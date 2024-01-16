@@ -20,6 +20,11 @@
 		41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB792B5676E500A7670A /* MytaskViewModel.swift */; };
 		41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB7C2B56770400A7670A /* AccountModel.swift */; };
 		41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB7E2B56770E00A7670A /* AccountViewModel.swift */; };
+		41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB832B5692AD00A7670A /* SUIWelcomeView.swift */; };
+		41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */; };
+		41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */; };
+		41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */; };
+		41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB912B56DDE400A7670A /* WelcomePageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +43,11 @@
 		41FBEB792B5676E500A7670A /* MytaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytaskViewModel.swift; sourceTree = "<group>"; };
 		41FBEB7C2B56770400A7670A /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		41FBEB7E2B56770E00A7670A /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		41FBEB832B5692AD00A7670A /* SUIWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUIWelcomeView.swift; sourceTree = "<group>"; };
+		41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackgroundView.swift; sourceTree = "<group>"; };
+		41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUILoginView.swift; sourceTree = "<group>"; };
+		41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonComponent.swift; sourceTree = "<group>"; };
+		41FBEB912B56DDE400A7670A /* WelcomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +83,11 @@
 				41FBEB552B55837500A7670A /* AppDelegate.swift */,
 				41FBEB572B55837500A7670A /* SceneDelegate.swift */,
 				41FBEB802B56772900A7670A /* Onboarding */,
+				41FBEB892B56C2B900A7670A /* LoginPage */,
 				41FBEB712B56762B00A7670A /* HomePage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
+				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
 				41FBEB5E2B55837800A7670A /* Assets.xcassets */,
 				41FBEB602B55837800A7670A /* LaunchScreen.storyboard */,
 				41FBEB632B55837800A7670A /* Info.plist */,
@@ -116,8 +128,29 @@
 		41FBEB802B56772900A7670A /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				41FBEB832B5692AD00A7670A /* SUIWelcomeView.swift */,
+				41FBEB912B56DDE400A7670A /* WelcomePageViewModel.swift */,
 			);
 			name = Onboarding;
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		41FBEB892B56C2B900A7670A /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */,
+			);
+			name = LoginPage;
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		41FBEB8E2B56C3E700A7670A /* SUIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */,
+				41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */,
+			);
+			name = SUIComponents;
 			path = HomePage;
 			sourceTree = "<group>";
 		};
@@ -194,11 +227,16 @@
 				41FBEB6C2B566FFA00A7670A /* HomeVC.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountVC.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
+				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
+				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */,
+				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
+				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
 				41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */,
+				41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */,
 				41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */,
 				41FBEB782B5676DE00A7670A /* MytaskModel.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksVC.swift in Sources */,
