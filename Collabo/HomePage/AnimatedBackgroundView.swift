@@ -33,11 +33,3 @@ struct AnimatedBackgroundView: View {
         return CGFloat.random(in: -300...300)
     }
 }
-
-
-
-
-
-//#Preview {
-//    AnimatedBackgroundView()
-//}

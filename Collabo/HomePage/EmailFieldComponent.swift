@@ -8,35 +8,25 @@
 import SwiftUI
 
 struct EmailTextField: View {
-    //MARK: - Properties
+    // MARK: - Properties
     @Binding var email: String
     
-    //MARK: - Body
+    // MARK: - Body
     var body: some View {
         VStack {
-            Text("Email")
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
             ZStack(alignment: .leading) {
-                if email.isEmpty {
-                    Text("Enter your email address")
-                        .font(.system(size: 14))
-                        .foregroundStyle(.white.opacity(0.6))
-                }
-                TextField("", text: $email)
+                TextField("Enter your email address", text: $email)
                     .keyboardType(.emailAddress)
                     .padding(.horizontal, 16)
                     .frame(height: 48)
                     .foregroundColor(.blue)
                     .tint(.white)
                     .background(
-                        Capsule()
+                        RoundedRectangle(cornerRadius: 8)
                             .fill(Color.white)
                             .frame(height: 48)
-                            .clipShape(Capsule())
                             .overlay(
-                                Capsule()
+                                RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.cyan.opacity(0.5), lineWidth: 1.0)
                             )
                     )
@@ -45,6 +35,9 @@ struct EmailTextField: View {
         .padding(.horizontal, 16)
     }
 }
+
+
+
 
 
 

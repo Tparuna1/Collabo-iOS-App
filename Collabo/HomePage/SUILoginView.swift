@@ -24,6 +24,7 @@ struct SUILoginView: View {
                     viewModel.comeBackText()
                     EmailTextField(email: $email)
                         .padding(.horizontal)
+                        .padding(.vertical)
                     
                     PasswordSecureField(password: $password)
                         .padding(.horizontal)
@@ -31,10 +32,11 @@ struct SUILoginView: View {
                     Spacer()
                     
                     Button(action: {
-                        // Add action for your Log In button here
+                        //TODO: Add action for your Log In button here
                     }) {
                         PrimaryButtonComponentView(text: "Log In")
                     }
+                    .padding(.horizontal)
 
                     
                     NavigationLink(destination: SUISignUpView()) {

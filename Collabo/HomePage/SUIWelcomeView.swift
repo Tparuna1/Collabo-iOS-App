@@ -23,6 +23,7 @@ struct SUIWelcomeView: View {
                     NavigationLink(destination: SUILoginView()) {
                         PrimaryButtonComponentView(text: "Get Started")
                     }
+                    .padding(.horizontal)
                 }
             }
             .navigationBarHidden(true)

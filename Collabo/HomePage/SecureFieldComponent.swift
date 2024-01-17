@@ -8,39 +8,28 @@
 import SwiftUI
 
 struct PasswordSecureField: View {
-    //MARK: - Properties
+    // MARK: - Properties
     @Binding var password: String
     
-    //MARK: - Body
+    // MARK: - Body
     var body: some View {
         VStack {
-            Text("Password")
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
             ZStack(alignment: .leading) {
-                if password.isEmpty {
-                    Text("Enter your password")
-                        .font(.system(size: 14))
-                        .foregroundStyle(.white.opacity(0.6))
-                }
-                SecureField("", text: $password)
-                    .cornerRadius(8)
-            }
-            .foregroundStyle(.blue)
-            .tint(.white)
-            .padding(.horizontal, 16)
-            .frame(height: 48)
-            .background(
-                Capsule()
-                    .fill(Color.white)
+                SecureField("Enter your password", text: $password)
+                    .padding(.horizontal, 16)
                     .frame(height: 48)
-                    .clipShape(Capsule())
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.cyan.opacity(0.5), lineWidth: 1.0)
+                    .foregroundColor(.blue)
+                    .tint(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white)
+                            .frame(height: 48)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.cyan.opacity(0.5), lineWidth: 1.0)
+                            )
                     )
-            )
+            }
         }
         .padding(.horizontal, 16)
     }
