@@ -15,7 +15,7 @@ struct SUILoginView: View {
         
         @ObservedObject var viewModel = LoginPageViewModel()
 
-        NavigationView {
+        NavigationStack {
             ZStack {
                 AnimatedBackgroundView()
                 VStack {

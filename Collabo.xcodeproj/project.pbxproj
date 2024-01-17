@@ -29,6 +29,8 @@
 		41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */; };
 		41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */; };
 		41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */; };
+		41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */; };
+		41FBEBA02B58167800A7670A /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 41FBEB9F2B58167800A7670A /* Auth0 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,7 @@
 		41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailFieldComponent.swift; sourceTree = "<group>"; };
 		41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
 		41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
+		41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41FBEBA02B58167800A7670A /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +163,7 @@
 			children = (
 				41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */,
 				41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */,
+				41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */,
 				41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */,
 				41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */,
 			);
@@ -190,6 +195,9 @@
 			dependencies = (
 			);
 			name = Collabo;
+			packageProductDependencies = (
+				41FBEB9F2B58167800A7670A /* Auth0 */,
+			);
 			productName = Collabo;
 			productReference = 41FBEB522B55837500A7670A /* Collabo.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +226,9 @@
 				Base,
 			);
 			mainGroup = 41FBEB492B55837500A7670A;
+			packageReferences = (
+				41FBEB9E2B58167700A7670A /* XCRemoteSwiftPackageReference "Auth0.swift" */,
+			);
 			productRefGroup = 41FBEB532B55837500A7670A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,6 +272,7 @@
 				41FBEB952B56EE1300A7670A /* SUISignUpView.swift in Sources */,
 				41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */,
 				41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */,
+				41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */,
 				41FBEB782B5676DE00A7670A /* MytaskModel.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksVC.swift in Sources */,
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
@@ -478,6 +490,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		41FBEB9E2B58167700A7670A /* XCRemoteSwiftPackageReference "Auth0.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/Auth0.swift.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41FBEB9F2B58167800A7670A /* Auth0 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41FBEB9E2B58167700A7670A /* XCRemoteSwiftPackageReference "Auth0.swift" */;
+			productName = Auth0;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 41FBEB4A2B55837500A7670A /* Project object */;
 }
