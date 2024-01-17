@@ -9,19 +9,17 @@ import SwiftUI
 
 struct SUIWelcomeView: View {
     
-
+    
     var body: some View {
         @ObservedObject var viewModel = WelcomeViewModel()
-
+        
         NavigationStack {
             ZStack {
                 AnimatedBackgroundView()
                 VStack {
-
                     viewModel.welcomeQuote()
                     viewModel.welcomeImage()
                     viewModel.welcomeText()
-
                     NavigationLink(destination: SUILoginView()) {
                         PrimaryButtonComponentView(text: "Get Started")
                     }

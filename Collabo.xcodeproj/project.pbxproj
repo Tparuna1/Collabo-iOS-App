@@ -25,6 +25,10 @@
 		41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */; };
 		41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */; };
 		41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB912B56DDE400A7670A /* WelcomePageViewModel.swift */; };
+		41FBEB952B56EE1300A7670A /* SUISignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB942B56EE1300A7670A /* SUISignUpView.swift */; };
+		41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */; };
+		41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */; };
+		41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +52,10 @@
 		41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUILoginView.swift; sourceTree = "<group>"; };
 		41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonComponent.swift; sourceTree = "<group>"; };
 		41FBEB912B56DDE400A7670A /* WelcomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewModel.swift; sourceTree = "<group>"; };
+		41FBEB942B56EE1300A7670A /* SUISignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUISignUpView.swift; sourceTree = "<group>"; };
+		41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailFieldComponent.swift; sourceTree = "<group>"; };
+		41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
+		41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +92,7 @@
 				41FBEB572B55837500A7670A /* SceneDelegate.swift */,
 				41FBEB802B56772900A7670A /* Onboarding */,
 				41FBEB892B56C2B900A7670A /* LoginPage */,
+				41FBEB932B56EDEC00A7670A /* SignUpPage */,
 				41FBEB712B56762B00A7670A /* HomePage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
@@ -139,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				41FBEB8A2B56C2DF00A7670A /* SUILoginView.swift */,
+				41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */,
 			);
 			name = LoginPage;
 			path = HomePage;
@@ -149,9 +159,19 @@
 			children = (
 				41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */,
 				41FBEB8F2B56C40A00A7670A /* PrimaryButtonComponent.swift */,
+				41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */,
+				41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */,
 			);
 			name = SUIComponents;
 			path = HomePage;
+			sourceTree = "<group>";
+		};
+		41FBEB932B56EDEC00A7670A /* SignUpPage */ = {
+			isa = PBXGroup;
+			children = (
+				41FBEB942B56EE1300A7670A /* SUISignUpView.swift */,
+			);
+			path = SignUpPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,15 +251,19 @@
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
+				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
 				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
 				41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */,
+				41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */,
+				41FBEB952B56EE1300A7670A /* SUISignUpView.swift in Sources */,
 				41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */,
 				41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */,
 				41FBEB782B5676DE00A7670A /* MytaskModel.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksVC.swift in Sources */,
+				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

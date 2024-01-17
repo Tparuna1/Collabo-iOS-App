@@ -8,10 +8,48 @@
 import SwiftUI
 
 struct SUILoginView: View {
+    @State private var email = ""
+    @State private var password = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        @ObservedObject var viewModel = LoginPageViewModel()
+
+        NavigationView {
+            ZStack {
+                AnimatedBackgroundView()
+                VStack {
+                    Spacer()
+                    viewModel.LoginImage()
+                    viewModel.comeBackText()
+                    EmailTextField(email: $email)
+                        .padding(.horizontal)
+                    
+                    PasswordSecureField(password: $password)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // Add action for your Log In button here
+                    }) {
+                        PrimaryButtonComponentView(text: "Log In")
+                    }
+
+                    
+                    NavigationLink(destination: SUISignUpView()) {
+                        Text("Don't have an account? Sign up")
+                            .font(.subheadline)
+                            .foregroundColor(Color.white)
+                    }
+                }
+            }
+            .navigationBarHidden(true)
+        }
     }
 }
+
+
 
 #Preview {
     SUILoginView()
