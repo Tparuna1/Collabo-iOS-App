@@ -6,15 +6,21 @@
 //
 
 import SwiftUI
+import Auth0
+
+enum NavigationPath: Hashable {
+    case home
+    case signUp
+}
+
 
 struct SUILoginView: View {
+    @StateObject private var viewModel = LoginPageViewModel()
     @State private var email = ""
     @State private var password = ""
     
+    
     var body: some View {
-        
-        @ObservedObject var viewModel = LoginPageViewModel()
-
         NavigationStack {
             ZStack {
                 AnimatedBackgroundView()
@@ -31,28 +37,36 @@ struct SUILoginView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        //TODO: Add action for your Log In button here
-                    }) {
-                        PrimaryButtonComponentView(text: "Log In")
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        PrimaryButtonComponentView(
+                            text: "Log In",
+                            backgroundColor: .white,
+                            textColor: .blue
+                        )
+                        .onTapGesture {
+                            viewModel.login(email: email, password: password)
+                        }
+                        .disabled(viewModel.isLoading)
+                        .padding()
                     }
-                    .padding(.horizontal)
-
-                    
-                    NavigationLink(destination: SUISignUpView()) {
-                        Text("Don't have an account? Sign up")
-                            .font(.subheadline)
-                            .foregroundColor(Color.white)
+                }
+                .padding()
+            }
+            .onAppear {
+                viewModel.onLoginSuccess = {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate {
+                        sceneDelegate.switchToMainTabBarController()
                     }
                 }
             }
-            .navigationBarHidden(true)
         }
     }
 }
 
 
-
-#Preview {
-    SUILoginView()
-}
+//#Preview {
+//    SUILoginView()
+//}

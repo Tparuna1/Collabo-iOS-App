@@ -11,30 +11,38 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = scene as? UIWindowScene else { return }
-        
-        let tabBarController = UITabBarController()
-        
-        let homeViewController = HomeVC()
-        let myTasksViewController = MyTasksVC()
-        let accountViewController = AccountVC()
-        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
         let welcomeView = SUIWelcomeView()
+
         let hostingController = UIHostingController(rootView: welcomeView)
-        
-        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
-        myTasksViewController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
-        accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
-        
-        tabBarController.viewControllers = [homeViewController, myTasksViewController, accountViewController]
-        
-        
+
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = hostingController
         window?.makeKeyAndVisible()
     }
+
+    func switchToMainTabBarController() {
+        let tabBarController = UITabBarController()
+
+        let homeViewController = HomeVC()
+        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+        
+        let myTasksViewController = MyTasksVC()
+        myTasksViewController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
+        
+        let accountViewController = AccountVC()
+        accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
+
+        tabBarController.viewControllers = [homeViewController, myTasksViewController, accountViewController]
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+    }
+
+
     
     
     

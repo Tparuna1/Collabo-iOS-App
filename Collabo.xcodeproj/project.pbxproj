@@ -31,6 +31,7 @@
 		41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */; };
 		41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */; };
 		41FBEBA02B58167800A7670A /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 41FBEB9F2B58167800A7670A /* Auth0 */; };
+		41FBEBA22B58186B00A7670A /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEBA12B58186B00A7670A /* Auth0.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
 		41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 		41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldComponent.swift; sourceTree = "<group>"; };
+		41FBEBA12B58186B00A7670A /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
 				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
+				41FBEBA12B58186B00A7670A /* Auth0.plist */,
 				41FBEB5E2B55837800A7670A /* Assets.xcassets */,
 				41FBEB602B55837800A7670A /* LaunchScreen.storyboard */,
 				41FBEB632B55837800A7670A /* Info.plist */,
@@ -244,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41FBEB622B55837800A7670A /* LaunchScreen.storyboard in Resources */,
+				41FBEBA22B58186B00A7670A /* Auth0.plist in Resources */,
 				41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,20 +423,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K84R5X722N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Collabo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = TockProducts.Collabo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TockProducts.Collabo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -447,20 +452,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K84R5X722N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Collabo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = TockProducts.Collabo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TockProducts.Collabo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
