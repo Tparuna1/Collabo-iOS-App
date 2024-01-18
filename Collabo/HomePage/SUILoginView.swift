@@ -11,6 +11,7 @@ import Auth0
 enum NavigationPath: Hashable {
     case home
     case signUp
+    case login
 }
 
 
@@ -50,9 +51,20 @@ struct SUILoginView: View {
                         }
                         .disabled(viewModel.isLoading)
                         .padding()
+                        
+                        NavigationLink(destination: SUISignUpView()) {
+                            PrimaryButtonComponentView(
+                                text: "Sign Up",
+                                backgroundColor: .white,
+                                textColor: .blue
+                            )
+                            .padding(.horizontal)
+                        }
+                        Spacer()
                     }
                 }
                 .padding()
+                
             }
             .onAppear {
                 viewModel.onLoginSuccess = {

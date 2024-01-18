@@ -425,6 +425,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K84R5X722N;
 				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_WARNINGS = YES;
 				INFOPLIST_FILE = Collabo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -454,6 +455,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K84R5X722N;
 				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_WARNINGS = YES;
 				INFOPLIST_FILE = Collabo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
