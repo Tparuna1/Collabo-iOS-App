@@ -32,6 +32,9 @@
 		41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */; };
 		41FBEBA02B58167800A7670A /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 41FBEB9F2B58167800A7670A /* Auth0 */; };
 		41FBEBA22B58186B00A7670A /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEBA12B58186B00A7670A /* Auth0.plist */; };
+		41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEBA52B5959C700A7670A /* SUISIgnUpViewModel.swift */; };
+		41FBEBA82B596A6900A7670A /* PasswordChecklList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */; };
+		41FBEBAA2B5A78A300A7670A /* PasswordStrengthChecklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +64,9 @@
 		41FBEB9A2B57C1D400A7670A /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 		41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldComponent.swift; sourceTree = "<group>"; };
 		41FBEBA12B58186B00A7670A /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
+		41FBEBA52B5959C700A7670A /* SUISIgnUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUISIgnUpViewModel.swift; sourceTree = "<group>"; };
+		41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChecklList.swift; sourceTree = "<group>"; };
+		41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStrengthChecklist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +184,9 @@
 			isa = PBXGroup;
 			children = (
 				41FBEB942B56EE1300A7670A /* SUISignUpView.swift */,
+				41FBEBA52B5959C700A7670A /* SUISIgnUpViewModel.swift */,
+				41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */,
+				41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */,
 			);
 			path = SignUpPage;
 			sourceTree = "<group>";
@@ -267,10 +276,13 @@
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
+				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
+				41FBEBA82B596A6900A7670A /* PasswordChecklList.swift in Sources */,
 				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
+				41FBEBAA2B5A78A300A7670A /* PasswordStrengthChecklist.swift in Sources */,
 				41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */,
 				41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */,
 				41FBEB952B56EE1300A7670A /* SUISignUpView.swift in Sources */,

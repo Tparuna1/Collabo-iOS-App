@@ -5,51 +5,61 @@
 //  Created by tornike <parunashvili on 16.01.24.
 //
 
+
 import SwiftUI
 
-
 struct SUISignUpView: View {
-    @State private var fullName = ""
-    @State private var email = ""
-    @State private var password = ""
+    @ObservedObject var viewModel = SUISignUpViewModel()
     
     var body: some View {
-        @ObservedObject var viewModel = LoginPageViewModel()
-        
         NavigationStack {
             ZStack {
                 AnimatedBackgroundView()
                 VStack {
-                    
                     Text("Begin your journey with Collabo")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .padding(.bottom, 32)
                     
-                    CustomTextField(text: $fullName, placeholder: "Full Name")
+                    CustomTextField(text: $viewModel.username, placeholder: "Full Name")
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                     
-                    CustomTextField(text: $email, placeholder: "Email Address", keyboardType: .emailAddress)
+                    CustomTextField(text: $viewModel.email, placeholder: "Email Address", keyboardType: .emailAddress)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                     
-                    
-                    PasswordSecureField(password: $password)
+                    PasswordSecureField(password: $viewModel.password)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
+                        .onChange(of: viewModel.password) {
+                            viewModel.validatePassword(password: viewModel.password)
+                        }
+
+
                     
+                    PasswordStrengthChecklist(
+                        isMinLengthMet: viewModel.isMinLengthMet,
+                        isCapitalLetterMet: viewModel.isCapitalLetterMet,
+                        isNumberMet: viewModel.isNumberMet,
+                        isUniqueCharacterMet: viewModel.isUniqueCharacterMet
+                    )
                     
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
                     
                     Button(action: {
-                        // TODO: Add action for your Sign-Up button here
+                        viewModel.signUpUser()
                     }) {
-                        PrimaryButtonComponentView(text: "Sign Up")
+                        PrimaryButtonComponentView(text: viewModel.isLoading ? "Signing Up..." : "Sign Up")
                     }
+                    .disabled(!viewModel.isSignUpEnabled || viewModel.isLoading)
                     .padding(.horizontal)
-                    .padding(.top ,32)
-
+                    .padding(.top, 32)
                     
                     NavigationLink(destination: SUILoginView()) {
                         Text("Already have an account? Log in")
@@ -63,13 +73,12 @@ struct SUISignUpView: View {
     }
 }
 
-struct SUISignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SUISignUpView()
-    }
-}
+
+//struct SUISignUpView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SUISignUpView()
+//    }
+//}
 
 
-#Preview {
-    SUISignUpView()
-}
+

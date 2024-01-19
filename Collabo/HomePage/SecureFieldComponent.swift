@@ -10,12 +10,13 @@ import SwiftUI
 struct PasswordSecureField: View {
     // MARK: - Properties
     @Binding var password: String
+    var onCommit: () -> Void = {}
     
     // MARK: - Body
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {
-                SecureField("Enter your password", text: $password)
+                SecureField("Enter your password", text: $password, onCommit: onCommit)
                     .padding(.horizontal, 16)
                     .frame(height: 48)
                     .foregroundColor(.blue)
@@ -34,4 +35,5 @@ struct PasswordSecureField: View {
         .padding(.horizontal, 16)
     }
 }
+
 
