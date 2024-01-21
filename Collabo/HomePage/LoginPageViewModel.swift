@@ -48,11 +48,31 @@ class LoginPageViewModel: ObservableObject {
                         print("Credentials: \(credentials)")
                         // TODO: Store the credentials securely
                         self?.onLoginSuccess?()
+                        self?.connectWithAsana()
+
                     case .failure(let error):
                         print("Error: \(error)")
                         self?.errorMessage = "Login failed: \(error.localizedDescription)"
                         // TODO: Show error message to the user
                     }
+                }
+            }
+    }
+
+    func connectWithAsana() {
+        let connectionName = "Asana"
+        
+        Auth0
+            .webAuth()
+            .scope("openid profile email")
+            .connection(connectionName)
+            .start { result in
+                switch result {
+                case .success(let credentials):
+                    print("Connected with Asana: \(credentials)")
+                    // TODO: Store the Asana credentials securely and use them to interact with Asana API
+                case .failure(let error):
+                    print("Failed to connect with Asana: \(error)")
                 }
             }
     }

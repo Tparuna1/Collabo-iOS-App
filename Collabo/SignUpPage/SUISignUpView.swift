@@ -12,7 +12,7 @@ struct SUISignUpView: View {
     @ObservedObject var viewModel = SUISignUpViewModel()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack() {
             ZStack {
                 AnimatedBackgroundView()
                 VStack {
@@ -36,8 +36,6 @@ struct SUISignUpView: View {
                         .onChange(of: viewModel.password) {
                             viewModel.validatePassword(password: viewModel.password)
                         }
-
-
                     
                     PasswordStrengthChecklist(
                         isMinLengthMet: viewModel.isMinLengthMet,
@@ -69,6 +67,14 @@ struct SUISignUpView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear {
+                viewModel.onSignUpSuccess = {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate {
+                        sceneDelegate.switchToMainTabBarController()
+                    }
+                }
+            }
         }
     }
 }

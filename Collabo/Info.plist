@@ -12,8 +12,7 @@
 </string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>
-</string>
+				<string>com.TockProducts.Collabo</string>
 			</array>
 		</dict>
 	</array>

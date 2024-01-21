@@ -21,7 +21,9 @@ class SUISignUpViewModel: ObservableObject {
     @Published var isUniqueCharacterMet = false
     @Published var showAlert = false
     @Published var alertMessage = ""
-    
+    var onSignUpSuccess: (() -> Void)?
+
+
     
     
     func validatePassword(password: String) {
@@ -53,7 +55,8 @@ class SUISignUpViewModel: ObservableObject {
                     switch result {
                     case .success(let user):
                         print("User signed up: \(user)")
-                        
+                        self?.onSignUpSuccess?()
+
                     case .failure(let error):
                         print("Error: \(error)")
                         self?.errorMessage = "Sign up failed: \(error.localizedDescription)"
