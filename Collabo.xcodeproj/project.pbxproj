@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
+		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
+		41FAAC572B5D4394009F6510 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC562B5D4394009F6510 /* Alamofire */; };
 		41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB552B55837500A7670A /* AppDelegate.swift */; };
 		41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB572B55837500A7670A /* SceneDelegate.swift */; };
 		41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEB5E2B55837800A7670A /* Assets.xcassets */; };
@@ -39,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
 		41FBEB522B55837500A7670A /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FBEB552B55837500A7670A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FBEB572B55837500A7670A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41FAAC572B5D4394009F6510 /* Alamofire in Frameworks */,
 				41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */,
 				41FBEBA02B58167800A7670A /* Auth0 in Frameworks */,
 			);
@@ -83,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */ = {
+			isa = PBXGroup;
+			children = (
+				41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */,
+			);
+			name = ConnectWithAsana;
+			sourceTree = "<group>";
+		};
 		41FBEB492B55837500A7670A = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +116,7 @@
 			children = (
 				41FBEB552B55837500A7670A /* AppDelegate.swift */,
 				41FBEB572B55837500A7670A /* SceneDelegate.swift */,
+				41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */,
 				41FBEB802B56772900A7670A /* Onboarding */,
 				41FBEB892B56C2B900A7670A /* LoginPage */,
 				41FBEB932B56EDEC00A7670A /* SignUpPage */,
@@ -212,6 +225,7 @@
 			packageProductDependencies = (
 				41FBEB9F2B58167800A7670A /* Auth0 */,
 				41FAAC4B2B5D27D9009F6510 /* OAuthSwift */,
+				41FAAC562B5D4394009F6510 /* Alamofire */,
 			);
 			productName = Collabo;
 			productReference = 41FBEB522B55837500A7670A /* Collabo.app */;
@@ -244,6 +258,7 @@
 			packageReferences = (
 				41FBEB9E2B58167700A7670A /* XCRemoteSwiftPackageReference "Auth0.swift" */,
 				41FAAC4A2B5D27D9009F6510 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
+				41FAAC552B5D4393009F6510 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 41FBEB532B55837500A7670A /* Products */;
 			projectDirPath = "";
@@ -279,6 +294,7 @@
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
+				41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
@@ -524,6 +540,14 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		41FAAC552B5D4393009F6510 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
 		41FBEB9E2B58167700A7670A /* XCRemoteSwiftPackageReference "Auth0.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Auth0.swift.git";
@@ -539,6 +563,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 41FAAC4A2B5D27D9009F6510 /* XCRemoteSwiftPackageReference "OAuthSwift" */;
 			productName = OAuthSwift;
+		};
+		41FAAC562B5D4394009F6510 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41FAAC552B5D4393009F6510 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		41FBEB9F2B58167800A7670A /* Auth0 */ = {
 			isa = XCSwiftPackageProductDependency;

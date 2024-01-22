@@ -48,7 +48,6 @@ class LoginPageViewModel: ObservableObject {
                         print("Credentials: \(credentials)")
                         // TODO: Store the credentials securely
                         self?.onLoginSuccess?()
-                        self?.connectWithAsana()
 
                     case .failure(let error):
                         print("Error: \(error)")
