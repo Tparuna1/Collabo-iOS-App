@@ -1,0 +1,95 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad",
+        "version" : "5.8.1"
+      }
+    },
+    {
+      "identity" : "auth0.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/auth0/Auth0.swift.git",
+      "state" : {
+        "revision" : "9d970f3f5a694a146724e055c7932808a274d96e",
+        "version" : "2.5.0"
+      }
+    },
+    {
+      "identity" : "brightfutures",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Thomvis/BrightFutures.git",
+      "state" : {
+        "revision" : "fa66fa183dce7196d431244d0215748cd14c5758",
+        "version" : "8.2.0"
+      }
+    },
+    {
+      "identity" : "erik",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/phimage/Erik.git",
+      "state" : {
+        "revision" : "109a130e9cdb00789a43a7a625293eeb12d22989",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "filekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nvzqz/FileKit.git",
+      "state" : {
+        "revision" : "9006d2888025fbe893c3c396327b2fe45a8c177b",
+        "version" : "6.1.0"
+      }
+    },
+    {
+      "identity" : "jwtdecode.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/auth0/JWTDecode.swift.git",
+      "state" : {
+        "revision" : "58af7278797871e460d79496621b3e5366b865b2",
+        "version" : "3.1.0"
+      }
+    },
+    {
+      "identity" : "kanna",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tid-kijyun/Kanna.git",
+      "state" : {
+        "revision" : "f9e4922223dd0d3dfbf02ca70812cf5531fc0593",
+        "version" : "5.2.7"
+      }
+    },
+    {
+      "identity" : "oauthswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OAuthSwift/OAuthSwift.git",
+      "state" : {
+        "revision" : "d85964b96dbce94df961f28b996187c835089903",
+        "version" : "2.2.0"
+      }
+    },
+    {
+      "identity" : "simplekeychain",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/auth0/SimpleKeychain.git",
+      "state" : {
+        "revision" : "f082494aab8056139a4fe234c920a9f92f681aff",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swifter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/httpswift/swifter.git",
+      "state" : {
+        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+        "version" : "1.5.0"
+      }
+    }
+  ],
+  "version" : 2
+}

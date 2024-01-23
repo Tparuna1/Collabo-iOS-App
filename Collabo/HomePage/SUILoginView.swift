@@ -6,13 +6,77 @@
 //
 
 import SwiftUI
+import Auth0
+
+enum NavigationPath: Hashable {
+    case home
+    case signUp
+    case login
+}
+
 
 struct SUILoginView: View {
+    @StateObject private var viewModel = LoginPageViewModel()
+    @State private var email = ""
+    @State private var password = ""
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack {
+                AnimatedBackgroundView()
+                VStack {
+                    Spacer()
+                    viewModel.LoginImage()
+                    viewModel.comeBackText()
+                    EmailTextField(email: $email)
+                        .padding(.horizontal)
+                        .padding(.vertical)
+                    
+                    PasswordSecureField(password: $password)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        PrimaryButtonComponentView(
+                            text: "Log In",
+                            backgroundColor: .white,
+                            textColor: .blue
+                        )
+                        .onTapGesture {
+                            viewModel.login(email: email, password: password)
+                        }
+                        .disabled(viewModel.isLoading)
+                        .padding()
+                        
+                        NavigationLink(destination: SUISignUpView()) {
+                            PrimaryButtonComponentView(
+                                text: "Sign Up",
+                                backgroundColor: .white,
+                                textColor: .blue
+                            )
+                            .padding(.horizontal)
+                        }
+                        Spacer()
+                    }
+                }
+                .padding()
+                
+            }
+            .onAppear {
+                viewModel.onLoginSuccess = {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate {
+                        sceneDelegate.switchToMainTabBarController()
+                    }
+                }
+            }
+        }
     }
 }
 
-#Preview {
-    SUILoginView()
-}
+
+

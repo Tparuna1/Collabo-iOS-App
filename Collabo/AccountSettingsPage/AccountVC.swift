@@ -6,24 +6,50 @@
 //
 
 import UIKit
+import SwiftUI
 
 class AccountVC: UIViewController {
-
+    
+    private let viewModel = AccountViewModel()
+    private let logoutButton = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupLogoutButton()
+        
+        viewModel.onLogoutComplete = { [weak self] in
+            self?.navigateToLoginView()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupLogoutButton() {
+        logoutButton.setTitle("Log Out", for: .normal)
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        
+        logoutButton.backgroundColor = .systemRed
+        logoutButton.setTitleColor(.white, for: .normal)
+        logoutButton.layer.cornerRadius = 10
+        
+        view.addSubview(logoutButton)
+        
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            logoutButton.widthAnchor.constraint(equalToConstant: 200),
+            logoutButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
-    */
-
+    
+    @objc private func logoutButtonTapped() {
+        viewModel.logout()
+    }
+    
+    private func navigateToLoginView() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+            sceneDelegate.switchToLoginViewController()
+        }
+    }
 }
+
