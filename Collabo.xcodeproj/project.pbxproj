@@ -104,8 +104,8 @@
 		41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */ = {
 			isa = PBXGroup;
 			children = (
-				41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */,
 				41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */,
+				41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */,
 				41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */,
 			);
 			name = ProjectTasksPage;
@@ -153,8 +153,8 @@
 		41FBEB712B56762B00A7670A /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				41FBEB6B2B566FFA00A7670A /* HomeVC.swift */,
 				41FBEB722B56763D00A7670A /* HomePageModel.swift */,
+				41FBEB6B2B566FFA00A7670A /* HomeVC.swift */,
 				41FBEB742B56764600A7670A /* HomePageViewModel.swift */,
 			);
 			path = HomePage;
@@ -216,8 +216,8 @@
 		41FBEB932B56EDEC00A7670A /* SignUpPage */ = {
 			isa = PBXGroup;
 			children = (
-				41FBEB942B56EE1300A7670A /* SUISignUpView.swift */,
 				41FBEBA52B5959C700A7670A /* SUISIgnUpViewModel.swift */,
+				41FBEB942B56EE1300A7670A /* SUISignUpView.swift */,
 				41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */,
 				41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */,
 			);
