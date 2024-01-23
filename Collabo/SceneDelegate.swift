@@ -28,19 +28,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         
         let homeViewController = HomeVC()
-        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+        let homeNavigationController = UINavigationController(rootViewController: homeViewController)
+        homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
         let myTasksViewController = MyTasksVC()
-        myTasksViewController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
+        let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
+        myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
         
         let accountViewController = AccountVC()
-        accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
+        let accountNavigationController = UINavigationController(rootViewController: accountViewController)
+        accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
         
-        tabBarController.viewControllers = [homeViewController, myTasksViewController, accountViewController]
+        tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, accountNavigationController]
+        
+        tabBarController.tabBar.backgroundColor = UIColor.white
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
+
     
     func switchToLoginViewController() {
         let loginView = SUILoginView()

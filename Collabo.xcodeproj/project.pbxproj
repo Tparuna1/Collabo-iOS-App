@@ -10,6 +10,9 @@
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
 		41FAAC572B5D4394009F6510 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC562B5D4394009F6510 /* Alamofire */; };
+		41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */; };
+		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
+		41FAAC602B5FB24F009F6510 /* ProjectTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */; };
 		41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB552B55837500A7670A /* AppDelegate.swift */; };
 		41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB572B55837500A7670A /* SceneDelegate.swift */; };
 		41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEB5E2B55837800A7670A /* Assets.xcassets */; };
@@ -42,6 +45,9 @@
 
 /* Begin PBXFileReference section */
 		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
+		41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksVC.swift; sourceTree = "<group>"; };
+		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
+		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
 		41FBEB522B55837500A7670A /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FBEB552B55837500A7670A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FBEB572B55837500A7670A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +101,17 @@
 			name = ConnectWithAsana;
 			sourceTree = "<group>";
 		};
+		41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */ = {
+			isa = PBXGroup;
+			children = (
+				41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */,
+				41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */,
+				41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */,
+			);
+			name = ProjectTasksPage;
+			path = HomePage;
+			sourceTree = "<group>";
+		};
 		41FBEB492B55837500A7670A = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +138,7 @@
 				41FBEB892B56C2B900A7670A /* LoginPage */,
 				41FBEB932B56EDEC00A7670A /* SignUpPage */,
 				41FBEB712B56762B00A7670A /* HomePage */,
+				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
 				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
@@ -291,15 +309,18 @@
 				41FBEB702B56702100A7670A /* AccountVC.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
+				41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */,
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
 				41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
+				41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
+				41FAAC602B5FB24F009F6510 /* ProjectTasksViewModel.swift in Sources */,
 				41FBEBA82B596A6900A7670A /* PasswordChecklList.swift in Sources */,
 				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
 				41FBEBAA2B5A78A300A7670A /* PasswordStrengthChecklist.swift in Sources */,

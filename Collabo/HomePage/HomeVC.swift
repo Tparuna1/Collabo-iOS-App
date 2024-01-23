@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import Alamofire
-import OAuthSwift
+//import Alamofire
+//import OAuthSwift
 
-class HomeVC: UIViewController, UITableViewDataSource {
+class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var viewModel = HomeViewModel()
     
@@ -41,6 +41,8 @@ class HomeVC: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
+        projectsTableView.delegate = self
+        projectsTableView.dataSource = self
     }
     
     func setupUI() {
@@ -91,6 +93,26 @@ class HomeVC: UIViewController, UITableViewDataSource {
             cell.textLabel?.text = project.name
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Cell tapped")
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let project = viewModel.projects.value?[indexPath.row] {
+            navigateToProjectTasks(project: project)
+        }
+    }
+
+    private func navigateToProjectTasks(project: Project) {
+        let projectTasksVC = ProjectTasksVC()
+        projectTasksVC.viewModel = ProjectTasksViewModel()
+        projectTasksVC.viewModel.projectId = project.gid
+
+        if let navigationController = navigationController {
+            navigationController.pushViewController(projectTasksVC, animated: true)
+        } else {
+            print("NavigationController not found")
+        }
     }
 }
 

@@ -71,7 +71,7 @@ class HomeViewModel {
         
         let parameters: [String: Any] = ["project": 538986955234806]
         
-        AF.request(apiEndpoint, method: .get, headers: headers) // Changed from post to get
+        AF.request(apiEndpoint, method: .get, headers: headers)
             .responseDecodable(of: ProjectsResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let projectsResponse):
