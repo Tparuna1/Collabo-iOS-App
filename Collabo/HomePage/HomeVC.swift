@@ -6,116 +6,109 @@
 //
 
 import UIKit
-//import Alamofire
-//import OAuthSwift
+import Combine
 
-class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class HomeVC: UIViewController {
     
     var viewModel = HomeViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
+    
+    
+    lazy var someTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter OAuth Token"
-        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
         return textField
     }()
     
-    lazy var fetchDataButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Fetch Data", for: .normal)
-        button.addTarget(self, action: #selector(fetchData(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var projectsTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProjectCell")
-        return tableView
+    lazy var taskTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Enter Project Title"
+        textField.textAlignment = .center
+        return textField
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
-        projectsTableView.delegate = self
-        projectsTableView.dataSource = self
+        
     }
     
     func setupUI() {
-        view.backgroundColor = .white
-        
+        view.addSubview(someTextLabel)
         view.addSubview(codeTextField)
-        view.addSubview(fetchDataButton)
-        view.addSubview(projectsTableView)
+        view.addSubview(taskTextField)
         
         NSLayoutConstraint.activate([
-            codeTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            someTextLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            someTextLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             codeTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            codeTextField.topAnchor.constraint(equalTo: someTextLabel.bottomAnchor, constant: 20.0),
             codeTextField.widthAnchor.constraint(equalToConstant: 200.0),
             
-            fetchDataButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20),
+            taskTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            taskTextField.topAnchor.constraint(equalTo: codeTextField.topAnchor, constant: -100.0),
+            taskTextField.widthAnchor.constraint(equalToConstant: 200.0),
+        ])
+        
+        let fetchDataButton = UIButton(type: .system)
+        fetchDataButton.translatesAutoresizingMaskIntoConstraints = false
+        fetchDataButton.setTitle("Fetch Data", for: .normal)
+        fetchDataButton.addTarget(self, action: #selector(fetchData(_:)), for: .touchUpInside)
+        view.addSubview(fetchDataButton)
+        
+        NSLayoutConstraint.activate([
             fetchDataButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            projectsTableView.topAnchor.constraint(equalTo: fetchDataButton.bottomAnchor, constant: 20),
-            projectsTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            projectsTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            projectsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            fetchDataButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20.0),
+        ])
+        
+        let addTaskButton = UIButton(type: .system)
+        addTaskButton.translatesAutoresizingMaskIntoConstraints = false
+        addTaskButton.setTitle("Add Project", for: .normal)
+        addTaskButton.addTarget(self, action: #selector(addProject(_:)), for: .touchUpInside)
+        view.addSubview(addTaskButton)
+        
+        NSLayoutConstraint.activate([
+            addTaskButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addTaskButton.topAnchor.constraint(equalTo: someTextLabel.topAnchor, constant: -30.0),
         ])
     }
     
-    private func bindViewModel() {
-        viewModel.projects.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.projectsTableView.reloadData()
+    func bindViewModel() {
+        viewModel.$projects.receive(on: DispatchQueue.main).sink { [weak self] projects in
+            self?.someTextLabel.text = projects.first?.name
+        }.store(in: &cancellables)
+        
+        viewModel.$errorMessage.receive(on: DispatchQueue.main).sink { [weak self] errorMessage in
+            if let message = errorMessage {
+                print("Error: \(message)")
             }
-        }
+        }.store(in: &cancellables)
     }
+    
+    
     
     @objc func fetchData(_ sender: UIButton) {
-        guard let oauthToken = codeTextField.text, !oauthToken.isEmpty else {
-            return
-        }
-        viewModel.fetchData(oauthToken: oauthToken)
+        let authorizationCode = codeTextField.text ?? ""
+        viewModel.getAccessToken(authorizationCode: authorizationCode)
     }
     
-    // MARK: - UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.projects.value?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath)
-        if let project = viewModel.projects.value?[indexPath.row] {
-            cell.textLabel?.text = project.name
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Cell tapped")
-        tableView.deselectRow(at: indexPath, animated: true)
-        if let project = viewModel.projects.value?[indexPath.row] {
-            navigateToProjectTasks(project: project)
-        }
-    }
-
-    private func navigateToProjectTasks(project: Project) {
-        let projectTasksVC = ProjectTasksVC()
-        projectTasksVC.viewModel = ProjectTasksViewModel()
-        projectTasksVC.viewModel.projectId = project.gid
-
-        if let navigationController = navigationController {
-            navigationController.pushViewController(projectTasksVC, animated: true)
-        } else {
-            print("NavigationController not found")
-        }
+    @objc func addProject(_ sender: UIButton) {
+        let taskName = taskTextField.text ?? ""
+        viewModel.addProjectToAsana(name: taskName)
     }
 }
-
 
 
 
