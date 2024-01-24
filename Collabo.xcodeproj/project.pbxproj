@@ -13,6 +13,8 @@
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */; };
 		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
 		41FAAC602B5FB24F009F6510 /* ProjectTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */; };
+		41FAAC6C2B60F9B1009F6510 /* AsanaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC6B2B60F9B1009F6510 /* AsanaManager.swift */; };
+		41FAAC6F2B60F9E8009F6510 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC6E2B60F9E8009F6510 /* UserDefaultsManager.swift */; };
 		41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB552B55837500A7670A /* AppDelegate.swift */; };
 		41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB572B55837500A7670A /* SceneDelegate.swift */; };
 		41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEB5E2B55837800A7670A /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksVC.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
 		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
+		41FAAC6B2B60F9B1009F6510 /* AsanaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaManager.swift; sourceTree = "<group>"; };
+		41FAAC6E2B60F9E8009F6510 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		41FBEB522B55837500A7670A /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FBEB552B55837500A7670A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FBEB572B55837500A7670A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,22 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		41FAAC6A2B60F994009F6510 /* AsanaManager */ = {
+			isa = PBXGroup;
+			children = (
+				41FAAC6B2B60F9B1009F6510 /* AsanaManager.swift */,
+			);
+			name = AsanaManager;
+			sourceTree = "<group>";
+		};
+		41FAAC6D2B60F9CD009F6510 /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				41FAAC6E2B60F9E8009F6510 /* UserDefaultsManager.swift */,
+			);
+			name = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
 		41FBEB492B55837500A7670A = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +153,8 @@
 			children = (
 				41FBEB552B55837500A7670A /* AppDelegate.swift */,
 				41FBEB572B55837500A7670A /* SceneDelegate.swift */,
+				41FAAC6D2B60F9CD009F6510 /* UserDefaultsManager */,
+				41FAAC6A2B60F994009F6510 /* AsanaManager */,
 				41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */,
 				41FBEB802B56772900A7670A /* Onboarding */,
 				41FBEB892B56C2B900A7670A /* LoginPage */,
@@ -314,6 +336,7 @@
 				41FBEB732B56763D00A7670A /* HomePageModel.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
 				41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */,
+				41FAAC6C2B60F9B1009F6510 /* AsanaManager.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
 				41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
@@ -330,6 +353,7 @@
 				41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */,
 				41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */,
 				41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */,
+				41FAAC6F2B60F9E8009F6510 /* UserDefaultsManager.swift in Sources */,
 				41FBEB782B5676DE00A7670A /* MytaskModel.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksVC.swift in Sources */,
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,

@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Project: Codable {
-    let gid: String
-    let name: String
+
+public struct AsanaProject: Codable {
+    public let gid: String
+    public let name: String
 }
 
-struct ProjectsResponse: Codable {
-    let data: [Project]
+public struct AsanaProjectsResponse: Codable {
+    public let data: [AsanaProject]
 }
 
