@@ -26,7 +26,7 @@ class LoginPageViewModel: ObservableObject {
     }
     
     func LoginImage() -> some View {
-        return Image("LogIn")
+        return Image("LogIN")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: 200)

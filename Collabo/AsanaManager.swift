@@ -13,6 +13,7 @@ public class AsanaManager {
     let clientId = "1206344666310503"
     let clientSecret = "385e60c477ccf676ef2759b209126404"
     let workspaceGID = "1206421146222686"
+    let projectGID = ""
     
     static let shared = AsanaManager()
     
@@ -100,7 +101,7 @@ public class AsanaManager {
     public func fetchProjects() async throws -> [AsanaProject] {
         let baseApiEndpoint = "https://app.asana.com/api/1.0"
         let apiEndpoint = "\(baseApiEndpoint)/workspaces/\(workspaceGID)/projects"
-
+        
         let tokenValue = token != "" ? token : UserDefaultsManager.shared.retrieveAsanaAccessToken()
         guard let token = tokenValue else {
             throw NetworkError.missingToken
@@ -122,6 +123,7 @@ public class AsanaManager {
         do {
             let decoder = JSONDecoder()
             let projects = try decoder.decode(AsanaProjectsResponse.self, from: data)
+            print("Parsed Data: \(projects.data)")
             return projects.data
         } catch {
             throw NetworkError.decodingError
@@ -136,16 +138,16 @@ public class AsanaManager {
                 "workspace": "\(workspaceGID)"
             ]
         ]
-
+        
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "POST"
-
+        
         let headers = [
             "Content-Type": "application/json",
             "Authorization": "Bearer \(token)"
         ]
         request.allHTTPHeaderFields = headers
-
+        
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
             print("Request URL: \(url)")
@@ -155,17 +157,17 @@ public class AsanaManager {
             print("JSON Encoding Error: \(error)")
             throw NetworkError.jsonEncodingError
         }
-
+        
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse
             }
-
+            
             let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
             print("Response Status Code: \(httpResponse.statusCode)")
             print("Response Body: \(responseBody)")
-
+            
             guard (200...299).contains(httpResponse.statusCode) else {
                 print("Server returned an error: \(responseBody)")
                 throw NetworkError.invalidResponse
@@ -174,11 +176,29 @@ public class AsanaManager {
             print("Network Request Error: \(error)")
             throw error
         }
-
+        
     }
-
     
-    
+    func fetchTasks(forProject projectGID: String) async throws -> [AsanaTask] {
+        let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)/tasks")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let tasksResponse = try decoder.decode(AsanaTasksResponse.self, from: data)
+            return tasksResponse.data
+        } catch {
+            throw NetworkError.decodingError
+        }
+    }
     
     enum NetworkError: Error {
         case invalidURL
