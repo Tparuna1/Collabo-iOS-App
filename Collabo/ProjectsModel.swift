@@ -1,8 +1,8 @@
 //
-//  HomePageModel.swift
+//  ProjectsModel.swift
 //  Collabo
 //
-//  Created by tornike <parunashvili on 16.01.24.
+//  Created by tornike <parunashvili on 25.01.24.
 //
 
 import Foundation
@@ -16,4 +16,3 @@ public struct AsanaProject: Codable {
 public struct AsanaProjectsResponse: Codable {
     public let data: [AsanaProject]
 }
-
