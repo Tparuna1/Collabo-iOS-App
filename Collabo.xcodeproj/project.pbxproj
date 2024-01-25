@@ -15,6 +15,8 @@
 		41FAAC6C2B60F9B1009F6510 /* AsanaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC6B2B60F9B1009F6510 /* AsanaManager.swift */; };
 		41FAAC6F2B60F9E8009F6510 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC6E2B60F9E8009F6510 /* UserDefaultsManager.swift */; };
 		41FAAC742B611B68009F6510 /* NewProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC732B611B68009F6510 /* NewProjectVC.swift */; };
+		41FAAC792B626FF1009F6510 /* SheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */; };
+		41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC7A2B627B16009F6510 /* AddProjectViewModel.swift */; };
 		41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB552B55837500A7670A /* AppDelegate.swift */; };
 		41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB572B55837500A7670A /* SceneDelegate.swift */; };
 		41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEB5E2B55837800A7670A /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		41FAAC6B2B60F9B1009F6510 /* AsanaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaManager.swift; sourceTree = "<group>"; };
 		41FAAC6E2B60F9E8009F6510 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		41FAAC732B611B68009F6510 /* NewProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectVC.swift; sourceTree = "<group>"; };
+		41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetPresentationController.swift; sourceTree = "<group>"; };
+		41FAAC7A2B627B16009F6510 /* AddProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModel.swift; sourceTree = "<group>"; };
 		41FBEB522B55837500A7670A /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FBEB552B55837500A7670A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FBEB572B55837500A7670A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				41FAAC732B611B68009F6510 /* NewProjectVC.swift */,
+				41FAAC7A2B627B16009F6510 /* AddProjectViewModel.swift */,
 			);
 			path = CreateNewProjectPage;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 		41FAAC752B611D6E009F6510 /* UIKitComponents */ = {
 			isa = PBXGroup;
 			children = (
+				41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */,
 			);
 			path = UIKitComponents;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				41FBEB6C2B566FFA00A7670A /* HomeVC.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountVC.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
+				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
 				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
 				41FAAC742B611B68009F6510 /* NewProjectVC.swift in Sources */,
 				41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */,
@@ -373,6 +380,7 @@
 				41FBEB782B5676DE00A7670A /* MytaskModel.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksVC.swift in Sources */,
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
+				41FAAC792B626FF1009F6510 /* SheetPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

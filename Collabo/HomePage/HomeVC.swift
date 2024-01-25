@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 
+
 class HomeVC: UIViewController {
     
     var viewModel = HomeViewModel()
@@ -39,7 +40,6 @@ class HomeVC: UIViewController {
         return tableView
     }()
     
-    
     lazy var addProjectButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -59,9 +59,13 @@ class HomeVC: UIViewController {
     }
     
     func setupUI() {
+        let tableViewWrapper = UIView()
+        tableViewWrapper.translatesAutoresizingMaskIntoConstraints = false
+        tableViewWrapper.backgroundColor = .clear
+        
         view.addSubview(codeTextField)
         view.addSubview(fetchDataButton)
-        view.addSubview(tableView)
+        view.addSubview(tableViewWrapper)
         view.addSubview(addProjectButton)
         
         NSLayoutConstraint.activate([
@@ -72,18 +76,33 @@ class HomeVC: UIViewController {
             fetchDataButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20),
             fetchDataButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            tableView.topAnchor.constraint(equalTo: fetchDataButton.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
+            tableViewWrapper.topAnchor.constraint(equalTo: fetchDataButton.bottomAnchor, constant: 20),
+            tableViewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableViewWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            tableViewWrapper.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
             
             addProjectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             addProjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             addProjectButton.widthAnchor.constraint(equalToConstant: 50),
             addProjectButton.heightAnchor.constraint(equalToConstant: 50),
         ])
-        addProjectButton.layer.cornerRadius = 25
-        addProjectButton.clipsToBounds = true
+        
+        tableViewWrapper.layer.cornerRadius = 10
+        tableViewWrapper.layer.borderWidth = 1.0
+        tableViewWrapper.layer.borderColor = UIColor.systemBlue.cgColor
+        tableViewWrapper.clipsToBounds = true
+        
+        tableViewWrapper.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: tableViewWrapper.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: tableViewWrapper.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: tableViewWrapper.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: tableViewWrapper.bottomAnchor),
+        ])
+        
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .clear 
     }
     
     func bindViewModel() {
@@ -104,8 +123,11 @@ class HomeVC: UIViewController {
     }
     
     @objc func addProject(_ sender: UIButton) {
+        print("Add Project button tapped")
         let newProjectVC = NewProjectVC()
-        navigationController?.pushViewController(newProjectVC, animated: true)
+        newProjectVC.modalPresentationStyle = .custom
+        newProjectVC.transitioningDelegate = self
+        present(newProjectVC, animated: true, completion: nil)
     }
 }
 
@@ -113,12 +135,21 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.projects.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath)
         let project = viewModel.projects[indexPath.row]
         cell.textLabel?.text = project.name
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        let headerLabel = UILabel(frame: CGRect(x: 15, y: 5, width: tableView.frame.size.width - 30, height: 20))
+        headerLabel.text = "Projects"
+        headerLabel.textColor = .systemBlue
+        headerView.addSubview(headerLabel)
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -129,8 +160,11 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension HomeVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return SheetPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
 
 
-
-
-
+    

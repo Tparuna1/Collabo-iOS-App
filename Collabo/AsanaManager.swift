@@ -61,7 +61,22 @@ public class AsanaManager {
                 throw NetworkError.invalidResponse
             }
         } catch {
-            throw error
+            switch error {
+                case SpecificNetworkError.invalidURL:
+                    print("Invalid URL")
+                case let SpecificNetworkError.invalidResponse(statusCode):
+                    print("Invalid Response (\(statusCode))")
+                case SpecificNetworkError.decodingError:
+                    print("Decoding Error")
+                case SpecificNetworkError.missingToken:
+                    print("Token is missing")
+                case SpecificNetworkError.jsonEncodingError:
+                    print("JSON Encoding Error")
+                case let SpecificNetworkError.otherError(message):
+                    print("Other Error: \(message)")
+                default:
+                    print("An error occurred: \(error.localizedDescription)")
+                }
         }
     }
     
@@ -206,5 +221,32 @@ public class AsanaManager {
         case decodingError
         case missingToken
         case jsonEncodingError
+        
+    }
+    
+    enum SpecificNetworkError: Error {
+        case invalidURL
+        case invalidResponse(Int)
+        case decodingError
+        case missingToken
+        case jsonEncodingError
+        case otherError(message: String)
+
+        var localizedDescription: String {
+            switch self {
+            case .invalidURL:
+                return "Invalid URL"
+            case .invalidResponse(let statusCode):
+                return "Invalid Response (\(statusCode))"
+            case .decodingError:
+                return "Decoding Error"
+            case .missingToken:
+                return "Token is missing"
+            case .jsonEncodingError:
+                return "JSON Encoding Error"
+            case .otherError(let message):
+                return "Other Error: \(message)"
+            }
+        }
     }
 }

@@ -33,14 +33,4 @@ class HomeViewModel {
             }
         }
     }
-    
-    func addProjectToAsana(name: String) {
-        Task {
-            do {
-                try await asanaManager.addProjectToAsana(name: name)
-            } catch {
-                self.errorMessage = error.localizedDescription
-            }
-        }
-    }
 }
