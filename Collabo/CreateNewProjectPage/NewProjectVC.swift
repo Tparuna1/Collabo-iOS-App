@@ -17,7 +17,7 @@ class NewProjectVC: UIViewController {
         label.text = "Create a New Project"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .systemBlue
+        label.textColor = .systemCyan
         return label
     }()
     
@@ -31,7 +31,7 @@ class NewProjectVC: UIViewController {
     let createButton: UIButton = {
         let button = UIButton()
         button.setTitle("Create", for: .normal)
-        button.backgroundColor = .blue
+        button.backgroundColor = .systemCyan
         button.layer.cornerRadius = 5
         return button
     }()
@@ -44,9 +44,12 @@ class NewProjectVC: UIViewController {
         view.addGestureRecognizer(panGesture)
         initialSheetYPosition = view.frame.origin.y
         
-        view.backgroundColor = .white
+        view.backgroundColor = .gray
         
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func setupUI() {
@@ -112,6 +115,24 @@ class NewProjectVC: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+
+        let keyboardHeight = keyboardFrame.height
+        let newY = view.frame.origin.y - keyboardHeight
+
+        if newY >= initialSheetYPosition {
+            view.frame.origin.y = newY
+        }
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        view.frame.origin.y = initialSheetYPosition
     }
 }
 

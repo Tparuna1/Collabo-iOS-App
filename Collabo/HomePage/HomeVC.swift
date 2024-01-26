@@ -54,7 +54,9 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupUI()
+        tableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomProjectCell")
         bindViewModel()
     }
     
@@ -137,9 +139,12 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomProjectCell", for: indexPath) as! CustomProjectCell
         let project = viewModel.projects[indexPath.row]
-        cell.textLabel?.text = project.name
+        
+        cell.setProjectIcon(UIImage(named: "list_alt"))
+        cell.setProjectName(project.name)
+        
         return cell
     }
     

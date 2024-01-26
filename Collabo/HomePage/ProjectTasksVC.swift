@@ -24,21 +24,36 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupUI()
         bindViewModel()
         viewModel.fetchTasks()
+        tasksTableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomTaskCell")
     }
 
     func setupUI() {
-        view.backgroundColor = .white
-
         view.addSubview(tasksTableView)
 
+        let wrapperView = UIView()
+        wrapperView.translatesAutoresizingMaskIntoConstraints = false
+        wrapperView.backgroundColor = .clear
+        wrapperView.layer.cornerRadius = 10
+        wrapperView.layer.borderWidth = 1.0
+        wrapperView.layer.borderColor = UIColor.systemBlue.cgColor
+        wrapperView.clipsToBounds = true
+
+        view.addSubview(wrapperView)
+
         NSLayoutConstraint.activate([
-            tasksTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tasksTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tasksTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tasksTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tasksTableView.topAnchor.constraint(equalTo: wrapperView.topAnchor),
+            tasksTableView.leftAnchor.constraint(equalTo: wrapperView.leftAnchor),
+            tasksTableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor),
+            tasksTableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: -100),
+
+            wrapperView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            wrapperView.heightAnchor.constraint(equalToConstant: 800),
         ])
     }
 
@@ -54,16 +69,19 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource {
         }.store(in: &cancellables)
     }
 
-
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTaskCell", for: indexPath) as! CustomProjectCell
         let task = viewModel.tasks[indexPath.row]
+
+        cell.setProjectIcon(UIImage(named: "task_icon"))
+
         cell.textLabel?.text = task.name
         return cell
     }
+
 }
