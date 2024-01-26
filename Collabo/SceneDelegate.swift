@@ -64,9 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             if let code = components?.queryItems?.first(where: { $0.name == "code" })?.value {
                 print("Authorization code: \(code)")
-                // TODO: Exchange the authorization code for an access token
             }
-
         }
     }
     

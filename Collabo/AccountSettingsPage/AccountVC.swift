@@ -15,8 +15,9 @@ class AccountVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+
         setupLogoutButton()
-        
         viewModel.onLogoutComplete = { [weak self] in
             self?.navigateToLoginView()
         }

@@ -194,6 +194,33 @@ public class AsanaManager {
         
     }
     
+    func deleteProject(projectGID: String) async throws {
+        let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+
+            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
+            print("Response Status Code: \(httpResponse.statusCode)")
+            print("Response Body: \(responseBody)")
+
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print("Server returned an error: \(responseBody)")
+                throw NetworkError.invalidResponse
+            }
+        } catch {
+            print("Network Request Error: \(error)")
+            throw error
+        }
+    }
+    
     func fetchTasks(forProject projectGID: String) async throws -> [AsanaTask] {
         let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)/tasks")!
         
