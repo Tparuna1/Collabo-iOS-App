@@ -160,7 +160,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedProjectGID = viewModel.projects[indexPath.row].gid
         let projectTasksVC = ProjectTasksVC()
-        projectTasksVC.viewModel.projectGID = selectedProjectGID
+        projectTasksVC.projectTasksViewModel.projectGID = selectedProjectGID
         navigationController?.pushViewController(projectTasksVC, animated: true)
     }
 }

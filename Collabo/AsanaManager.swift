@@ -62,21 +62,21 @@ public class AsanaManager {
             }
         } catch {
             switch error {
-                case SpecificNetworkError.invalidURL:
-                    print("Invalid URL")
-                case let SpecificNetworkError.invalidResponse(statusCode):
-                    print("Invalid Response (\(statusCode))")
-                case SpecificNetworkError.decodingError:
-                    print("Decoding Error")
-                case SpecificNetworkError.missingToken:
-                    print("Token is missing")
-                case SpecificNetworkError.jsonEncodingError:
-                    print("JSON Encoding Error")
-                case let SpecificNetworkError.otherError(message):
-                    print("Other Error: \(message)")
-                default:
-                    print("An error occurred: \(error.localizedDescription)")
-                }
+            case SpecificNetworkError.invalidURL:
+                print("Invalid URL")
+            case let SpecificNetworkError.invalidResponse(statusCode):
+                print("Invalid Response (\(statusCode))")
+            case SpecificNetworkError.decodingError:
+                print("Decoding Error")
+            case SpecificNetworkError.missingToken:
+                print("Token is missing")
+            case SpecificNetworkError.jsonEncodingError:
+                print("JSON Encoding Error")
+            case let SpecificNetworkError.otherError(message):
+                print("Other Error: \(message)")
+            default:
+                print("An error occurred: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -196,21 +196,21 @@ public class AsanaManager {
     
     func deleteProject(projectGID: String) async throws {
         let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)")!
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
+        
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse
             }
-
+            
             let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
             print("Response Status Code: \(httpResponse.statusCode)")
             print("Response Body: \(responseBody)")
-
+            
             guard (200...299).contains(httpResponse.statusCode) else {
                 print("Server returned an error: \(responseBody)")
                 throw NetworkError.invalidResponse
@@ -242,6 +242,27 @@ public class AsanaManager {
         }
     }
     
+    func fetchSingleTask(forTask taskGID: String) async throws -> SingleAsanaTask {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+            
+            let decoder = JSONDecoder()
+            let task = try decoder.decode(SingleAsanaTask.self, from: data)
+            return task
+        } catch {
+            throw NetworkError.decodingError
+        }
+    }
+    
     enum NetworkError: Error {
         case invalidURL
         case invalidResponse
@@ -258,7 +279,7 @@ public class AsanaManager {
         case missingToken
         case jsonEncodingError
         case otherError(message: String)
-
+        
         var localizedDescription: String {
             switch self {
             case .invalidURL:

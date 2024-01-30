@@ -19,6 +19,8 @@
 		41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC7A2B627B16009F6510 /* AddProjectViewModel.swift */; };
 		41FAAC832B6298F0009F6510 /* ProjectsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC822B6298F0009F6510 /* ProjectsModel.swift */; };
 		41FAAC852B62A1E4009F6510 /* CustomProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC842B62A1E4009F6510 /* CustomProjectCell.swift */; };
+		41FAAC8F2B691826009F6510 /* TaskDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC8E2B691826009F6510 /* TaskDetailsVC.swift */; };
+		41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC902B69182F009F6510 /* TaskDetailsViewModel.swift */; };
 		41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB552B55837500A7670A /* AppDelegate.swift */; };
 		41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FBEB572B55837500A7670A /* SceneDelegate.swift */; };
 		41FBEB5F2B55837800A7670A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41FBEB5E2B55837800A7670A /* Assets.xcassets */; };
@@ -60,6 +62,8 @@
 		41FAAC7A2B627B16009F6510 /* AddProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModel.swift; sourceTree = "<group>"; };
 		41FAAC822B6298F0009F6510 /* ProjectsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsModel.swift; sourceTree = "<group>"; };
 		41FAAC842B62A1E4009F6510 /* CustomProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProjectCell.swift; sourceTree = "<group>"; };
+		41FAAC8E2B691826009F6510 /* TaskDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsVC.swift; sourceTree = "<group>"; };
+		41FAAC902B69182F009F6510 /* TaskDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsViewModel.swift; sourceTree = "<group>"; };
 		41FBEB522B55837500A7670A /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FBEB552B55837500A7670A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FBEB572B55837500A7670A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +168,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */ = {
+			isa = PBXGroup;
+			children = (
+				41FAAC8E2B691826009F6510 /* TaskDetailsVC.swift */,
+				41FAAC902B69182F009F6510 /* TaskDetailsViewModel.swift */,
+			);
+			path = TaskDetailsPage;
+			sourceTree = "<group>";
+		};
 		41FBEB492B55837500A7670A = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +208,7 @@
 				41FBEB712B56762B00A7670A /* HomePage */,
 				41FAAC702B6119CF009F6510 /* CreateNewProjectPage */,
 				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
+				41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
 				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
@@ -361,6 +375,7 @@
 			files = (
 				41FBEB6C2B566FFA00A7670A /* HomeVC.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountVC.swift in Sources */,
+				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
 				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
@@ -374,6 +389,7 @@
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
 				41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
+				41FAAC8F2B691826009F6510 /* TaskDetailsVC.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				41FBEB7D2B56770400A7670A /* AccountModel.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
