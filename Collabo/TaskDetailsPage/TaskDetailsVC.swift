@@ -39,7 +39,6 @@ class TaskDetailsVC: UIViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TaskDetailsVC loaded with taskGID: \(taskDetailsViewModel.taskGID)")
         view.backgroundColor = .white
 
         setupUI()

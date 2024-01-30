@@ -14,6 +14,7 @@ public class AsanaManager {
     let clientSecret = "385e60c477ccf676ef2759b209126404"
     let workspaceGID = "1206421146222686"
     let projectGID = ""
+    let taskGID = ""
     
     static let shared = AsanaManager()
     
@@ -251,14 +252,15 @@ public class AsanaManager {
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                throw NetworkError.invalidResponse
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print(jsonString)
             }
             
             let decoder = JSONDecoder()
             let task = try decoder.decode(SingleAsanaTask.self, from: data)
             return task
         } catch {
+            print("Networking error: \(error)")
             throw NetworkError.decodingError
         }
     }
