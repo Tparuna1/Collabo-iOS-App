@@ -1,5 +1,5 @@
 //
-//  HomePageViewModel.swift
+//  HomeViewModel.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 16.01.24.
@@ -7,12 +7,16 @@
 
 import Foundation
 
-
 class HomeViewModel {
+    
+    // MARK: - Properties
+    
     private var asanaManager = AsanaManager.shared
     @Published var projects: [AsanaProject] = []
     @Published var errorMessage: String?
-
+    
+    // MARK: - Methods
+    
     func getAccessToken(authorizationCode: String) {
         Task {
             do {

@@ -243,7 +243,7 @@ public class AsanaManager {
         }
     }
     
-    func fetchSingleTask(forTask taskGID: String) async throws -> SingleAsanaTask {
+    func fetchSingleTask(forTask taskGID: String) async throws -> TaskAsana {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
         
         var request = URLRequest(url: url)
@@ -253,18 +253,20 @@ public class AsanaManager {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             if let jsonString = String(data: data, encoding: .utf8) {
-                print(jsonString)
+                print("JSON Response: \(jsonString)")
             }
             
             let decoder = JSONDecoder()
-            let task = try decoder.decode(SingleAsanaTask.self, from: data)
+            let task = try decoder.decode(TaskAsana.self, from: data)
+            print("Task fetched successfully")
             return task
         } catch {
             print("Networking error: \(error)")
             throw NetworkError.decodingError
         }
     }
-    
+
+
     enum NetworkError: Error {
         case invalidURL
         case invalidResponse

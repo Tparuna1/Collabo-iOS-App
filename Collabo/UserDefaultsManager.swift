@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - User Defaults Manager
 
 public class UserDefaultsManager {
     

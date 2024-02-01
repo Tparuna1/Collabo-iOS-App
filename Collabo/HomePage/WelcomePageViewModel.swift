@@ -9,6 +9,8 @@ import SwiftUI
 
 class WelcomeViewModel: ObservableObject {
     
+    // MARK: - View Methods
+    
     func welcomeQuote() -> some View {
         Text("Stay on Top of your Work")
             .font(.largeTitle)

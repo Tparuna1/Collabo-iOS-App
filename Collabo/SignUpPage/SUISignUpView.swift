@@ -5,11 +5,15 @@
 //  Created by tornike <parunashvili on 16.01.24.
 //
 
-
 import SwiftUI
 
 struct SUISignUpView: View {
+    
+    // MARK: - ObservedObject Property
+    
     @ObservedObject var viewModel = SUISignUpViewModel()
+    
+    // MARK: - Body View
     
     var body: some View {
         NavigationStack() {
@@ -78,13 +82,3 @@ struct SUISignUpView: View {
         }
     }
 }
-
-
-//struct SUISignUpView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SUISignUpView()
-//    }
-//}
-
-
-

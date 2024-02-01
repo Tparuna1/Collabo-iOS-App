@@ -8,13 +8,15 @@
 import UIKit
 import Combine
 
-
 class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    // MARK: - Properties
     
     var projectTasksViewModel = ProjectTasksViewModel()
     var cancellables = Set<AnyCancellable>()
     var selectedTaskGID: String = ""
     
+    // MARK: - UI Components
     
     lazy var tasksTableView: UITableView = {
         let tableView = UITableView()
@@ -23,6 +25,8 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
         return tableView
     }()
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +37,11 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelega
         tasksTableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomTaskCell")
         tasksTableView.delegate = self
         tasksTableView.dataSource = self
-        
     }
     
+    // MARK: - UI Setup
+    
     func setupUI() {
-        
         let wrapperView = UIView()
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
         wrapperView.backgroundColor = .clear
@@ -61,6 +65,8 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelega
         ])
     }
     
+    // MARK: - ViewModel Binding
+    
     func bindViewModel() {
         projectTasksViewModel.$tasks.receive(on: DispatchQueue.main).sink { [weak self] _ in
             self?.tasksTableView.reloadData()
@@ -74,6 +80,7 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // MARK: - UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return projectTasksViewModel.tasks.count
     }
@@ -83,19 +90,16 @@ class ProjectTasksVC: UIViewController, UITableViewDataSource, UITableViewDelega
         let task = projectTasksViewModel.tasks[indexPath.row]
         
         cell.setProjectIcon(UIImage(named: "task_icon"))
-        
         cell.textLabel?.text = task.name
         return cell
     }
     
+    // MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedTaskGID = projectTasksViewModel.tasks[indexPath.row].gid
-        print("Cell tapped at indexPath: \(indexPath)")
+        let selectedTaskGID = projectTasksViewModel.tasks[indexPath.row].gid
         let taskDetailsVC = TaskDetailsVC()
-        taskDetailsVC.taskDetailsViewModel.taskGID = selectedTaskGID
-        print("Pushing TaskDetailsVC with taskGID: \(selectedTaskGID)")
-        
+        taskDetailsVC.taskGID = selectedTaskGID
         navigationController?.pushViewController(taskDetailsVC, animated: true)
     }
 }
-

@@ -10,11 +10,15 @@ import Combine
 
 class ProjectTasksViewModel {
     
+    // MARK: - Properties
+    
     private var asanaManager = AsanaManager.shared
     var projectGID: String = ""
     @Published var tasks: [AsanaTask] = []
     @Published var errorMessage: String?
 
+    // MARK: - Methods
+    
     func fetchTasks() {
         Task {
             do {
@@ -30,7 +34,3 @@ class ProjectTasksViewModel {
         }
     }
 }
-
-
-
-

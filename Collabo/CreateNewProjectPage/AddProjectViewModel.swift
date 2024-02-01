@@ -7,11 +7,15 @@
 
 import Foundation
 
-
 class AddProjectViewModel {
+    
+    // MARK: - Properties
+    
     private var asanaManager = AsanaManager.shared
     var errorMessage: String?
 
+    // MARK: - Methods
+    
     func addProjectToAsana(name: String, completion: @escaping (Error?) -> Void) {
         Task {
             do {
@@ -24,5 +28,3 @@ class AddProjectViewModel {
         }
     }
 }
-
-

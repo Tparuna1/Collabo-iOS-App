@@ -8,11 +8,5 @@
 import Foundation
 
 
-public struct AsanaProject: Codable {
-    public let gid: String
-    public let name: String
-}
 
-public struct AsanaProjectsResponse: Codable {
-    public let data: [AsanaProject]
-}
+

@@ -10,13 +10,16 @@ import Combine
 
 class TaskDetailsViewModel: ObservableObject {
     
-    @Published var singleTask: AsanaTask?
+    // MARK: - Properties
+    
+    @Published var singleTask: TaskAsana?
     private var asanaManager = AsanaManager.shared
     var taskGID: String = ""
-    @Published var task: SingleAsanaTask?
+    @Published var task: TaskAsana?
     @Published var errorMessage: String?
     var cancellables = Set<AnyCancellable>()
     
+    // MARK: - Methods
     
     func fetchSingleTask() {
         Task {

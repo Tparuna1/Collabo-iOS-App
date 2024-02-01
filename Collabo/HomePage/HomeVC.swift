@@ -8,18 +8,26 @@
 import UIKit
 import Combine
 
-
 class HomeVC: UIViewController {
+    
+    // MARK: - Properties
     
     var viewModel = HomeViewModel()
     var selectedProjectGID: String = ""
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - UI Components
     
     lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter OAuth Token"
         textField.textAlignment = .center
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.textColor = .systemBlue
         return textField
     }()
     
@@ -27,6 +35,9 @@ class HomeVC: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Fetch Data", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(fetchData(_:)), for: .touchUpInside)
         return button
     }()
@@ -37,20 +48,24 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProjectCell")
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         return tableView
     }()
     
     lazy var addProjectButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("+", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+        button.setTitle("+ Add Project", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(addProject(_:)), for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +74,8 @@ class HomeVC: UIViewController {
         tableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomProjectCell")
         bindViewModel()
     }
+    
+    // MARK: - UI Setup
     
     func setupUI() {
         let tableViewWrapper = UIView()
@@ -72,11 +89,14 @@ class HomeVC: UIViewController {
         
         NSLayoutConstraint.activate([
             codeTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            codeTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            codeTextField.widthAnchor.constraint(equalToConstant: 200),
+            codeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            codeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            codeTextField.heightAnchor.constraint(equalToConstant: 40),
             
             fetchDataButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20),
-            fetchDataButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fetchDataButton.leadingAnchor.constraint(equalTo: codeTextField.leadingAnchor),
+            fetchDataButton.trailingAnchor.constraint(equalTo: codeTextField.trailingAnchor),
+            fetchDataButton.heightAnchor.constraint(equalToConstant: 40),
             
             tableViewWrapper.topAnchor.constraint(equalTo: fetchDataButton.bottomAnchor, constant: 20),
             tableViewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -85,7 +105,7 @@ class HomeVC: UIViewController {
             
             addProjectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             addProjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            addProjectButton.widthAnchor.constraint(equalToConstant: 50),
+            addProjectButton.widthAnchor.constraint(equalToConstant: 140),
             addProjectButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
@@ -102,10 +122,9 @@ class HomeVC: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: tableViewWrapper.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: tableViewWrapper.bottomAnchor),
         ])
-        
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .clear 
     }
+    
+    // MARK: - View Model Binding
     
     func bindViewModel() {
         viewModel.$projects.receive(on: DispatchQueue.main).sink { [weak self] _ in
@@ -118,6 +137,8 @@ class HomeVC: UIViewController {
             }
         }.store(in: &cancellables)
     }
+    
+    // MARK: - Button Actions
     
     @objc func fetchData(_ sender: UIButton) {
         let authorizationCode = codeTextField.text ?? ""
@@ -132,6 +153,8 @@ class HomeVC: UIViewController {
         present(newProjectVC, animated: true, completion: nil)
     }
 }
+
+// MARK: - Table View Delegate and Data Source
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -165,11 +188,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
 extension HomeVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return SheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
-
-
-    
