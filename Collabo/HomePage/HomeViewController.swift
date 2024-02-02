@@ -226,6 +226,8 @@ public final class HomeViewController: UIViewController {
         switch route {
         case .detail(let params):
             navigator.navigate(to: .details(params), animated: true)
+        case .newProject:
+            navigator.navigate(to: .newProject, animated: true)
         }
     }
     
@@ -237,11 +239,7 @@ public final class HomeViewController: UIViewController {
     }
     
     @objc func addProject(_ sender: UIButton) {
-        print("Add Project button tapped")
-        let newProjectVC = NewProjectVC()
-        newProjectVC.modalPresentationStyle = .custom
-        newProjectVC.transitioningDelegate = self
-        present(newProjectVC, animated: true, completion: nil)
+        viewModel.newProject()
     }
 }
 
@@ -290,4 +288,8 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-
+extension HomeViewController: NewProjectViewControllerDelegate {
+    func dismissed() {
+        viewModel.fetchProjects(with: "")
+    }
+}

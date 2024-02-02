@@ -58,6 +58,8 @@ public class AsanaManager {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let data = try decoder.decode(AsanaAuthenticationModel.self, from: data)
+                token = data.accessToken
+                refreshToken = data.refreshToken
                 UserDefaultsManager.shared.saveAccessToken(data.accessToken)
                 UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
             } catch {
@@ -138,11 +140,13 @@ public class AsanaManager {
     func addProjectToAsana(name: String) async throws {
         let url = URL(string: "https://app.asana.com/api/1.0/projects")!
         let parameters: [String: Any] = [
-            "name": name,
-            "workspace": "\(workspaceGID)"
+            "data": [
+                "name": name,
+                "workspace": "\(workspaceGID)"
+            ]
         ]
         
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "POST"
         
         let headers = [

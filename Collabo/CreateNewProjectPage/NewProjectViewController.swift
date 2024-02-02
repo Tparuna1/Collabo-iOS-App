@@ -1,5 +1,5 @@
 //
-//  NewProjectVC.swift
+//  NewProjectViewController.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 24.01.24.
@@ -7,12 +7,18 @@
 
 import UIKit
 
-class NewProjectVC: UIViewController {
+protocol NewProjectViewControllerDelegate: AnyObject {
+    func dismissed()
+}
+
+class NewProjectViewController: UIViewController {
     
     // MARK: - Properties
     
     private var initialSheetYPosition: CGFloat = 0
     private var addProjectViewModel = AddProjectViewModel()
+    
+    public weak var delegate: NewProjectViewControllerDelegate?
     
     // MARK: - UI Components
     
@@ -123,7 +129,9 @@ class NewProjectVC: UIViewController {
             } else {
                 print("Project added successfully")
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true)
+                    self.dismiss(animated: true) { [weak self] in
+                        self?.delegate?.dismissed()
+                    }
                 }
             }
         }

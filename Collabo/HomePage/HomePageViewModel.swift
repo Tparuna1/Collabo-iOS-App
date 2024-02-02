@@ -14,6 +14,7 @@ public protocol HomeViewModelInput: AnyObject {
     func viewDidLoad()
     func didSelectRow(at index: Int)
     func fetchProjects(with token: String)
+    func newProject()
 }
 
 public protocol HomeViewModelOutput {
@@ -27,6 +28,7 @@ public enum HomeViewModelOutputAction {
 
 public enum HomeViewModelRoute {
     case detail(ProjectTasksViewModelParams)
+    case newProject
 }
 
 final class DefaultHomeViewModel {
@@ -54,13 +56,6 @@ final class DefaultHomeViewModel {
     }
     
     private func fetchProjects() {
-        Task {
-            do {
-                try await asanaManager.refreshAccessToken()
-            } catch {
-                self.errorMessage = error.localizedDescription
-            }
-        }
         Task {
             do {
                 self.projects = try await asanaManager.fetchProjects()
@@ -98,5 +93,9 @@ extension DefaultHomeViewModel: HomeViewModel {
         
         let params = ProjectTasksViewModelParams(name: name, gid: gid)
         routeSubject.send(.detail(params))
+    }
+    
+    func newProject() {
+        routeSubject.send(.newProject)
     }
 }
