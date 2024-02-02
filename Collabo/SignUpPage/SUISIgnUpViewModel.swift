@@ -1,5 +1,5 @@
 //
-//  SUISIgnUpViewModel.swift
+//  SUISignUpViewModel.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 18.01.24.
@@ -9,6 +9,9 @@ import SwiftUI
 import Auth0
 
 class SUISignUpViewModel: ObservableObject {
+    
+    // MARK: - Published Properties
+    
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var email = ""
@@ -22,9 +25,8 @@ class SUISignUpViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var alertMessage = ""
     var onSignUpSuccess: (() -> Void)?
-
-
     
+    // MARK: - Password Validation
     
     func validatePassword(password: String) {
         isMinLengthMet = password.count >= 8
@@ -35,6 +37,8 @@ class SUISignUpViewModel: ObservableObject {
         isSignUpEnabled = isMinLengthMet && isCapitalLetterMet && isNumberMet && isUniqueCharacterMet
     }
 
+    // MARK: - Sign Up
+    
     func signUpUser() {
         isLoading = true
         errorMessage = nil

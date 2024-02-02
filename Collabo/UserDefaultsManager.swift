@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - User Defaults Manager
 
 public class UserDefaultsManager {
     
@@ -16,6 +17,10 @@ public class UserDefaultsManager {
     
     public func saveAccessToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: "accessToken")
+    }
+    
+    public func saveRefreshToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: "refreshToken")
     }
     
     public func retrieveAsanaAccessToken() -> String? {

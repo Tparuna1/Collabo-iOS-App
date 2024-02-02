@@ -9,10 +9,13 @@ import SwiftUI
 
 struct SUIWelcomeView: View {
     
+    // MARK: - Properties
+    
+    @ObservedObject var viewModel = WelcomeViewModel()
+    
+    // MARK: - Body
     
     var body: some View {
-        @ObservedObject var viewModel = WelcomeViewModel()
-        
         NavigationStack {
             ZStack {
                 AnimatedBackgroundView()
@@ -31,7 +34,7 @@ struct SUIWelcomeView: View {
     }
 }
 
-
+// MARK: - Preview
 
 #Preview {
     SUIWelcomeView()

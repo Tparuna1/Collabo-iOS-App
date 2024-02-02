@@ -1,5 +1,5 @@
 //
-//  NewProjectVC.swift
+//  NewProjectViewController.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 24.01.24.
@@ -7,10 +7,20 @@
 
 import UIKit
 
-class NewProjectVC: UIViewController {
+protocol NewProjectViewControllerDelegate: AnyObject {
+    func dismissed()
+}
+
+class NewProjectViewController: UIViewController {
+    
+    // MARK: - Properties
     
     private var initialSheetYPosition: CGFloat = 0
     private var addProjectViewModel = AddProjectViewModel()
+    
+    public weak var delegate: NewProjectViewControllerDelegate?
+    
+    // MARK: - UI Components
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -37,6 +47,8 @@ class NewProjectVC: UIViewController {
     }()
     
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +64,8 @@ class NewProjectVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    // MARK: - UI Setup
+    
     private func setupUI() {
         view.addSubview(titleLabel)
         view.addSubview(projectNameTextField)
@@ -63,6 +77,8 @@ class NewProjectVC: UIViewController {
         
         createButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
     }
+    
+    // MARK: - Gesture Handling
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: view)
@@ -98,6 +114,8 @@ class NewProjectVC: UIViewController {
         }
     }
     
+    // MARK: - Button Actions
+    
     @objc func createProject() {
         print("button tapped")
         guard let projectName = projectNameTextField.text, !projectName.isEmpty else {
@@ -111,11 +129,15 @@ class NewProjectVC: UIViewController {
             } else {
                 print("Project added successfully")
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true)
+                    self.dismiss(animated: true) { [weak self] in
+                        self?.delegate?.dismissed()
+                    }
                 }
             }
         }
     }
+    
+    // MARK: - Keyboard Handling
     
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
@@ -135,5 +157,3 @@ class NewProjectVC: UIViewController {
         view.frame.origin.y = initialSheetYPosition
     }
 }
-
-

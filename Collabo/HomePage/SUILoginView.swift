@@ -8,18 +8,23 @@
 import SwiftUI
 import Auth0
 
+// MARK: - NavigationPath Enum
+
 enum NavigationPath: Hashable {
     case home
     case signUp
     case login
 }
 
-
 struct SUILoginView: View {
+    
+    // MARK: - State Properties
+    
     @StateObject private var viewModel = LoginPageViewModel()
     @State private var email = ""
     @State private var password = ""
     
+    // MARK: - Body View
     
     var body: some View {
         NavigationStack {
@@ -77,6 +82,3 @@ struct SUILoginView: View {
         }
     }
 }
-
-
-

@@ -8,15 +8,16 @@
 import SwiftUI
 import Auth0
 
-
-
 class LoginPageViewModel: ObservableObject {
+    
+    // MARK: - Published Properties
     
     @Published var isLoading = false
     @Published var errorMessage = ""
     @Published var shouldNavigateToHome = false
     var onLoginSuccess: (() -> Void)?
     
+    // MARK: - View Methods
     
     func comeBackText() -> some View {
         Text("Let's Get Back to Work!")
@@ -32,6 +33,8 @@ class LoginPageViewModel: ObservableObject {
             .frame(height: 200)
             .padding()
     }
+    
+    // MARK: - Authentication Methods
     
     func login(email: String, password: String) {
         isLoading = true
@@ -75,5 +78,4 @@ class LoginPageViewModel: ObservableObject {
                 }
             }
     }
-    
 }
