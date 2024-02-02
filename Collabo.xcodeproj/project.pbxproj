@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4163F48A2B6CF9F4001D139A /* CustomBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackgroundColor.swift; sourceTree = "<group>"; };
 		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksVC.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */,
 				41FAAC842B62A1E4009F6510 /* CustomProjectCell.swift */,
+				4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */,
 			);
 			path = UIKitComponents;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4163F48A2B6CF9F4001D139A /* CustomBackgroundColor.swift in Sources */,
 				41FBEB6C2B566FFA00A7670A /* HomeVC.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountVC.swift in Sources */,
 				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,

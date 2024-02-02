@@ -8,14 +8,7 @@
 import Foundation
 
 
-public struct AsanaProject: Codable {
-    public let gid: String
-    public let name: String
-}
 
-public struct AsanaProjectsResponse: Codable {
-    public let data: [AsanaProject]
-}
 
 struct AsanaTask: Codable {
     let gid: String
@@ -33,12 +26,19 @@ struct TaskAsana: Codable {
 struct SingleAsanaTask: Codable {
     let gid: String
     let name: String
+    let description: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case gid
+        case name
+        case description
+    }
 }
 
-struct SingleAsanaTaskResponse: Codable {
-    let data: SingleAsanaTask
-}
 
+struct OtherData: Codable {
+    let description: String
+}
 
 struct AsanaUser: Codable {
     //  let gid: String
@@ -47,22 +47,22 @@ struct AsanaUser: Codable {
 }
 
 struct AsanaDependency: Codable {
-   // let gid: String
+    // let gid: String
     let resourceType: String
 }
 
 struct AsanaExternal: Codable {
-   // let gid: String
+    // let gid: String
     let data: String
 }
 
 struct AsanaHeart: Codable {
-  //  let gid: String
+    //  let gid: String
     let user: AsanaUser
 }
 
 struct AsanaLike: Codable {
-   // let gid: String
+    // let gid: String
     let user: AsanaUser
 }
 
@@ -72,13 +72,13 @@ struct AsanaMembership: Codable {
 }
 
 struct AsanaSection: Codable {
-   // let gid: String
+    // let gid: String
     let resourceType: String
     let name: String
 }
 
 struct AsanaCustomField: Codable {
-   // let gid: String
+    // let gid: String
     let resourceType: String
     let name: String
     let resourceSubtype: String
@@ -107,7 +107,7 @@ struct AsanaCustomField: Codable {
 }
 
 struct AsanaEnumOption: Codable {
-   // let gid: String
+    // let gid: String
     let resourceType: String
     let name: String
     let enabled: Bool
@@ -120,7 +120,7 @@ struct AsanaDateValue: Codable {
 }
 
 struct AsanaTag: Codable {
-  //  let gid: String
+    //  let gid: String
     let name: String
 }
 

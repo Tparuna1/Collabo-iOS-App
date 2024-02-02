@@ -41,8 +41,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, accountNavigationController]
         
-        tabBarController.tabBar.backgroundColor = UIColor.gray
-        
+        tabBarController.tabBar.applyCustomBackgroundColor()
+
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }

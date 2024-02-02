@@ -18,15 +18,40 @@ class HomeVC: UIViewController {
     
     // MARK: - UI Components
     
+    
+    lazy var asanaLogoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "asanaLogo")
+        return imageView
+    }()
+    
+    lazy var fetchDataLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Fetch data from Asana"
+        label.textAlignment = .left
+        label.textColor = .black
+        return label
+    }()
+    
+    lazy var fetchDataContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1)
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    
     lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter OAuth Token"
         textField.textAlignment = .center
+        textField.isSecureTextEntry = true
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1.0
-        textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.textColor = .systemBlue
         return textField
     }()
@@ -73,24 +98,76 @@ class HomeVC: UIViewController {
         setupUI()
         tableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomProjectCell")
         bindViewModel()
+        view.applyCustomBackgroundColor()
     }
     
     // MARK: - UI Setup
     
     func setupUI() {
+        view.addSubview(fetchDataContainerView)
+        
+        let fetchDataTitleLabel = UILabel()
+        fetchDataTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        fetchDataTitleLabel.text = "Fetch data"
+        fetchDataTitleLabel.textAlignment = .left
+        fetchDataTitleLabel.textColor = .black
+        fetchDataTitleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        view.addSubview(fetchDataTitleLabel)
+        
+        let headerStackView = UIStackView(arrangedSubviews: [asanaLogoImageView, fetchDataLabel])
+        headerStackView.translatesAutoresizingMaskIntoConstraints = false
+        headerStackView.axis = .horizontal
+        headerStackView.alignment = .center
+        headerStackView.distribution = .fillProportionally
+        headerStackView.spacing = 8
+        
+        let stackView = UIStackView(arrangedSubviews: [headerStackView, codeTextField, fetchDataButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 10
+        
+        fetchDataContainerView.addSubview(stackView)
+        
         let tableViewWrapper = UIView()
         tableViewWrapper.translatesAutoresizingMaskIntoConstraints = false
         tableViewWrapper.backgroundColor = .clear
         
-        view.addSubview(codeTextField)
-        view.addSubview(fetchDataButton)
+        let headerLabel = UILabel()
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.text = "Projects"
+        headerLabel.textAlignment = .left
+        headerLabel.textColor = .black
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        view.addSubview(headerLabel)
         view.addSubview(tableViewWrapper)
         view.addSubview(addProjectButton)
         
         NSLayoutConstraint.activate([
-            codeTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            codeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            codeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            fetchDataTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            fetchDataTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            fetchDataTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: fetchDataContainerView.trailingAnchor, constant: -20), 
+
+            
+            fetchDataContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45),
+            fetchDataContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            fetchDataContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            fetchDataContainerView.heightAnchor.constraint(equalToConstant: 180),
+            
+            stackView.topAnchor.constraint(equalTo: fetchDataContainerView.topAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor, constant: 20),
+            
+            asanaLogoImageView.widthAnchor.constraint(equalToConstant: 24),
+            asanaLogoImageView.heightAnchor.constraint(equalToConstant: 24),
+            
+            headerStackView.heightAnchor.constraint(equalToConstant: 40),
+            
+            codeTextField.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 20),
+            codeTextField.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor, constant: 20),
+            codeTextField.trailingAnchor.constraint(equalTo: fetchDataContainerView.trailingAnchor, constant: -20),
             codeTextField.heightAnchor.constraint(equalToConstant: 40),
             
             fetchDataButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20),
@@ -98,7 +175,11 @@ class HomeVC: UIViewController {
             fetchDataButton.trailingAnchor.constraint(equalTo: codeTextField.trailingAnchor),
             fetchDataButton.heightAnchor.constraint(equalToConstant: 40),
             
-            tableViewWrapper.topAnchor.constraint(equalTo: fetchDataButton.bottomAnchor, constant: 20),
+            headerLabel.topAnchor.constraint(equalTo: fetchDataContainerView.bottomAnchor, constant: 20),
+            headerLabel.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor, constant: 20),
+
+
+            tableViewWrapper.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
             tableViewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableViewWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             tableViewWrapper.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
@@ -109,10 +190,7 @@ class HomeVC: UIViewController {
             addProjectButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
-        tableViewWrapper.layer.cornerRadius = 10
-        tableViewWrapper.layer.borderWidth = 1.0
-        tableViewWrapper.layer.borderColor = UIColor.systemBlue.cgColor
-        tableViewWrapper.clipsToBounds = true
+        tableView.separatorInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         
         tableViewWrapper.addSubview(tableView)
         
@@ -123,6 +201,7 @@ class HomeVC: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: tableViewWrapper.bottomAnchor),
         ])
     }
+    
     
     // MARK: - View Model Binding
     
@@ -154,9 +233,30 @@ class HomeVC: UIViewController {
     }
 }
 
-// MARK: - Table View Delegate and Data Source
+// MARK: - UITableViewDelegate
 
-extension HomeVC: UITableViewDelegate, UITableViewDataSource {
+extension HomeVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+        
+        selectedProjectGID = viewModel.projects[indexPath.row].gid
+        let projectTasksVC = ProjectTasksVC()
+        projectTasksVC.selectedProjectName = viewModel.projects[indexPath.row].name
+        projectTasksVC.projectTasksViewModel.projectGID = selectedProjectGID
+        navigationController?.pushViewController(projectTasksVC, animated: true)
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.projects.count
     }
@@ -165,28 +265,16 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomProjectCell", for: indexPath) as! CustomProjectCell
         let project = viewModel.projects[indexPath.row]
         
-        cell.setProjectIcon(UIImage(named: "list_alt"))
+        let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemOrange]
+        let colorIndex = indexPath.row % colors.count
+        
+        cell.setColor(colors[colorIndex])
         cell.setProjectName(project.name)
         
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        let headerLabel = UILabel(frame: CGRect(x: 15, y: 5, width: tableView.frame.size.width - 30, height: 20))
-        headerLabel.text = "Projects"
-        headerLabel.textColor = .systemBlue
-        headerView.addSubview(headerLabel)
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedProjectGID = viewModel.projects[indexPath.row].gid
-        let projectTasksVC = ProjectTasksVC()
-        projectTasksVC.projectTasksViewModel.projectGID = selectedProjectGID
-        navigationController?.pushViewController(projectTasksVC, animated: true)
-    }
 }
+
 
 // MARK: - UIViewControllerTransitioningDelegate
 
@@ -195,3 +283,5 @@ extension HomeVC: UIViewControllerTransitioningDelegate {
         return SheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
+
+
