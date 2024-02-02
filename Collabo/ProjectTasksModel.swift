@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct AsanaTask: Codable {
+public struct AsanaTask: Codable {
     let gid: String
     let name: String
 }
@@ -19,21 +19,21 @@ struct AsanaTasksResponse: Codable {
     let data: [AsanaTask]
 }
 
-struct TaskAsana: Codable {
-    let data: SingleAsanaTask
-}
-
-struct SingleAsanaTask: Codable {
-    let gid: String
-    let name: String
-    let description: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case gid
-        case name
-        case description
-    }
-}
+//struct TaskAsana: Codable {
+//    let data: SingleAsanaTask
+//}
+//
+//struct SingleAsanaTask: Codable {
+//    let gid: String
+//    let name: String
+//    let description: String?
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case gid
+//        case name
+//        case description
+//    }
+//}
 
 
 struct OtherData: Codable {

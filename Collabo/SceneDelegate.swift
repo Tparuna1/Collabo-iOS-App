@@ -27,8 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func switchToMainTabBarController() {
         let tabBarController = UITabBarController()
         
-        let homeViewController = HomeVC()
+        let homeViewController = HomeViewController()
+        homeViewController.viewModel = DefaultHomeViewModel()
+        homeViewController.navigator = .init(viewController: homeViewController)
         let homeNavigationController = UINavigationController(rootViewController: homeViewController)
+        homeNavigationController.navigationItem.largeTitleDisplayMode = .always
         homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
         let myTasksViewController = MyTasksVC()

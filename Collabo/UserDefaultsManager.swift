@@ -19,6 +19,10 @@ public class UserDefaultsManager {
         UserDefaults.standard.set(token, forKey: "accessToken")
     }
     
+    public func saveRefreshToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: "refreshToken")
+    }
+    
     public func retrieveAsanaAccessToken() -> String? {
         UserDefaults.standard.string(forKey: "accessToken")
     }

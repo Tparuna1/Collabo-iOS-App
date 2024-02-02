@@ -1,5 +1,5 @@
 //
-//  HomeVC.swift
+//  HomeViewController.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 16.01.24.
@@ -8,18 +8,21 @@
 import UIKit
 import Combine
 
-class HomeVC: UIViewController {
+public final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    var viewModel = HomeViewModel()
-    var selectedProjectGID: String = ""
+    var viewModel: HomeViewModel!
+    var navigator: HomeNavigator!
+    
+    private var projects = [AsanaProject]()
+    
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
     
     
-    lazy var asanaLogoImageView: UIImageView = {
+    private lazy var asanaLogoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -27,7 +30,7 @@ class HomeVC: UIViewController {
         return imageView
     }()
     
-    lazy var fetchDataLabel: UILabel = {
+    private lazy var fetchDataLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Fetch data from Asana"
@@ -36,7 +39,7 @@ class HomeVC: UIViewController {
         return label
     }()
     
-    lazy var fetchDataContainerView: UIView = {
+    private lazy var fetchDataContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1)
@@ -44,7 +47,7 @@ class HomeVC: UIViewController {
         return view
     }()
     
-    lazy var codeTextField: UITextField = {
+    private lazy var codeTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter OAuth Token"
@@ -56,7 +59,7 @@ class HomeVC: UIViewController {
         return textField
     }()
     
-    lazy var fetchDataButton: UIButton = {
+    private lazy var fetchDataButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Fetch Data", for: .normal)
@@ -67,7 +70,7 @@ class HomeVC: UIViewController {
         return button
     }()
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -78,7 +81,7 @@ class HomeVC: UIViewController {
         return tableView
     }()
     
-    lazy var addProjectButton: UIButton = {
+    private lazy var addProjectButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("+ Add Project", for: .normal)
@@ -92,18 +95,20 @@ class HomeVC: UIViewController {
     
     // MARK: - View Lifecycle
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
-        tableView.register(CustomProjectCell.self, forCellReuseIdentifier: "CustomProjectCell")
-        bindViewModel()
+        tableView.register(ProjectCell.self, forCellReuseIdentifier: "ProjectCell")
+        bind(to: viewModel)
         view.applyCustomBackgroundColor()
+        viewModel.viewDidLoad()
     }
     
     // MARK: - UI Setup
     
-    func setupUI() {
+    private func setupUI() {
+        title = "Home"
         view.addSubview(fetchDataContainerView)
         
         let fetchDataTitleLabel = UILabel()
@@ -204,24 +209,31 @@ class HomeVC: UIViewController {
     
     
     // MARK: - View Model Binding
+    private func bind(to viewModel: HomeViewModel) {
+        viewModel.action.sink { [weak self] action in self?.didReceive(action: action) }.store(in: &cancellables)
+        viewModel.route.sink { [weak self] route in self?.didReceive(route: route) }.store(in: &cancellables)
+    }
     
-    func bindViewModel() {
-        viewModel.$projects.receive(on: DispatchQueue.main).sink { [weak self] _ in
-            self?.tableView.reloadData()
-        }.store(in: &cancellables)
-        
-        viewModel.$errorMessage.receive(on: DispatchQueue.main).sink { [weak self] errorMessage in
-            if let message = errorMessage {
-                print("Error: \(message)")
-            }
-        }.store(in: &cancellables)
+    private func didReceive(action: HomeViewModelOutputAction) {
+        switch action {
+        case .projects(let projects):
+            self.projects = projects
+            tableView.reloadData()
+        }
+    }
+    
+    private func didReceive(route: HomeViewModelRoute) {
+        switch route {
+        case .detail(let params):
+            navigator.navigate(to: .details(params), animated: true)
+        }
     }
     
     // MARK: - Button Actions
     
     @objc func fetchData(_ sender: UIButton) {
         let authorizationCode = codeTextField.text ?? ""
-        viewModel.getAccessToken(authorizationCode: authorizationCode)
+        viewModel.fetchProjects(with: authorizationCode)
     }
     
     @objc func addProject(_ sender: UIButton) {
@@ -235,41 +247,35 @@ class HomeVC: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension HomeVC: UITableViewDelegate {
+extension HomeViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        
-        selectedProjectGID = viewModel.projects[indexPath.row].gid
-        let projectTasksVC = ProjectTasksVC()
-        projectTasksVC.selectedProjectName = viewModel.projects[indexPath.row].name
-        projectTasksVC.projectTasksViewModel.projectGID = selectedProjectGID
-        navigationController?.pushViewController(projectTasksVC, animated: true)
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension HomeVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.projects.count
+extension HomeViewController: UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        projects.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomProjectCell", for: indexPath) as! CustomProjectCell
-        let project = viewModel.projects[indexPath.row]
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath) as? ProjectCell else {
+            return .init()
+        }
+        
+        let project = projects[indexPath.row]
         
         let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemOrange]
         let colorIndex = indexPath.row % colors.count
         
-        cell.setColor(colors[colorIndex])
-        cell.setProjectName(project.name)
+        cell.setup(with: .init(title: project.name, color: colors[colorIndex]))
         
         return cell
     }
@@ -278,9 +284,9 @@ extension HomeVC: UITableViewDataSource {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension HomeVC: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return SheetPresentationController(presentedViewController: presented, presenting: presenting)
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        SheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

@@ -6,18 +6,43 @@
 //
 
 import Foundation
+import Combine
 
-class HomeViewModel {
+public protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
+
+public protocol HomeViewModelInput: AnyObject {
+    func viewDidLoad()
+    func didSelectRow(at index: Int)
+    func fetchProjects(with token: String)
+}
+
+public protocol HomeViewModelOutput {
+    var action: AnyPublisher<HomeViewModelOutputAction, Never> { get }
+    var route: AnyPublisher<HomeViewModelRoute, Never> { get }
+}
+
+public enum HomeViewModelOutputAction {
+    case projects([AsanaProject])
+}
+
+public enum HomeViewModelRoute {
+    case detail(ProjectTasksViewModelParams)
+}
+
+final class DefaultHomeViewModel {
+    private let actionSubject = PassthroughSubject<HomeViewModelOutputAction, Never>()
+    private let routeSubject = PassthroughSubject<HomeViewModelRoute, Never>()
     
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
-    @Published var projects: [AsanaProject] = []
-    @Published var errorMessage: String?
+    private let asanaManager = AsanaManager.shared
+    private var projects: [AsanaProject] = []
+    private var errorMessage: String?
     
-    // MARK: - Methods
     
-    func getAccessToken(authorizationCode: String) {
+    // MARK: - Private Methods
+    
+    private func getAccessToken(authorizationCode: String) {
         Task {
             do {
                 try await asanaManager.getAccessToken(authorizationCode: authorizationCode)
@@ -28,13 +53,50 @@ class HomeViewModel {
         }
     }
     
-    func fetchProjects() {
+    private func fetchProjects() {
         Task {
             do {
-                self.projects = try await asanaManager.fetchProjects()
+                try await asanaManager.refreshAccessToken()
             } catch {
                 self.errorMessage = error.localizedDescription
             }
         }
+        Task {
+            do {
+                self.projects = try await asanaManager.fetchProjects()
+                await MainActor.run {
+                    self.actionSubject.send(.projects(self.projects))
+                }
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+}
+
+extension DefaultHomeViewModel: HomeViewModel {
+    var action: AnyPublisher<HomeViewModelOutputAction, Never> {
+        actionSubject.eraseToAnyPublisher()
+    }
+    
+    var route: AnyPublisher<HomeViewModelRoute, Never> {
+        routeSubject.eraseToAnyPublisher()
+    }
+    
+    // MARK: - Public Methods
+    func viewDidLoad() {
+        fetchProjects()
+    }
+    
+    func fetchProjects(with token: String) {
+        getAccessToken(authorizationCode: token)
+    }
+    
+    func didSelectRow(at index: Int) {
+        let gid = projects[index].gid
+        let name = projects[index].name
+        
+        let params = ProjectTasksViewModelParams(name: name, gid: gid)
+        routeSubject.send(.detail(params))
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CustomProjectCell.swift
+//  ProjectCell.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 25.01.24.
@@ -7,20 +7,20 @@
 
 import UIKit
 
-class CustomProjectCell: UITableViewCell {
-    let colorView: UIView = {
+class ProjectCell: UITableViewCell {
+    private let colorView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let projectNameLabel: UILabel = {
+    private let projectNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let whiteBackgroundView: UIView = {
+    private let whiteBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -33,7 +33,6 @@ class CustomProjectCell: UITableViewCell {
         contentView.addSubview(colorView)
         contentView.addSubview(whiteBackgroundView)
         contentView.addSubview(projectNameLabel)
-        
         NSLayoutConstraint.activate([
             colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             colorView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -49,6 +48,7 @@ class CustomProjectCell: UITableViewCell {
             projectNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
         
+        selectionStyle = .none
         backgroundColor = .clear
         contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
@@ -58,12 +58,9 @@ class CustomProjectCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setColor(_ color: UIColor) {
-        colorView.backgroundColor = color
-    }
-    
-    func setProjectName(_ name: String) {
-        projectNameLabel.text = name
+    func setup(with model: ProjectCellModel) {
+        colorView.backgroundColor = model.color
+        projectNameLabel.text = model.title
     }
 
     

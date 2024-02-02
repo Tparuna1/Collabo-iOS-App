@@ -8,29 +8,101 @@
 import Foundation
 import Combine
 
-class ProjectTasksViewModel {
+public protocol ProjectTasksViewModel: ProjectTasksViewModelInput, ProjectTasksViewModelOutput {}
+
+public struct ProjectTasksViewModelParams {
+    public let name: String
+    public let gid: String
+    
+    public init(
+        name: String,
+        gid: String
+    ) {
+        self.name = name
+        self.gid = gid
+    }
+}
+
+public protocol ProjectTasksViewModelInput: AnyObject {
+    var params: ProjectTasksViewModelParams? { get set }
+    func viewDidLoad()
+    func didSelectRow(at index: Int)
+}
+
+public protocol ProjectTasksViewModelOutput {
+    var action: AnyPublisher<ProjectTasksViewModelOutputAction, Never> { get }
+    var route: AnyPublisher<ProjectTasksViewModelRoute, Never> { get }
+}
+
+public enum ProjectTasksViewModelOutputAction {
+    case tasks([AsanaTask])
+    case title(String)
+}
+
+public enum ProjectTasksViewModelRoute {
+    case details(TaskDetailsViewModelParams)
+}
+
+class DefaultProjectTasksViewModel {
+    private let actionSubject = PassthroughSubject<ProjectTasksViewModelOutputAction, Never>()
+    private let routeSubject = PassthroughSubject<ProjectTasksViewModelRoute, Never>()
+    
+    public var params: ProjectTasksViewModelParams?
     
     // MARK: - Properties
     
     private var asanaManager = AsanaManager.shared
-    var projectGID: String = ""
-    @Published var tasks: [AsanaTask] = []
-    @Published var errorMessage: String?
-
+    private var tasks: [AsanaTask] = []
+    private var errorMessage: String?
+    
+    // MARK: - Init
+    
+    public init(params: ProjectTasksViewModelParams? = nil) {
+        self.params = params
+    }
+    
     // MARK: - Methods
     
-    func fetchTasks() {
+    private func fetchTasks() {
+        guard let params else {
+            return
+        }
         Task {
             do {
-                let fetchedTasks = try await AsanaManager.shared.fetchTasks(forProject: projectGID)
-                DispatchQueue.main.async {
-                    self.tasks = fetchedTasks
+                tasks = try await AsanaManager.shared.fetchTasks(forProject: params.gid)
+                await MainActor.run {
+                    self.actionSubject.send(.tasks(self.tasks))
                 }
             } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                }
+                self.errorMessage = error.localizedDescription
             }
         }
+    }
+}
+
+extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
+    var action: AnyPublisher<ProjectTasksViewModelOutputAction, Never> {
+        actionSubject.eraseToAnyPublisher()
+    }
+    
+    var route: AnyPublisher<ProjectTasksViewModelRoute, Never> {
+        routeSubject.eraseToAnyPublisher()
+    }
+    
+    // MARK: - Public Methods
+    func viewDidLoad() {
+        fetchTasks()
+        
+        guard let params else {
+            return
+        }
+        
+        actionSubject.send(.title(params.name))
+    }
+    
+    func didSelectRow(at index: Int) {
+        let gid = tasks[index].gid
+        
+        routeSubject.send(.details(.init(gid: gid)))
     }
 }

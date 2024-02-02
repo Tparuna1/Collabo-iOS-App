@@ -10,6 +10,7 @@ import Foundation
 
 public class AsanaManager {
     var token: String
+    var refreshToken: String
     let clientId = "1206344666310503"
     let clientSecret = "385e60c477ccf676ef2759b209126404"
     let workspaceGID = "1206421146222686"
@@ -20,6 +21,7 @@ public class AsanaManager {
     
     private init() {
         token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+        refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
     }
     
     public func getAccessToken(authorizationCode: String) async throws {
@@ -52,14 +54,14 @@ public class AsanaManager {
                 throw NetworkError.invalidResponse
             }
             
-            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            
-            if let accessToken = json?["access_token"] as? String {
-                token = accessToken
-                UserDefaultsManager.shared.saveAccessToken(accessToken)
-                try await fetchProjects()
-            } else {
-                throw NetworkError.invalidResponse
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let data = try decoder.decode(AsanaAuthenticationModel.self, from: data)
+                UserDefaultsManager.shared.saveAccessToken(data.accessToken)
+                UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
+            } catch {
+                throw NetworkError.decodingError
             }
         } catch {
             switch error {
@@ -84,17 +86,25 @@ public class AsanaManager {
     func refreshAccessToken() async throws {
         let tokenEndpoint = "https://app.asana.com/-/oauth_revoke"
         
+        let parameters: [String: Any] = [
+            "grant_type": "refresh_token",
+            "client_id": clientId,
+            "client_secret": clientSecret,
+            "token": refreshToken
+        ]
+        
         guard let url = URL(string: tokenEndpoint) else {
             throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let body = "grant_type=refresh_token&client_id=\(clientId)&client_secret=\(clientSecret)&token=\(token)"
-        request.httpBody = body.data(using: .utf8)
-        
+        request.httpBody = parameters
+            .map { "\($0.key)=\($0.value)" }
+            .joined(separator: "&")
+            .data(using: .utf8)
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             
@@ -102,60 +112,37 @@ public class AsanaManager {
                 throw NetworkError.invalidResponse
             }
             
-            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            
-            guard let accessToken = json?["access_token"] as? String else {
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let data = try decoder.decode(AsanaAuthenticationModel.self, from: data)
+                UserDefaultsManager.shared.saveAccessToken(data.accessToken)
+                UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
+            } catch {
                 throw NetworkError.decodingError
             }
-            
-            UserDefaultsManager.shared.saveAccessToken(accessToken)
         } catch {
             throw error
         }
     }
     
     public func fetchProjects() async throws -> [AsanaProject] {
-        let baseApiEndpoint = "https://app.asana.com/api/1.0"
-        let apiEndpoint = "\(baseApiEndpoint)/workspaces/\(workspaceGID)/projects"
-        
-        let tokenValue = token != "" ? token : UserDefaultsManager.shared.retrieveAsanaAccessToken()
-        guard let token = tokenValue else {
-            throw NetworkError.missingToken
-        }
-        
-        guard let url = URL(string: apiEndpoint) else {
-            throw NetworkError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidResponse
-        }
-        
         do {
-            let decoder = JSONDecoder()
-            let projects = try decoder.decode(AsanaProjectsResponse.self, from: data)
-            print("Parsed Data: \(projects.data)")
-            return projects.data
-        } catch {
-            throw NetworkError.decodingError
+            return try await performFetchProjects()
+        } catch NetworkError.invalidResponse {
+            try await refreshAccessToken()
+            return try await performFetchProjects()
         }
     }
     
     func addProjectToAsana(name: String) async throws {
         let url = URL(string: "https://app.asana.com/api/1.0/projects")!
         let parameters: [String: Any] = [
-            "data": [
-                "name": name,
-                "workspace": "\(workspaceGID)"
-            ]
+            "name": name,
+            "workspace": "\(workspaceGID)"
         ]
         
-        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
         let headers = [
@@ -252,12 +239,13 @@ public class AsanaManager {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await URLSession.shared.data(for: request)
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("JSON Response: \(jsonString)")
             }
             
             let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
             let task = try decoder.decode(TaskAsana.self, from: data)
             print("Task fetched successfully")
             return task
@@ -300,6 +288,40 @@ public class AsanaManager {
             case .otherError(let message):
                 return "Other Error: \(message)"
             }
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    private func performFetchProjects() async throws -> [AsanaProject] {
+        let baseApiEndpoint = "https://app.asana.com/api/1.0"
+        let apiEndpoint = "\(baseApiEndpoint)/workspaces/\(workspaceGID)/projects"
+        
+        let tokenValue = token != "" ? token : UserDefaultsManager.shared.retrieveAsanaAccessToken()
+        guard let token = tokenValue else {
+            throw NetworkError.missingToken
+        }
+        
+        guard let url = URL(string: apiEndpoint) else {
+            throw NetworkError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let projects = try decoder.decode(AsanaProjectsResponse.self, from: data)
+            print("Parsed Data: \(projects.data)")
+            return projects.data
+        } catch {
+            throw NetworkError.decodingError
         }
     }
 }
