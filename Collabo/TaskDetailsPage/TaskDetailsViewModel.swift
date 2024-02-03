@@ -30,6 +30,7 @@ public protocol TaskDetailsViewModelOutput {
 
 public enum TaskDetailsViewModelOutputAction {
     case task(SingleAsanaTask?)
+    case subtask([Subtask])
 }
 
 public enum TaskDetailsViewModelRoute {
@@ -46,6 +47,7 @@ class DefaultTaskDetailsViewModel: ObservableObject {
     
     private var asanaManager = AsanaManager.shared
     private var task: SingleAsanaTask?
+    private var subTasks: [Subtask] = []
     private var errorMessage: String?
     var cancellables = Set<AnyCancellable>()
     
@@ -74,6 +76,27 @@ class DefaultTaskDetailsViewModel: ObservableObject {
             }
         }
     }
+    
+    private func fetchSubtask() {
+        guard let params = params else {
+            return
+        }
+        Task {
+            do {
+                let subtaskResponse = try await AsanaManager.shared.fetchSubtasks(forSubtask: params.gid)
+                
+                
+                self.subTasks = subtaskResponse
+                await MainActor.run {
+                    self.actionSubject.send(.subtask(self.subTasks))
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
 }
 
 extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
@@ -88,5 +111,7 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
     
     func viewDidLoad() {
         fetchSingleTask()
+        fetchSubtask()
     }
 }
+

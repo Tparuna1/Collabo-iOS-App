@@ -258,6 +258,33 @@ public class AsanaManager {
             throw NetworkError.decodingError
         }
     }
+    
+    
+    func fetchSubtasks(forSubtask taskGID: String) async throws -> [Subtask] {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+            
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON Response:")
+                print(jsonString)
+            }
+            
+            let decoder = JSONDecoder()
+            let tasksResponse = try decoder.decode(SubtaskResponse.self, from: data)
+            return tasksResponse.data
+        } catch {
+            throw NetworkError.decodingError
+        }
+    }
 
 
     enum NetworkError: Error {
