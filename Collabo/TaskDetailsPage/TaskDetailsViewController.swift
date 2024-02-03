@@ -69,8 +69,9 @@ class TaskDetailsViewController: UIViewController {
     private func populateDetails(with task: SingleAsanaTask?) {
         guard let task else { return }
         self.title = task.name
-        descriptionLabel.text = "\(dump(task))"
+        descriptionLabel.text = task.notes
     }
 }
 
 
+//"\(dump(task))"
