@@ -14,8 +14,9 @@
 		4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */; };
 		4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */; };
 		417A807F2B6E33CE00E867E7 /* SubTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */; };
-		417A80822B6EBC1300E867E7 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80812B6EBC1300E867E7 /* InputCell.swift */; };
-		417A80842B6EBC1D00E867E7 /* InputCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80832B6EBC1D00E867E7 /* InputCellModel.swift */; };
+		417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */; };
+		417A808B2B6ECF4000E867E7 /* TaskDetailsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */; };
+		417A808D2B6ED06900E867E7 /* AddSubtaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808C2B6ED06900E867E7 /* AddSubtaskViewController.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
@@ -67,8 +68,9 @@
 		4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksNavigator.swift; sourceTree = "<group>"; };
 		4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaAuthenticationModel.swift; sourceTree = "<group>"; };
 		417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskModel.swift; sourceTree = "<group>"; };
-		417A80812B6EBC1300E867E7 /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
-		417A80832B6EBC1D00E867E7 /* InputCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCellModel.swift; sourceTree = "<group>"; };
+		417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewModel.swift; sourceTree = "<group>"; };
+		417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsNavigator.swift; sourceTree = "<group>"; };
+		417A808C2B6ED06900E867E7 /* AddSubtaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewController.swift; sourceTree = "<group>"; };
 		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
@@ -134,13 +136,13 @@
 			path = ProjectCell;
 			sourceTree = "<group>";
 		};
-		417A80802B6EBBFD00E867E7 /* InputCell */ = {
+		417A80852B6ECF0A00E867E7 /* AddSubtaskPage */ = {
 			isa = PBXGroup;
 			children = (
-				417A80812B6EBC1300E867E7 /* InputCell.swift */,
-				417A80832B6EBC1D00E867E7 /* InputCellModel.swift */,
+				417A808C2B6ED06900E867E7 /* AddSubtaskViewController.swift */,
+				417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */,
 			);
-			path = InputCell;
+			path = AddSubtaskPage;
 			sourceTree = "<group>";
 		};
 		41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */ = {
@@ -191,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				4163F48F2B6D53CC001D139A /* ProjectCell */,
-				417A80802B6EBBFD00E867E7 /* InputCell */,
 				41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */,
 				4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */,
 			);
@@ -215,6 +216,7 @@
 			children = (
 				41FAAC8E2B691826009F6510 /* TaskDetailsViewController.swift */,
 				41FAAC902B69182F009F6510 /* TaskDetailsViewModel.swift */,
+				417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */,
 			);
 			path = TaskDetailsPage;
 			sourceTree = "<group>";
@@ -251,6 +253,7 @@
 				41FAAC702B6119CF009F6510 /* CreateNewProjectPage */,
 				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
 				41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */,
+				417A80852B6ECF0A00E867E7 /* AddSubtaskPage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
 				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
@@ -422,17 +425,19 @@
 				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
+				417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */,
 				4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */,
 				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
 				41FAAC742B611B68009F6510 /* NewProjectViewController.swift in Sources */,
-				417A80842B6EBC1D00E867E7 /* InputCellModel.swift in Sources */,
 				41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */,
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FAAC852B62A1E4009F6510 /* ProjectCell.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
 				41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */,
 				41FAAC6C2B60F9B1009F6510 /* AsanaManager.swift in Sources */,
+				417A808D2B6ED06900E867E7 /* AddSubtaskViewController.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
+				417A808B2B6ECF4000E867E7 /* TaskDetailsNavigator.swift in Sources */,
 				41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
 				41FAAC8F2B691826009F6510 /* TaskDetailsViewController.swift in Sources */,
@@ -451,7 +456,6 @@
 				41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */,
 				41FBEB952B56EE1300A7670A /* SUISignUpView.swift in Sources */,
 				41FBEB8B2B56C2DF00A7670A /* SUILoginView.swift in Sources */,
-				417A80822B6EBC1300E867E7 /* InputCell.swift in Sources */,
 				41FBEB7A2B5676E500A7670A /* MytaskViewModel.swift in Sources */,
 				41FAAC832B6298F0009F6510 /* ProjectsModel.swift in Sources */,
 				41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */,

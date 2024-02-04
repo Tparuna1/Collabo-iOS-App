@@ -14,6 +14,7 @@ import Combine
     
     var viewModel: ProjectTasksViewModel!
     var navigator: ProjectTasksNavigator!
+     var taskDetailsNavigator: TaskDetailsNavigator!
     var cancellables = Set<AnyCancellable>()
     
     private var tasks = [AsanaTask]()
@@ -133,5 +134,4 @@ extension ProjectTasksViewController: UITableViewDataSource {
         return cell
     }
 }
-
 

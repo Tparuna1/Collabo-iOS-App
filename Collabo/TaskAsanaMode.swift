@@ -19,7 +19,7 @@ public struct SingleAsanaTask: Codable {
     let name: String?
     let createdBy: CreatedBy?
     let assigneeStatus: String?
-    let completed: Bool?
+    var completed: Bool?
     let completedAt: String?
     let completedBy: Assignee?
     let createdAt: String?

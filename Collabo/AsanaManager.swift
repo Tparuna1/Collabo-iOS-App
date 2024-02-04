@@ -259,6 +259,65 @@ public class AsanaManager {
         }
     }
     
+    func updateSingleTask(forTask taskGID: String, completed: Bool) async throws -> TaskAsana {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let updatedTaskData: [String: Any] = ["completed": completed]
+        
+        do {
+            let requestData = try JSONSerialization.data(withJSONObject: updatedTaskData, options: [])
+            
+            request.httpBody = requestData
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON Response: \(jsonString)")
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let task = try decoder.decode(TaskAsana.self, from: data)
+            print("Task updated successfully")
+            return task
+        } catch {
+            print("Networking error: \(error)")
+            throw NetworkError.decodingError
+        }
+    }
+
+
+
+
+    
+    func deleteSingleTask(forTask taskGID: String) async throws -> TaskAsana {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON Response: \(jsonString)")
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let task = try decoder.decode(TaskAsana.self, from: data)
+            print("Task fetched successfully")
+            return task
+        } catch {
+            print("Networking error: \(error)")
+            throw NetworkError.decodingError
+        }
+    }
+    
     
     func fetchSubtasks(forSubtask taskGID: String) async throws -> [Subtask] {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
@@ -285,6 +344,57 @@ public class AsanaManager {
             throw NetworkError.decodingError
         }
     }
+    
+    func addSubtask(name: String) async throws {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
+        let parameters: [String: Any] = [
+            "data": [
+                "name": name,
+                "gid": "\(taskGID)"
+            ]
+        ]
+        
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        
+        let headers = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(token)"
+        ]
+        request.allHTTPHeaderFields = headers
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            print("Request URL: \(url)")
+            print("Request Headers: \(headers)")
+            print("Request Body: \(parameters)")
+        } catch {
+            print("JSON Encoding Error: \(error)")
+            throw NetworkError.jsonEncodingError
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+            
+            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
+            print("Response Status Code: \(httpResponse.statusCode)")
+            print("Response Body: \(responseBody)")
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print("Server returned an error: \(responseBody)")
+                throw NetworkError.invalidResponse
+            }
+        } catch {
+            print("Network Request Error: \(error)")
+            throw error
+        }
+        
+    }
+    
+    
 
 
     enum NetworkError: Error {

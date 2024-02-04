@@ -1,39 +1,40 @@
 //
-//  NewProjectViewController.swift
+//  AddSubtaskViewController.swift
 //  Collabo
 //
-//  Created by tornike <parunashvili on 24.01.24.
+//  Created by tornike <parunashvili on 03.02.24.
 //
 
 import UIKit
 
-protocol NewProjectViewControllerDelegate: AnyObject {
+protocol AddSubtaskViewControllerDelegate: AnyObject {
     func dismissed()
 }
 
-class NewProjectViewController: UIViewController {
+class AddSubtaskViewController: UIViewController {
     
     // MARK: - Properties
     
     private var initialSheetYPosition: CGFloat = 0
-    private var viewModel = AddProjectViewModel()
+    private var viewModel = AddSubtaskViewModel()
     
-    public weak var delegate: NewProjectViewControllerDelegate?
-    
+    public weak var delegate: AddSubtaskViewControllerDelegate?
+
+
     // MARK: - UI Components
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Create a New Project"
+        label.text = "Add New Subtask"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .systemCyan
         return label
     }()
     
-    let projectNameTextField: UITextField = {
+    let subtaskNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Project Name"
+        textField.placeholder = "Subtask Name"
         textField.borderStyle = .roundedRect
         return textField
     }()
@@ -68,14 +69,14 @@ class NewProjectViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(titleLabel)
-        view.addSubview(projectNameTextField)
+        view.addSubview(subtaskNameTextField)
         view.addSubview(createButton)
         
         titleLabel.frame = CGRect(x: 20, y: 20, width: view.frame.width - 40, height: 40)
-        projectNameTextField.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40)
+        subtaskNameTextField.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40)
         createButton.frame = CGRect(x: 20, y: 140, width: view.frame.width - 40, height: 40)
         
-        createButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
+        createButton.addTarget(self, action: #selector(createSubtask), for: .touchUpInside)
     }
     
     // MARK: - Gesture Handling
@@ -116,14 +117,14 @@ class NewProjectViewController: UIViewController {
     
     // MARK: - Button Actions
     
-    @objc func createProject() {
+    @objc func createSubtask() {
         print("button tapped")
-        guard let projectName = projectNameTextField.text, !projectName.isEmpty else {
+        guard let subtaskName = subtaskNameTextField.text, !subtaskName.isEmpty else {
             print("Project name is empty")
             return
         }
         
-        viewModel.addProjectToAsana(name: projectName) { error in
+        viewModel.addSubtask(name: subtaskName) { error in
             if let error = error {
                 print("Error creating project: \(error.localizedDescription)")
             } else {
