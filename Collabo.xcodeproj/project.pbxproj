@@ -19,6 +19,7 @@
 		417A808D2B6ED06900E867E7 /* AddSubtaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808C2B6ED06900E867E7 /* AddSubtaskViewController.swift */; };
 		41BA94D12B70FEE5009AA25C /* UserTaskListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D02B70FEE5009AA25C /* UserTaskListModel.swift */; };
 		41BA94D32B710D06009AA25C /* MyTaskListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */; };
+		41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D42B7130EB009AA25C /* UserProfileModel.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
@@ -73,6 +74,7 @@
 		417A808C2B6ED06900E867E7 /* AddSubtaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewController.swift; sourceTree = "<group>"; };
 		41BA94D02B70FEE5009AA25C /* UserTaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTaskListModel.swift; sourceTree = "<group>"; };
 		41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTaskListNavigator.swift; sourceTree = "<group>"; };
+		41BA94D42B7130EB009AA25C /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
 		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				4163F48D2B6D4D9B001D139A /* TaskAsanaMode.swift */,
 				417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */,
 				4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */,
+				41BA94D42B7130EB009AA25C /* UserProfileModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
 				4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */,
 				41FAAC792B626FF1009F6510 /* SheetPresentationController.swift in Sources */,
+				41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

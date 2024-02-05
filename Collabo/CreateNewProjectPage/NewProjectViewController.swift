@@ -56,7 +56,7 @@ class NewProjectViewController: UIViewController {
         view.addGestureRecognizer(panGesture)
         initialSheetYPosition = view.frame.origin.y
         
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         
         setupUI()
         

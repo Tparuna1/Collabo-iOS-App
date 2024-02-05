@@ -16,7 +16,8 @@ public class AsanaManager {
     let workspaceGID = "1206421146222686"
     let projectGID = ""
     let taskGID = ""
-    let userTaskListGid = "1206421171234526"
+    let userTaskListGid = ""
+    let userGID = "538953726748370"
     
     static let shared = AsanaManager()
     
@@ -236,8 +237,8 @@ public class AsanaManager {
         }
     }
     
-    func fetchUserTasks() async throws -> ([AsanaTask], String) {
-        let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists")!
+    func fetchUserTasks(forUser UserGID: String) async throws -> ([UserTaskList], String) {
+        let url = URL(string: "https://app.asana.com/api/1.0/\(userGID)/user_task_lists")!
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -254,7 +255,7 @@ public class AsanaManager {
 
             do {
                 let decoder = JSONDecoder()
-                let userTaskListsResponse = try decoder.decode(AsanaTasksResponse.self, from: data)
+                let userTaskListsResponse = try decoder.decode(UserTaskListResponse.self, from: data)
                 return (userTaskListsResponse.data, responseBody)
             } catch {
                 throw NetworkError.decodingError
@@ -321,9 +322,6 @@ public class AsanaManager {
     }
 
 
-
-
-    
     func deleteSingleTask(forTask taskGID: String) async throws -> TaskAsana {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
         
@@ -424,9 +422,29 @@ public class AsanaManager {
         
     }
     
+    func fetchUserInfo() async throws -> UserProfile {
+        let url = URL(string: "https://app.asana.com/api/1.0/users/\(userGID)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let userProfile = try decoder.decode(UserProfile.self, from: data)
+            return userProfile
+        } catch {
+            throw error
+        }
+    }
     
-
-
+    
     enum NetworkError: Error {
         case invalidURL
         case invalidResponse

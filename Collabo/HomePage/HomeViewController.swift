@@ -70,6 +70,13 @@ public final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -149,7 +156,11 @@ public final class HomeViewController: UIViewController {
         view.addSubview(headerLabel)
         view.addSubview(tableViewWrapper)
         view.addSubview(addProjectButton)
-        
+        tableViewWrapper.addSubview(loadingIndicator)
+
+        loadingIndicator.centerXAnchor.constraint(equalTo: tableViewWrapper.centerXAnchor).isActive = true
+        loadingIndicator.centerYAnchor.constraint(equalTo: tableViewWrapper.centerYAnchor).isActive = true
+
         NSLayoutConstraint.activate([
             
             fetchDataTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -182,7 +193,6 @@ public final class HomeViewController: UIViewController {
             
             headerLabel.topAnchor.constraint(equalTo: fetchDataContainerView.bottomAnchor, constant: 20),
             headerLabel.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor, constant: 20),
-
 
             tableViewWrapper.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
             tableViewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -219,6 +229,7 @@ public final class HomeViewController: UIViewController {
         case .projects(let projects):
             self.projects = projects
             tableView.reloadData()
+            loadingIndicator.stopAnimating()
         }
     }
     
@@ -235,6 +246,7 @@ public final class HomeViewController: UIViewController {
     
     @objc func fetchData(_ sender: UIButton) {
         let authorizationCode = codeTextField.text ?? ""
+        loadingIndicator.startAnimating()
         viewModel.fetchProjects(with: authorizationCode)
     }
     
