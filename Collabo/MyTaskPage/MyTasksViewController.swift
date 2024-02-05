@@ -17,7 +17,7 @@ public final class UserTaskListViewController: UIViewController {
     
     var cancellables = Set<AnyCancellable>()
     
-    private var tasks = [AsanaTask]()
+    private var tasks = [UserTaskList]()
     
     // MARK: - UI Components
     

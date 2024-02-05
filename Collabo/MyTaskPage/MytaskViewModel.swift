@@ -36,7 +36,7 @@ public protocol UserTaskListViewModelOutput {
 }
 
 public enum UserTaskListViewModelOutputAction {
-    case tasks([AsanaTask])
+    case tasks([UserTaskList])
     case title(String)
 }
 
@@ -53,7 +53,7 @@ class DefaultUserTaskListViewModel {
     // MARK: - Properties
     
     private var asanaManager = AsanaManager.shared
-    private var tasks: [AsanaTask] = []
+    private var tasks: [UserTaskList] = []
     private var errorMessage: String?
     
     // MARK: - Init
@@ -65,25 +65,21 @@ class DefaultUserTaskListViewModel {
     // MARK: - Methods
     
     private func fetchUserTasks() {
+        guard let params = params else {
+            return
+        }
         Task {
             do {
-                let (userTaskLists, _) = try await AsanaManager.shared.fetchUserTasks()
-                let userTasks = userTaskLists.map { userTaskList in
-                    let gid = userTaskList.gid
-                    let name = userTaskList.name 
-                    
-                    return AsanaTask(gid: gid, name: name)
-                }
-                
+                let (userTaskLists, _) = try await AsanaManager.shared.fetchUserTasks(forUser: params.gid)
+                tasks = userTaskLists
                 await MainActor.run {
-                    self.actionSubject.send(.tasks(userTasks))
+                    self.actionSubject.send(.tasks(self.tasks))
                 }
             } catch {
                 self.errorMessage = error.localizedDescription
             }
         }
     }
-
 }
 
 extension DefaultUserTaskListViewModel: UserTaskListViewModel {
