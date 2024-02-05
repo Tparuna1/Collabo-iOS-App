@@ -8,12 +8,13 @@
 import UIKit
 import Combine
 
-public final class ProjectTasksViewController: UIViewController {
+ public final class ProjectTasksViewController: UIViewController {
     
     // MARK: - Properties
     
     var viewModel: ProjectTasksViewModel!
     var navigator: ProjectTasksNavigator!
+     var taskDetailsNavigator: TaskDetailsNavigator!
     var cancellables = Set<AnyCancellable>()
     
     private var tasks = [AsanaTask]()
@@ -133,5 +134,4 @@ extension ProjectTasksViewController: UITableViewDataSource {
         return cell
     }
 }
-
 

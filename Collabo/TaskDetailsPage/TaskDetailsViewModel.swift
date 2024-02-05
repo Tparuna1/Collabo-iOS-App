@@ -21,6 +21,7 @@ public struct TaskDetailsViewModelParams {
 public protocol TaskDetailsViewModelInput: AnyObject {
     var params: TaskDetailsViewModelParams? { get set }
     func viewDidLoad()
+    func newSubtask()
 }
 
 public protocol TaskDetailsViewModelOutput {
@@ -30,10 +31,12 @@ public protocol TaskDetailsViewModelOutput {
 
 public enum TaskDetailsViewModelOutputAction {
     case task(SingleAsanaTask?)
+    case subtask([Subtask])
 }
 
 public enum TaskDetailsViewModelRoute {
-    case close
+    case newSubtask
+    case taskDeleted
 }
 
 class DefaultTaskDetailsViewModel: ObservableObject {
@@ -45,7 +48,8 @@ class DefaultTaskDetailsViewModel: ObservableObject {
     // MARK: - Properties
     
     private var asanaManager = AsanaManager.shared
-    private var task: SingleAsanaTask?
+    var task: SingleAsanaTask?
+    private var subTasks: [Subtask] = []
     private var errorMessage: String?
     var cancellables = Set<AnyCancellable>()
     
@@ -74,6 +78,70 @@ class DefaultTaskDetailsViewModel: ObservableObject {
             }
         }
     }
+    
+    private func fetchSubtask() {
+        guard let params = params else {
+            return
+        }
+        Task {
+            do {
+                let subtaskResponse = try await AsanaManager.shared.fetchSubtasks(forSubtask: params.gid)
+                
+                
+                self.subTasks = subtaskResponse
+                await MainActor.run {
+                    self.actionSubject.send(.subtask(self.subTasks))
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+    
+    func deleteTask() {
+        guard let taskGID = params?.gid else {
+            return
+        }
+        
+        Task {
+            do {
+                let deletedTask = try await AsanaManager.shared.deleteSingleTask(forTask: taskGID)
+                
+                await MainActor.run {
+                    self.routeSubject.send(.taskDeleted)
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+    
+    func updateSingleTask() {
+        guard let taskGID = params?.gid, let task = task else {
+            return
+        }
+        
+        let newCompletionStatus = !(task.completed ?? false)
+        
+        Task {
+            do {
+                let _ = try await AsanaManager.shared.updateSingleTask(forTask: taskGID, completed: newCompletionStatus)
+                
+                await MainActor.run {
+                    self.task?.completed = newCompletionStatus
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+
 }
 
 extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
@@ -88,5 +156,11 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
     
     func viewDidLoad() {
         fetchSingleTask()
+        fetchSubtask()
+    }
+    
+    func newSubtask() {
+        routeSubject.send(.newSubtask)
     }
 }
+
