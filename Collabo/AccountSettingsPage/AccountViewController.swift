@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-class AccountVC: UIViewController {
+class AccountViewController: UIViewController {
     
     private let viewModel = AccountViewModel()
     private let logoutButton = UIButton(type: .system)

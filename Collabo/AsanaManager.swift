@@ -16,6 +16,7 @@ public class AsanaManager {
     let workspaceGID = "1206421146222686"
     let projectGID = ""
     let taskGID = ""
+    let userTaskListGid = "1206421171234526"
     
     static let shared = AsanaManager()
     
@@ -234,6 +235,35 @@ public class AsanaManager {
             throw NetworkError.decodingError
         }
     }
+    
+    func fetchUserTasks() async throws -> ([AsanaTask], String) {
+        let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+
+            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
+            print("Raw Response:\n\(responseBody)")
+
+            do {
+                let decoder = JSONDecoder()
+                let userTaskListsResponse = try decoder.decode(AsanaTasksResponse.self, from: data)
+                return (userTaskListsResponse.data, responseBody)
+            } catch {
+                throw NetworkError.decodingError
+            }
+        } catch {
+            throw NetworkError.invalidURL
+        }
+    }
+
     
     func fetchSingleTask(forTask taskGID: String) async throws -> TaskAsana {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
