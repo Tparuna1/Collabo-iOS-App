@@ -34,11 +34,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeNavigationController.navigationItem.largeTitleDisplayMode = .always
         homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
-        let myTasksViewController = MyTasksVC()
+        let myTasksViewController = UserTaskListViewController()
         let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
         myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
         
-        let accountViewController = AccountVC()
+        let accountViewController = AccountViewController()
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
         accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
         

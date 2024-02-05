@@ -1,20 +1,20 @@
 //
-//  ProjectTasksViewController.swift
+//  MyTasksVC.swift
 //  Collabo
 //
-//  Created by tornike <parunashvili on 23.01.24.
+//  Created by tornike <parunashvili on 16.01.24.
 //
 
 import UIKit
 import Combine
 
- public final class ProjectTasksViewController: UIViewController {
+public final class UserTaskListViewController: UIViewController {
     
     // MARK: - Properties
     
-    var viewModel: ProjectTasksViewModel!
-    var navigator: ProjectTasksNavigator!
-    var taskDetailsNavigator: TaskDetailsNavigator!
+    var viewModel: UserTaskListViewModel!
+    var navigator: UserTaskListNavigator!
+    
     var cancellables = Set<AnyCancellable>()
     
     private var tasks = [AsanaTask]()
@@ -45,16 +45,15 @@ import Combine
         viewModel.viewDidLoad()
         setupTableView()
         view.applyCustomBackgroundColor()
-
     }
     
     // MARK: - View Model Binding
-    private func bind(to viewModel: ProjectTasksViewModel) {
+    private func bind(to viewModel: UserTaskListViewModel) {
         viewModel.action.sink { [weak self] action in self?.didReceive(action: action) }.store(in: &cancellables)
         viewModel.route.sink { [weak self] route in self?.didReceive(route: route) }.store(in: &cancellables)
     }
     
-    private func didReceive(action: ProjectTasksViewModelOutputAction) {
+    private func didReceive(action: UserTaskListViewModelOutputAction) {
         switch action {
         case .title(let title):
             self.title = title
@@ -64,7 +63,7 @@ import Combine
         }
     }
     
-    private func didReceive(route: ProjectTasksViewModelRoute) {
+    private func didReceive(route: UserTaskListViewModelRoute) {
         switch route {
         case .details(let params):
             navigator.navigate(to: .details(params), animated: true)
@@ -94,7 +93,7 @@ import Combine
     }
     
     private func setupTableView() {
-        tableView.register(ProjectCell.self, forCellReuseIdentifier: "ProjectCell")
+        tableView.register(ProjectCell.self, forCellReuseIdentifier: "UserTaskCell")
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -102,7 +101,7 @@ import Combine
 
 // MARK: - UITableViewDelegate
 
-extension ProjectTasksViewController: UITableViewDelegate {
+extension UserTaskListViewController: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         50
@@ -115,13 +114,13 @@ extension ProjectTasksViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension ProjectTasksViewController: UITableViewDataSource {
+extension UserTaskListViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tasks.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath) as? ProjectCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserTaskCell", for: indexPath) as? ProjectCell else {
             return .init()
         }
         let task = tasks[indexPath.row]
