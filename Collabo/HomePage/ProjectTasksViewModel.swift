@@ -50,6 +50,7 @@ class DefaultProjectTasksViewModel {
     
     public var params: ProjectTasksViewModelParams?
     
+    
     // MARK: - Properties
     
     private var asanaManager = AsanaManager.shared
@@ -123,7 +124,8 @@ extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
     
     func didSelectRow(at index: Int) {
         let gid = tasks[index].gid
-        
-        routeSubject.send(.details(.init(gid: gid)))
+        let name = tasks[index].name
+
+        routeSubject.send(.details(.init(name: name, gid: gid)))
     }
 }

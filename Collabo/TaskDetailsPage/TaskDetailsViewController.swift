@@ -11,18 +11,47 @@ import Combine
 
 public final class TaskDetailsViewController: UIViewController {
     
-    
     // MARK: - Properties
     var viewModel: DefaultTaskDetailsViewModel!
     var navigator: TaskDetailsNavigator!
     
     private var subtask = [Subtask]()
-    private var moreButton: UIBarButtonItem!
     private var cancellables = Set<AnyCancellable>()
-
-    
     
     // MARK: - UI Elements
+    
+    private let customNavBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(showMoreOptions), for: .touchUpInside)
+        return button
+    }()
+    
+    private let navBarTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -104,13 +133,12 @@ public final class TaskDetailsViewController: UIViewController {
     // MARK: - Lifecycle Methods
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setupCustomNavBar()
         setupUI()
         bind(to: viewModel)
         setupTableView()
-        setupMoreButton()
         viewModel.viewDidLoad()
         view.applyCustomBackgroundColor()
-        
     }
     
     // MARK: - View Model Binding
@@ -121,6 +149,8 @@ public final class TaskDetailsViewController: UIViewController {
     
     private func didReceive(action: TaskDetailsViewModelOutputAction) {
         switch action {
+        case .title(let title):
+            self.navBarTitleLabel.text = title
         case .task(let task):
             populateDetails(with: task)
         case .subtask(let subtask):
@@ -136,6 +166,49 @@ public final class TaskDetailsViewController: UIViewController {
         case .taskDeleted:
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    private func setupNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .systemBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    // MARK: - Custom Navigation Bar Setup
+    private func setupCustomNavBar() {
+        view.addSubview(customNavBar)
+        customNavBar.addSubview(backButton)
+        customNavBar.addSubview(navBarTitleLabel)
+        customNavBar.addSubview(moreButton)
+        
+        
+        NSLayoutConstraint.activate([
+            customNavBar.topAnchor.constraint(equalTo: view.topAnchor),
+            customNavBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customNavBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+            customNavBar.heightAnchor.constraint(equalToConstant: 150),
+            
+            backButton.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 10),
+            backButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            moreButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -10),
+            moreButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
+            moreButton.widthAnchor.constraint(equalToConstant: 44),
+            moreButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            navBarTitleLabel.centerXAnchor.constraint(equalTo: customNavBar.centerXAnchor),
+            navBarTitleLabel.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -50),
+            navBarTitleLabel.leftAnchor.constraint(greaterThanOrEqualTo: customNavBar.leftAnchor, constant: 16),
+            navBarTitleLabel.rightAnchor.constraint(lessThanOrEqualTo: customNavBar.rightAnchor, constant: -16)
+        ])
     }
     
     // MARK: - UI Setup
@@ -159,7 +232,6 @@ public final class TaskDetailsViewController: UIViewController {
         
         mainStackView.addArrangedSubview(addSubtaskButton)
         
-        
         view.addSubview(mainStackView)
         view.addSubview(wrapperView)
         wrapperView.addSubview(tableView)
@@ -168,7 +240,7 @@ public final class TaskDetailsViewController: UIViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 140),
+            mainStackView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 40),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
@@ -197,9 +269,8 @@ public final class TaskDetailsViewController: UIViewController {
         viewModel.newSubtask()
     }
     
-    private func setupMoreButton() {
-        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showMoreOptions))
-        navigationItem.rightBarButtonItem = moreButton
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func showMoreOptions() {
@@ -215,7 +286,8 @@ public final class TaskDetailsViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         if let popoverController = alertController.popoverPresentationController {
-            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+            popoverController.sourceView = self.moreButton
+            popoverController.sourceRect = self.moreButton.bounds
         }
         
         present(alertController, animated: true, completion: nil)
@@ -230,7 +302,7 @@ public final class TaskDetailsViewController: UIViewController {
             if let currentCompletionStatus = task.completed {
                 let newCompletionStatus = !currentCompletionStatus
                 task.completed = newCompletionStatus
-
+                
                 if newCompletionStatus {
                     completedLabel.text = "Completed"
                     checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")?.withTintColor(.green, renderingMode: .alwaysOriginal)
@@ -238,13 +310,13 @@ public final class TaskDetailsViewController: UIViewController {
                     completedLabel.text = "Not Completed"
                     checkmarkImageView.image = UIImage(systemName: "xmark.circle.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal)
                 }
-
+                
                 viewModel.task = task
                 viewModel.updateSingleTask()
             }
         }
     }
-
+    
     // MARK: - Populate Task Details
     private func populateDetails(with task: SingleAsanaTask?) {
         guard let task else { return }
@@ -285,7 +357,6 @@ public final class TaskDetailsViewController: UIViewController {
             assigneeLabel.text = "Assignee: Not Assigned"
         }
     }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -310,7 +381,6 @@ extension TaskDetailsViewController: UITableViewDataSource {
     }
 }
 
-
 // MARK: - UIViewControllerTransitioningDelegate
 
 extension TaskDetailsViewController: UIViewControllerTransitioningDelegate {
@@ -324,3 +394,4 @@ extension TaskDetailsViewController: AddSubtaskViewControllerDelegate {
         print("ViewController Dismissed ")
     }
 }
+

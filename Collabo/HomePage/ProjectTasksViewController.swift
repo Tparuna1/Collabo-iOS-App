@@ -17,10 +17,42 @@ public final class ProjectTasksViewController: UIViewController {
     var taskDetailsNavigator: TaskDetailsNavigator!
     
     private var tasks = [AsanaTask]()
-    private var moreButton: UIBarButtonItem!
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(showMoreOptions), for: .touchUpInside)
+        return button
+    }()
+
+    private let navBarTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let customNavBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -41,12 +73,14 @@ public final class ProjectTasksViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavigationBarAppearance()
+        setupCustomNavBar()
         setupUI()
         bind(to: viewModel)
         viewModel.viewDidLoad()
         setupTableView()
         view.applyCustomBackgroundColor()
-        
     }
     
     // MARK: - View Model Binding
@@ -58,7 +92,7 @@ public final class ProjectTasksViewController: UIViewController {
     private func didReceive(action: ProjectTasksViewModelOutputAction) {
         switch action {
         case .title(let title):
-            self.title = title
+            self.navBarTitleLabel.text = title
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()
@@ -74,6 +108,49 @@ public final class ProjectTasksViewController: UIViewController {
         }
     }
     
+    private func setupNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .systemBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func setupCustomNavBar() {
+        view.addSubview(customNavBar)
+        customNavBar.addSubview(backButton)
+        customNavBar.addSubview(navBarTitleLabel)
+        customNavBar.addSubview(moreButton)
+        
+        
+        NSLayoutConstraint.activate([
+            customNavBar.topAnchor.constraint(equalTo: view.topAnchor),
+            customNavBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customNavBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+            customNavBar.heightAnchor.constraint(equalToConstant: 150),
+            
+            backButton.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 10),
+            backButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            moreButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -10),
+            moreButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
+            moreButton.widthAnchor.constraint(equalToConstant: 44),
+            moreButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            navBarTitleLabel.centerXAnchor.constraint(equalTo: customNavBar.centerXAnchor),
+            navBarTitleLabel.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -50),
+            navBarTitleLabel.leftAnchor.constraint(greaterThanOrEqualTo: customNavBar.leftAnchor, constant: 16),
+            navBarTitleLabel.rightAnchor.constraint(lessThanOrEqualTo: customNavBar.rightAnchor, constant: -16)
+        ])
+    }
+    
+    
     // MARK: - UI Setup
     
     private func setupUI() {
@@ -86,7 +163,7 @@ public final class ProjectTasksViewController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: -100),
             
-            wrapperView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            wrapperView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 20),
             wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
             wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
             wrapperView.heightAnchor.constraint(equalToConstant: 800),
@@ -102,15 +179,14 @@ public final class ProjectTasksViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    private func setupMoreButton() {
-        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showMoreOptions))
-        navigationItem.rightBarButtonItem = moreButton
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func showMoreOptions() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let deleteAction = UIAlertAction(title: "Delete Task", style: .destructive) { [weak self] _ in
+        let deleteAction = UIAlertAction(title: "Delete Project", style: .destructive) { [weak self] _ in
             self?.handleDeleteProject()
         }
         
@@ -120,11 +196,13 @@ public final class ProjectTasksViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         if let popoverController = alertController.popoverPresentationController {
-            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+            popoverController.sourceView = self.moreButton
+            popoverController.sourceRect = self.moreButton.bounds
         }
         
         present(alertController, animated: true, completion: nil)
     }
+
     
     func handleDeleteProject() {
         viewModel.deleteProject()

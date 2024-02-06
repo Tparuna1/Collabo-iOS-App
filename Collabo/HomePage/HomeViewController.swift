@@ -16,8 +16,8 @@ public final class HomeViewController: UIViewController {
     var navigator: HomeNavigator!
     
     private var projects = [AsanaProject]()
-    
     private var cancellables = Set<AnyCancellable>()
+
     
     // MARK: - UI Components
     
