@@ -21,7 +21,6 @@
 		41BA94D32B710D06009AA25C /* MyTaskListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */; };
 		41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D42B7130EB009AA25C /* UserProfileModel.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
-		41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
 		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
 		41FAAC602B5FB24F009F6510 /* ProjectTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */; };
@@ -75,7 +74,6 @@
 		41BA94D02B70FEE5009AA25C /* UserTaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTaskListModel.swift; sourceTree = "<group>"; };
 		41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTaskListNavigator.swift; sourceTree = "<group>"; };
 		41BA94D42B7130EB009AA25C /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
-		41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWithAssanaVc.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
 		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
@@ -147,12 +145,28 @@
 			path = AddSubtaskPage;
 			sourceTree = "<group>";
 		};
-		41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */ = {
+		41BA94D62B71AD77009AA25C /* SwiftUIViews */ = {
 			isa = PBXGroup;
 			children = (
-				41FAAC512B5D2D5F009F6510 /* ConnectWithAssanaVc.swift */,
+				41FBEB802B56772900A7670A /* Onboarding */,
+				41FBEB892B56C2B900A7670A /* LoginPage */,
+				41FBEB932B56EDEC00A7670A /* SignUpPage */,
 			);
-			name = ConnectWithAsana;
+			name = SwiftUIViews;
+			sourceTree = "<group>";
+		};
+		41BA94D72B71ADC8009AA25C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				41FBEB712B56762B00A7670A /* HomePage */,
+				41FAAC702B6119CF009F6510 /* CreateNewProjectPage */,
+				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
+				41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */,
+				417A80852B6ECF0A00E867E7 /* AddSubtaskPage */,
+				41FBEB762B5676D000A7670A /* MyTaskPage */,
+				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */ = {
@@ -246,21 +260,12 @@
 			children = (
 				41FBEB552B55837500A7670A /* AppDelegate.swift */,
 				41FBEB572B55837500A7670A /* SceneDelegate.swift */,
-				41FAAC812B6298DA009F6510 /* Models */,
 				41FAAC6D2B60F9CD009F6510 /* UserDefaultsManager */,
 				41FAAC6A2B60F994009F6510 /* AsanaManager */,
-				41FAAC502B5D2D3D009F6510 /* ConnectWithAsana */,
-				41FBEB802B56772900A7670A /* Onboarding */,
-				41FBEB892B56C2B900A7670A /* LoginPage */,
-				41FBEB932B56EDEC00A7670A /* SignUpPage */,
-				41FBEB712B56762B00A7670A /* HomePage */,
-				41FAAC702B6119CF009F6510 /* CreateNewProjectPage */,
-				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
-				41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */,
-				417A80852B6ECF0A00E867E7 /* AddSubtaskPage */,
-				41FBEB762B5676D000A7670A /* MyTaskPage */,
-				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
-				41FBEB8E2B56C3E700A7670A /* SUIComponents */,
+				41FAAC812B6298DA009F6510 /* Models */,
+				41BA94D62B71AD77009AA25C /* SwiftUIViews */,
+				41BA94D72B71ADC8009AA25C /* ViewControllers */,
+				41FBEB8E2B56C3E700A7670A /* SwiftUIComponents */,
 				41FAAC752B611D6E009F6510 /* UIKitComponents */,
 				41FBEBA12B58186B00A7670A /* Auth0.plist */,
 				41FBEB5E2B55837800A7670A /* Assets.xcassets */,
@@ -319,7 +324,7 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
-		41FBEB8E2B56C3E700A7670A /* SUIComponents */ = {
+		41FBEB8E2B56C3E700A7670A /* SwiftUIComponents */ = {
 			isa = PBXGroup;
 			children = (
 				41FBEB872B5696F000A7670A /* AnimatedBackgroundView.swift */,
@@ -328,7 +333,7 @@
 				41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */,
 				41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */,
 			);
-			name = SUIComponents;
+			name = SwiftUIComponents;
 			path = HomePage;
 			sourceTree = "<group>";
 		};
@@ -436,7 +441,6 @@
 				41FBEB562B55837500A7670A /* AppDelegate.swift in Sources */,
 				41FAAC852B62A1E4009F6510 /* ProjectCell.swift in Sources */,
 				41FBEB7F2B56770E00A7670A /* AccountViewModel.swift in Sources */,
-				41FAAC522B5D2D5F009F6510 /* ConnectWithAssanaVc.swift in Sources */,
 				41FAAC6C2B60F9B1009F6510 /* AsanaManager.swift in Sources */,
 				417A808D2B6ED06900E867E7 /* AddSubtaskViewController.swift in Sources */,
 				41FBEB992B56F10A00A7670A /* SecureFieldComponent.swift in Sources */,
