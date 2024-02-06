@@ -41,9 +41,9 @@ public final class UserTaskListViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupTableView()
         bind(to: viewModel)
         viewModel.viewDidLoad()
-        setupTableView()
         view.applyCustomBackgroundColor()
     }
     
@@ -55,8 +55,6 @@ public final class UserTaskListViewController: UIViewController {
     
     private func didReceive(action: UserTaskListViewModelOutputAction) {
         switch action {
-        case .title(let title):
-            self.title = title
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()

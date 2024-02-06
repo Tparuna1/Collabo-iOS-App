@@ -35,6 +35,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
         let myTasksViewController = UserTaskListViewController()
+        myTasksViewController.viewModel = DefaultUserTaskListViewModel()
+        myTasksViewController.navigator = .init(viewController: myTasksViewController)
         let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
         myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
         

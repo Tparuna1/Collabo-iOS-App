@@ -17,7 +17,7 @@ public class AsanaManager {
     let projectGID = ""
     let taskGID = ""
     let userTaskListGid = ""
-    let userGID = "538953726748370"
+    let userGID = "1206421171234526"
     
     static let shared = AsanaManager()
     
@@ -237,33 +237,37 @@ public class AsanaManager {
         }
     }
     
-    func fetchUserTasks(forUser UserGID: String) async throws -> ([UserTaskList], String) {
-        let url = URL(string: "https://app.asana.com/api/1.0/\(userGID)/user_task_lists")!
+    func fetchUserTasks() async throws -> [UserTaskList] {
+        let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userGID)/tasks")!
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
+        
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                throw NetworkError.invalidResponse
+                if let httpResponse = response as? HTTPURLResponse {
+                    throw SpecificNetworkError.invalidResponse(httpResponse.statusCode)
+                } else {
+                    throw SpecificNetworkError.invalidResponse(0)
+                }
             }
-
+            
             let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
             print("Raw Response:\n\(responseBody)")
-
-            do {
-                let decoder = JSONDecoder()
-                let userTaskListsResponse = try decoder.decode(UserTaskListResponse.self, from: data)
-                return (userTaskListsResponse.data, responseBody)
-            } catch {
-                throw NetworkError.decodingError
-            }
+            
+            let decoder = JSONDecoder()
+            let userTaskListsResponse = try decoder.decode(UserTaskListResponse.self, from: data)
+            return userTaskListsResponse.data
+        } catch let error as SpecificNetworkError {
+            throw error
         } catch {
-            throw NetworkError.invalidURL
+            let errorMessage = "An unknown error occurred: \(error.localizedDescription)"
+            throw SpecificNetworkError.otherError(message: errorMessage)
         }
     }
+
 
     
     func fetchSingleTask(forTask taskGID: String) async throws -> TaskAsana {
@@ -479,7 +483,6 @@ public class AsanaManager {
             }
         }
     }
-    
     // MARK: - Private Methods
     
     private func performFetchProjects() async throws -> [AsanaProject] {
