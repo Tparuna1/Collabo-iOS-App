@@ -14,16 +14,18 @@ public class AsanaManager {
     let clientId = "1206344666310503"
     let clientSecret = "385e60c477ccf676ef2759b209126404"
     let workspaceGID = "1206421146222686"
+    var userTaskListGID = "1206421171234526"
     let projectGID = ""
     let taskGID = ""
-    let userTaskListGid = ""
-    let userGID = "1206421171234526"
+    var userGID = ""
     
     static let shared = AsanaManager()
+    
     
     private init() {
         token = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+        
     }
     
     public func getAccessToken(authorizationCode: String) async throws {
@@ -64,6 +66,9 @@ public class AsanaManager {
                 refreshToken = data.refreshToken
                 UserDefaultsManager.shared.saveAccessToken(data.accessToken)
                 UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
+                
+                userGID = try await getUserID()
+                UserDefaultsManager.shared.saveUserGID(userGID)
             } catch {
                 throw NetworkError.decodingError
             }
@@ -123,6 +128,35 @@ public class AsanaManager {
                 UserDefaultsManager.shared.saveAccessToken(data.accessToken)
                 UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
             } catch {
+                throw NetworkError.decodingError
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+    public func getUserID() async throws -> String {
+        let url = URL(string: "https://app.asana.com/api/1.0/users/me")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+            
+            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
+            print("Raw Response:\n\(responseBody)")
+            
+            let decoder = JSONDecoder()
+            let user = try decoder.decode(UserProfile.self, from: data)
+            
+            if let userGID = user.data?.gid {
+                return userGID
+            } else {
                 throw NetworkError.decodingError
             }
         } catch {
@@ -238,8 +272,8 @@ public class AsanaManager {
     }
     
     func fetchUserTasks() async throws -> [UserTaskList] {
-        let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userGID)/tasks")!
-
+        let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userTaskListGID)/tasks")!
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -267,8 +301,8 @@ public class AsanaManager {
             throw SpecificNetworkError.otherError(message: errorMessage)
         }
     }
-
-
+    
+    
     
     func fetchSingleTask(forTask taskGID: String) async throws -> TaskAsana {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
@@ -324,8 +358,8 @@ public class AsanaManager {
             throw NetworkError.decodingError
         }
     }
-
-
+    
+    
     func deleteSingleTask(forTask taskGID: String) async throws -> TaskAsana {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)")!
         
@@ -353,7 +387,7 @@ public class AsanaManager {
     
     func fetchSubtasks(forSubtask taskGID: String) async throws -> [Subtask] {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")

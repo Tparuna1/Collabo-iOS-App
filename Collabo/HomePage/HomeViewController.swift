@@ -192,7 +192,7 @@ public final class HomeViewController: UIViewController {
             fetchDataButton.heightAnchor.constraint(equalToConstant: 40),
             
             headerLabel.topAnchor.constraint(equalTo: fetchDataContainerView.bottomAnchor, constant: 20),
-            headerLabel.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor, constant: 20),
+            headerLabel.leadingAnchor.constraint(equalTo: fetchDataContainerView.leadingAnchor),
 
             tableViewWrapper.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
             tableViewWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

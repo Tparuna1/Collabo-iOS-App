@@ -7,6 +7,7 @@
 
 public final class ProjectTasksNavigator {
     private weak var viewController: ProjectTasksViewController?
+    private var deleteTaskAction: ((Bool) -> Void)?
 
     public init(viewController: ProjectTasksViewController) {
         self.viewController = viewController

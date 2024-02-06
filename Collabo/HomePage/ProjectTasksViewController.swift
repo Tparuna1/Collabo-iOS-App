@@ -8,16 +8,17 @@
 import UIKit
 import Combine
 
- public final class ProjectTasksViewController: UIViewController {
+public final class ProjectTasksViewController: UIViewController {
     
     // MARK: - Properties
     
-    var viewModel: ProjectTasksViewModel!
+    var viewModel: DefaultProjectTasksViewModel!
     var navigator: ProjectTasksNavigator!
     var taskDetailsNavigator: TaskDetailsNavigator!
-    var cancellables = Set<AnyCancellable>()
     
     private var tasks = [AsanaTask]()
+    private var moreButton: UIBarButtonItem!
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
     
@@ -45,7 +46,7 @@ import Combine
         viewModel.viewDidLoad()
         setupTableView()
         view.applyCustomBackgroundColor()
-
+        
     }
     
     // MARK: - View Model Binding
@@ -68,6 +69,8 @@ import Combine
         switch route {
         case .details(let params):
             navigator.navigate(to: .details(params), animated: true)
+        case .projectDeleted:
+            navigationController?.popViewController(animated: true)
         }
     }
     
@@ -79,8 +82,8 @@ import Combine
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: wrapperView.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: wrapperView.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor),
+            tableView.leftAnchor.constraint(equalTo: wrapperView.leftAnchor, constant: 20),
+            tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: -100),
             
             wrapperView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -98,6 +101,34 @@ import Combine
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    private func setupMoreButton() {
+        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showMoreOptions))
+        navigationItem.rightBarButtonItem = moreButton
+    }
+    
+    @objc func showMoreOptions() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete Task", style: .destructive) { [weak self] _ in
+            self?.handleDeleteProject()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func handleDeleteProject() {
+        viewModel.deleteProject()
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -105,7 +136,7 @@ import Combine
 extension ProjectTasksViewController: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
+        70
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,7 +157,7 @@ extension ProjectTasksViewController: UITableViewDataSource {
         }
         let task = tasks[indexPath.row]
         
-        let colors: [UIColor] = [.red, .green, .blue, .orange]
+        let colors: [UIColor] = [.systemBlue]
         let colorIndex = indexPath.row % colors.count
         
         cell.setup(with: .init(title: task.name, color: colors[colorIndex]))

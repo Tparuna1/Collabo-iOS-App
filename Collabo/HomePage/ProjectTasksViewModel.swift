@@ -41,6 +41,7 @@ public enum ProjectTasksViewModelOutputAction {
 
 public enum ProjectTasksViewModelRoute {
     case details(TaskDetailsViewModelParams)
+    case projectDeleted
 }
 
 class DefaultProjectTasksViewModel {
@@ -78,6 +79,26 @@ class DefaultProjectTasksViewModel {
             }
         }
     }
+    
+    func deleteProject() {
+        guard let projectGID = params?.gid else {
+            return
+        }
+        
+        Task {
+            do {
+                try await AsanaManager.shared.deleteProject(projectGID: projectGID)
+                await MainActor.run {
+                    self.routeSubject.send(.projectDeleted)
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+
 }
 
 extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
