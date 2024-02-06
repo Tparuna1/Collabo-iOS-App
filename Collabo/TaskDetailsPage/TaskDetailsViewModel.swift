@@ -11,9 +11,14 @@ import Combine
 public protocol TaskDetailsViewModel: TaskDetailsViewModelInput, TaskDetailsViewModelOutput {}
 
 public struct TaskDetailsViewModelParams {
+    public let name: String
     public let gid: String
     
-    public init(gid: String) {
+    public init(
+        name: String,
+        gid: String
+    ) {
+        self.name = name
         self.gid = gid
     }
 }
@@ -32,6 +37,7 @@ public protocol TaskDetailsViewModelOutput {
 public enum TaskDetailsViewModelOutputAction {
     case task(SingleAsanaTask?)
     case subtask([Subtask])
+    case title(String)
 }
 
 public enum TaskDetailsViewModelRoute {
@@ -157,6 +163,12 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
     func viewDidLoad() {
         fetchSingleTask()
         fetchSubtask()
+        
+        guard let params else {
+            return
+        }
+        
+        actionSubject.send(.title(params.name))
     }
     
     func newSubtask() {

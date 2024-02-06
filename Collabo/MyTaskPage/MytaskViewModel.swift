@@ -74,8 +74,9 @@ extension DefaultUserTaskListViewModel: UserTaskListViewModel {
     
     func didSelectRow(at index: Int) {
         let gid = tasks[index].gid
+        let name = tasks[index].name
         
-        routeSubject.send(.details(.init(gid: gid)))
+        routeSubject.send(.details(.init(name: name, gid: gid)))
     }
 }
 
