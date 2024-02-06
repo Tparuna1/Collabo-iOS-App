@@ -42,7 +42,7 @@ class SheetPresentationController: UIPresentationController {
             NSLayoutConstraint.activate([
                 lineView.topAnchor.constraint(equalTo: presentedView.topAnchor, constant: 8),
                 lineView.centerXAnchor.constraint(equalTo: presentedView.centerXAnchor),
-                lineView.widthAnchor.constraint(equalToConstant: 48),
+                lineView.widthAnchor.constraint(equalToConstant: 36),
                 lineView.heightAnchor.constraint(equalToConstant: 2)
             ])
         }

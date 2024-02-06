@@ -67,7 +67,7 @@ class ProjectCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let padding = UIEdgeInsets(top: 5, left: 2, bottom: 5, right: 10)
+        let padding = UIEdgeInsets(top: 6, left: 2, bottom: 6, right: 10)
         contentView.frame = contentView.frame.inset(by: padding)
     }
 }

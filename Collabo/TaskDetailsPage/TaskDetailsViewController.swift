@@ -16,11 +16,10 @@ public final class TaskDetailsViewController: UIViewController {
     var viewModel: DefaultTaskDetailsViewModel!
     var navigator: TaskDetailsNavigator!
     
-    private var cancellables = Set<AnyCancellable>()
-    
     private var subtask = [Subtask]()
-    
     private var moreButton: UIBarButtonItem!
+    private var cancellables = Set<AnyCancellable>()
+
     
     
     // MARK: - UI Elements
@@ -302,7 +301,7 @@ extension TaskDetailsViewController: UITableViewDataSource {
         }
         let subtask = subtask[indexPath.row]
         
-        let colors: [UIColor] = [.orange]
+        let colors: [UIColor] = [.systemOrange]
         let colorIndex = indexPath.row % colors.count
         
         cell.setup(with: .init(title: subtask.name, color: colors[colorIndex]))

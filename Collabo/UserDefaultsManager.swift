@@ -26,4 +26,8 @@ public class UserDefaultsManager {
     public func retrieveAsanaAccessToken() -> String? {
         UserDefaults.standard.string(forKey: "accessToken")
     }
+    
+    public func saveUserGID(_ userGID: String) {
+        UserDefaults.standard.set(userGID, forKey: "userGID")
+    }
 }

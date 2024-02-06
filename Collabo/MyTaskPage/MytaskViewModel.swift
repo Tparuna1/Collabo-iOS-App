@@ -11,21 +11,8 @@ import Combine
 
 public protocol UserTaskListViewModel: UserTaskListViewModelInput, UserTaskListViewModelOutput {}
 
-public struct UserTaskListViewModelParams {
-    public let name: String
-    public let gid: String
-    
-    public init(
-        name: String,
-        gid: String
-    ) {
-        self.name = name
-        self.gid = gid
-    }
-}
 
 public protocol UserTaskListViewModelInput: AnyObject {
-    var params: UserTaskListViewModelParams? { get set }
     func viewDidLoad()
     func didSelectRow(at index: Int)
 }
@@ -37,7 +24,6 @@ public protocol UserTaskListViewModelOutput {
 
 public enum UserTaskListViewModelOutputAction {
     case tasks([UserTaskList])
-    case title(String)
 }
 
 public enum UserTaskListViewModelRoute {
@@ -47,35 +33,24 @@ public enum UserTaskListViewModelRoute {
 class DefaultUserTaskListViewModel {
     private let actionSubject = PassthroughSubject<UserTaskListViewModelOutputAction, Never>()
     private let routeSubject = PassthroughSubject<UserTaskListViewModelRoute, Never>()
-    
-    public var params: UserTaskListViewModelParams?
-    
+        
     // MARK: - Properties
     
     private var asanaManager = AsanaManager.shared
     private var tasks: [UserTaskList] = []
     private var errorMessage: String?
     
-    // MARK: - Init
-    
-    public init(params: UserTaskListViewModelParams? = nil) {
-        self.params = params
-    }
-    
     // MARK: - Methods
     
     private func fetchUserTasks() {
-        guard let params = params else {
-            return
-        }
         Task {
             do {
-                let (userTaskLists, _) = try await AsanaManager.shared.fetchUserTasks(forUser: params.gid)
-                tasks = userTaskLists
+                self.tasks = try await asanaManager.fetchUserTasks()
                 await MainActor.run {
                     self.actionSubject.send(.tasks(self.tasks))
                 }
             } catch {
+                print("Error fetching user tasks: \(error.localizedDescription)")
                 self.errorMessage = error.localizedDescription
             }
         }
@@ -94,13 +69,8 @@ extension DefaultUserTaskListViewModel: UserTaskListViewModel {
     // MARK: - Public Methods
     func viewDidLoad() {
         fetchUserTasks()
-        
-        guard let params else {
-            return
-        }
-        
-        actionSubject.send(.title(params.name))
     }
+
     
     func didSelectRow(at index: Int) {
         let gid = tasks[index].gid
