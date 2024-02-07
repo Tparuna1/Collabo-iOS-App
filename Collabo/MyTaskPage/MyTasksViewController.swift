@@ -14,12 +14,27 @@ public final class UserTaskListViewController: UIViewController {
     
     var viewModel: UserTaskListViewModel!
     var navigator: UserTaskListNavigator!
-    
+    private var tasks = [UserTaskList]()
     var cancellables = Set<AnyCancellable>()
     
-    private var tasks = [UserTaskList]()
     
     // MARK: - UI Components
+    
+    private let customNavBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "My Tasks"
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -70,20 +85,47 @@ public final class UserTaskListViewController: UIViewController {
     
     // MARK: - UI Setup
     
+    private func setupNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .systemBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func setupCustomNavBar() {
+        view.addSubview(customNavBar)
+        customNavBar.addSubview(headerLabel)
+        
+        NSLayoutConstraint.activate([
+            customNavBar.topAnchor.constraint(equalTo: view.topAnchor),
+            customNavBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customNavBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+            customNavBar.heightAnchor.constraint(equalToConstant: 150),
+            
+            headerLabel.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 20),
+            headerLabel.bottomAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -20)
+        ])
+    }
+    
     private func setupUI() {
+        setupCustomNavBar()
         view.addSubview(wrapperView)
         wrapperView.addSubview(tableView)
         
         NSLayoutConstraint.activate([
+            wrapperView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 20),
+            wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            wrapperView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            
             tableView.topAnchor.constraint(equalTo: wrapperView.topAnchor),
             tableView.leftAnchor.constraint(equalTo: wrapperView.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: -100),
-            
-            wrapperView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            wrapperView.heightAnchor.constraint(equalToConstant: 800),
+            tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor)
         ])
         
         tableView.separatorStyle = .none
@@ -102,7 +144,7 @@ public final class UserTaskListViewController: UIViewController {
 extension UserTaskListViewController: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
+        70
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
