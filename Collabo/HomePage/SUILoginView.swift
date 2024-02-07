@@ -10,11 +10,11 @@ import Auth0
 
 // MARK: - NavigationPath Enum
 
-enum NavigationPath: Hashable {
-    case home
-    case signUp
-    case login
-}
+//enum NavigationPath: Hashable {
+//    case home
+//    case signUp
+//    case login
+//}
 
 struct SUILoginView: View {
     

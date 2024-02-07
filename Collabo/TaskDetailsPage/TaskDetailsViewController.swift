@@ -61,12 +61,29 @@ public final class TaskDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private let descriptionContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.05)
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Task Description"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .left
+        return label
+    }()
+    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.textColor = .gray
+        label.textColor = .black
         return label
     }()
     
@@ -94,17 +111,60 @@ public final class TaskDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private let calendarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "calendar")
+        imageView.tintColor = .gray
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private let dueOnLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .blue
+        label.textColor = .gray
         return label
+    }()
+    
+    private lazy var dueOnStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.addArrangedSubview(calendarImageView)
+        stackView.addArrangedSubview(dueOnLabel)
+        return stackView
+    }()
+    
+    private let userImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "person")
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private let assigneeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
+        return label
+    }()
+    
+    private lazy var assigneeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.addArrangedSubview(userImageView)
+        stackView.addArrangedSubview(assigneeLabel)
+        return stackView
+    }()
+    
+    private let subtasksHeaderLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Subtasks"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .left
         return label
     }()
     
@@ -125,7 +185,12 @@ public final class TaskDetailsViewController: UIViewController {
     
     private lazy var addSubtaskButton: UIButton = {
         let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Add Subtask", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(addSubtask(_:)), for: .touchUpInside)
         return button
     }()
@@ -213,31 +278,55 @@ public final class TaskDetailsViewController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
-        mainStackView.addArrangedSubview(descriptionLabel)
-        
-        completedStackView.addArrangedSubview(completedLabel)
         completedStackView.addArrangedSubview(checkmarkImageView)
+        completedStackView.addArrangedSubview(completedLabel)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleTaskCompletion))
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionContainerView.addSubview(scrollView)
+        
         checkmarkImageView.isUserInteractionEnabled = true
         checkmarkImageView.addGestureRecognizer(tapGesture)
         
+        descriptionContainerView.addSubview(headerLabel)
+        descriptionContainerView.addSubview(descriptionLabel)
+        
+        
         mainStackView.addArrangedSubview(completedStackView)
-        
-        mainStackView.addArrangedSubview(dueOnLabel)
-        
-        mainStackView.addArrangedSubview(assigneeLabel)
-        
+        mainStackView.addArrangedSubview(dueOnStackView)
+        mainStackView.addArrangedSubview(assigneeStackView)
+        mainStackView.addArrangedSubview(headerLabel)
+        mainStackView.addArrangedSubview(descriptionContainerView)
+        mainStackView.addArrangedSubview(subtasksHeaderLabel
+        )
         mainStackView.addArrangedSubview(UIView())
-        
-        mainStackView.addArrangedSubview(addSubtaskButton)
         
         view.addSubview(mainStackView)
         view.addSubview(wrapperView)
+        view.addSubview(addSubtaskButton)
         wrapperView.addSubview(tableView)
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            descriptionContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            descriptionContainerView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
+            descriptionContainerView.heightAnchor.constraint(equalToConstant: 100),
+
+            
+            scrollView.leadingAnchor.constraint(equalTo: descriptionContainerView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: descriptionContainerView.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: descriptionContainerView.bottomAnchor),
+            
+            descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10),
+            descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10),
+            descriptionLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10)
+        ])
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 40),
@@ -253,15 +342,22 @@ public final class TaskDetailsViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor),
+            
+            addSubtaskButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addSubtaskButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addSubtaskButton.widthAnchor.constraint(equalToConstant: 140),
+            addSubtaskButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
     }
     
+    
     private func setupTableView() {
         tableView.register(ProjectCell.self, forCellReuseIdentifier: "SubtaskCell")
         tableView.dataSource = self
+        tableView.rowHeight = 70
     }
     
     @objc func addSubtask(_ sender: UIButton) {
@@ -308,7 +404,7 @@ public final class TaskDetailsViewController: UIViewController {
                     checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")?.withTintColor(.green, renderingMode: .alwaysOriginal)
                 } else {
                     completedLabel.text = "Not Completed"
-                    checkmarkImageView.image = UIImage(systemName: "xmark.circle.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal)
+                    checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
                 }
                 
                 viewModel.task = task
@@ -331,7 +427,7 @@ public final class TaskDetailsViewController: UIViewController {
             } else {
                 descriptionLabel.textColor = .gray
                 completedLabel.text = "Not Completed"
-                checkmarkImageView.image = UIImage(systemName: "xmark.circle.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal)
+                checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
             }
         }
         
@@ -381,9 +477,18 @@ extension TaskDetailsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
+extension TaskDetailsViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+}
+
 // MARK: - UIViewControllerTransitioningDelegate
 
 extension TaskDetailsViewController: UIViewControllerTransitioningDelegate {
+    
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         SheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
@@ -394,4 +499,3 @@ extension TaskDetailsViewController: AddSubtaskViewControllerDelegate {
         print("ViewController Dismissed ")
     }
 }
-

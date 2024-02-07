@@ -17,10 +17,9 @@ public class AsanaManager {
     var userTaskListGID = "1206421171234526"
     let projectGID = ""
     let taskGID = ""
-    var userGID = ""
+    var userGID = "538953726748370"
     
     static let shared = AsanaManager()
-    
     
     private init() {
         token = UserDefaults.standard.string(forKey: "accessToken") ?? ""

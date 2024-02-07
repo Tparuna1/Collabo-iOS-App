@@ -209,19 +209,6 @@ public final class ProjectTasksViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension ProjectTasksViewController: UITableViewDelegate {
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        70
-    }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath.row)
-    }
-}
-
 // MARK: - UITableViewDataSource
 
 extension ProjectTasksViewController: UITableViewDataSource {
@@ -244,3 +231,14 @@ extension ProjectTasksViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
+extension ProjectTasksViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
+    }
+}
