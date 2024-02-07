@@ -15,11 +15,25 @@ public final class ProjectTasksViewController: UIViewController {
     var viewModel: DefaultProjectTasksViewModel!
     var navigator: ProjectTasksNavigator!
     var taskDetailsNavigator: TaskDetailsNavigator!
-    
     private var tasks = [AsanaTask]()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
+    
+    private let customNavBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let navBarTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
@@ -39,21 +53,6 @@ public final class ProjectTasksViewController: UIViewController {
         return button
     }()
 
-    private let navBarTitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let customNavBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -116,7 +115,6 @@ public final class ProjectTasksViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
-        
         navigationController?.navigationBar.isHidden = true
     }
     

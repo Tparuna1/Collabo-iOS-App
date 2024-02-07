@@ -91,7 +91,7 @@ public final class TaskDetailsViewController: UIViewController {
         let label = UILabel()
         label.text = "Completed"
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .gray
+        label.textColor = .black
         return label
     }()
     
@@ -111,21 +111,6 @@ public final class TaskDetailsViewController: UIViewController {
         return stackView
     }()
     
-    private let calendarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "calendar")
-        imageView.tintColor = .gray
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private let dueOnLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .gray
-        return label
-    }()
-    
     private lazy var dueOnStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -133,6 +118,21 @@ public final class TaskDetailsViewController: UIViewController {
         stackView.addArrangedSubview(calendarImageView)
         stackView.addArrangedSubview(dueOnLabel)
         return stackView
+    }()
+    
+    private let calendarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "calendar")
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let dueOnLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = .black
+        return label
     }()
     
     private let userImageView: UIImageView = {
@@ -241,7 +241,6 @@ public final class TaskDetailsViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
-        
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -311,6 +310,7 @@ public final class TaskDetailsViewController: UIViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            
             descriptionContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             descriptionContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             descriptionContainerView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
@@ -404,7 +404,7 @@ public final class TaskDetailsViewController: UIViewController {
                     checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")?.withTintColor(.green, renderingMode: .alwaysOriginal)
                 } else {
                     completedLabel.text = "Not Completed"
-                    checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+                    checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.black, renderingMode: .alwaysOriginal)
                 }
                 
                 viewModel.task = task
@@ -427,7 +427,7 @@ public final class TaskDetailsViewController: UIViewController {
             } else {
                 descriptionLabel.textColor = .gray
                 completedLabel.text = "Not Completed"
-                checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+                checkmarkImageView.image = UIImage(systemName: "checkmark.circle")?.withTintColor(.black, renderingMode: .alwaysOriginal)
             }
         }
         
