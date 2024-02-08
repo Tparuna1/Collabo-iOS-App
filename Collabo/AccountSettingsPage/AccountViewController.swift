@@ -11,6 +11,27 @@ import Combine
 
 class AccountViewController: UIViewController {
     private let viewModel = AccountViewModel()
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 20
+        return stackView
+    }()
+    private lazy var infoContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
+    }()
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = 10
+        return stackView
+    }()
     private let nameLabel = UILabel()
     private let emailLabel = UILabel()
     private let profileImageView = UIImageView()
@@ -28,13 +49,36 @@ class AccountViewController: UIViewController {
         setupProfileImageView()
         setupLabels()
         setupLogoutButton()
+        
+        infoContainer.addSubview(infoStackView)
+        infoStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            infoStackView.leadingAnchor.constraint(equalTo: infoContainer.leadingAnchor, constant: 20),
+            infoStackView.trailingAnchor.constraint(equalTo: infoContainer.trailingAnchor, constant: -20),
+            infoStackView.topAnchor.constraint(equalTo: infoContainer.topAnchor, constant: 20),
+            infoStackView.bottomAnchor.constraint(equalTo: infoContainer.bottomAnchor, constant: -20),
+        ])
+        
+        stackView.addArrangedSubview(profileImageView)
+        stackView.addArrangedSubview(infoContainer)
+        setupLogoutButton()
+        
+        view.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -20),
+        ])
     }
 
     private func setupLabels() {
         nameLabel.text = "Name: Loading..."
         emailLabel.text = "Email: Loading..."
         
-        nameLabel.textAlignment = .center
+        nameLabel.textAlignment = .left
         emailLabel.textAlignment = .left
         
         nameLabel.font = UIFont.systemFont(ofSize: 18)
@@ -43,19 +87,8 @@ class AccountViewController: UIViewController {
         nameLabel.numberOfLines = 0
         emailLabel.numberOfLines = 0
         
-        view.addSubview(nameLabel)
-        view.addSubview(emailLabel)
-        
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
-            
-            emailLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-        ])
+        infoStackView.addArrangedSubview(nameLabel)
+        infoStackView.addArrangedSubview(emailLabel)
     }
 
     private func setupProfileImageView() {
@@ -63,13 +96,9 @@ class AccountViewController: UIViewController {
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = 50
         
-        view.addSubview(profileImageView)
-        
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             profileImageView.widthAnchor.constraint(equalToConstant: 100),
             profileImageView.heightAnchor.constraint(equalToConstant: 100),
         ])
@@ -83,14 +112,16 @@ class AccountViewController: UIViewController {
         logoutButton.setTitleColor(.white, for: .normal)
         logoutButton.layer.cornerRadius = 10
         
-        view.addSubview(logoutButton)
-        
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoutButton.widthAnchor.constraint(equalToConstant: 150),
+            logoutButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        view.addSubview(logoutButton)
         NSLayoutConstraint.activate([
             logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            logoutButton.widthAnchor.constraint(equalToConstant: 200),
-            logoutButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
 
