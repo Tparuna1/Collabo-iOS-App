@@ -270,12 +270,45 @@ public class AsanaManager {
         }
     }
     
-    func addTaskToAsana( name: String) async throws {
-        let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)/tasks")!
+    public func fetchAllTasks() async throws -> [AsanaTask] {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    throw SpecificNetworkError.invalidResponse(httpResponse.statusCode)
+                } else {
+                    throw SpecificNetworkError.invalidResponse(0)
+                }
+            }
+            
+            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
+            print("Raw Response:\n\(responseBody)")
+            
+            let decoder = JSONDecoder()
+            let asanaTaskResponse = try decoder.decode(AsanaTasksResponse.self, from: data)
+            return asanaTaskResponse.data
+        } catch let error as SpecificNetworkError {
+            throw error
+        } catch {
+            let errorMessage = "An unknown error occurred: \(error.localizedDescription)"
+            throw SpecificNetworkError.otherError(message: errorMessage)
+        }
+    }
+
+    
+    func addTaskToAsana(name: String, projectGID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let url = URL(string: "https://app.asana.com/api/1.0/tasks")!
         let parameters: [String: Any] = [
             "data": [
                 "workspace": "\(workspaceGID)",
-                "name": name,
+                "projects": [projectGID], // Pass project GID as an array
+                "name": name
             ]
         ]
         
@@ -295,28 +328,39 @@ public class AsanaManager {
             print("Request Body: \(parameters)")
         } catch {
             print("JSON Encoding Error: \(error)")
-            throw NetworkError.jsonEncodingError
+            completion(.failure(error))
+            return
         }
         
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidResponse
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Network Request Error: \(error)")
+                completion(.failure(error))
+                return
             }
             
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Response Status Code: \(httpResponse.statusCode)")
-            print("Response Body: \(responseBody)")
+            guard let httpResponse = response as? HTTPURLResponse else {
+                let error = NetworkError.invalidResponse
+                print("Invalid Response Error: \(error)")
+                completion(.failure(error))
+                return
+            }
             
             guard (200...299).contains(httpResponse.statusCode) else {
-                print("Server returned an error: \(responseBody)")
-                throw NetworkError.invalidResponse
+                let error = NetworkError.invalidResponse
+                print("Server returned an error: \(error)")
+                completion(.failure(error))
+                return
             }
-        } catch {
-            print("Network Request Error: \(error)")
-            throw error
-        }
+            
+            // Task added successfully
+            print("Task added successfully")
+            completion(.success(()))
+            
+        }.resume()
     }
+
+
 
     func fetchUserTasks() async throws -> [UserTaskList] {
         let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userTaskListGID)/tasks")!

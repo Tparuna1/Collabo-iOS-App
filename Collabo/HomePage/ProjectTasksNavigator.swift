@@ -35,10 +35,18 @@ public final class ProjectTasksNavigator {
     }
     
     private func navigateToNewTask(animated: Bool) {
+        guard let viewController = viewController else {
+            return
+        }
+        
+        let addTaskViewModel = AddTaskViewModel()
+        addTaskViewModel.params = ProjectTasksViewModelParams(name: viewController.viewModel.params?.name ?? "", gid: viewController.viewModel.params?.gid ?? "")
+        
         let vc = AddTaskViewController()
+        vc.viewModel = addTaskViewModel
         vc.delegate = viewController
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = viewController
-        viewController?.present(vc, animated: animated)
+        viewController.present(vc, animated: animated)
     }
 }

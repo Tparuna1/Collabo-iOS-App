@@ -16,7 +16,7 @@ class AddTaskViewController: UIViewController {
     // MARK: - Properties
     
     private var initialSheetYPosition: CGFloat = 0
-    private var viewModel = AddTaskViewModel()
+    var viewModel = AddTaskViewModel()
     
     public weak var delegate: AddTaskViewControllerDelegate?
     
@@ -62,6 +62,10 @@ class AddTaskViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func configure(with viewModel: AddTaskViewModel) {
+            self.viewModel = viewModel
     }
     
     // MARK: - UI Setup
@@ -123,19 +127,21 @@ class AddTaskViewController: UIViewController {
             return
         }
         
-        viewModel.addTaskToAsana(name: taskName) { error in
-            if let error = error {
-                print("Error creating task: \(error.localizedDescription)")
-            } else {
+        viewModel.addTask(name: taskName) { result in
+            switch result {
+            case .success:
                 print("Task added successfully")
                 DispatchQueue.main.async {
                     self.dismiss(animated: true) { [weak self] in
                         self?.delegate?.dismissed()
                     }
                 }
+            case .failure(let error):
+                print("Error creating task: \(error.localizedDescription)")
             }
         }
     }
+
     
     // MARK: - Keyboard Handling
     
