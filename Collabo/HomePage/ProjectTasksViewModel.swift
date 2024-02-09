@@ -27,6 +27,7 @@ public protocol ProjectTasksViewModelInput: AnyObject {
     var params: ProjectTasksViewModelParams? { get set }
     func viewDidLoad()
     func didSelectRow(at index: Int)
+    func newTask()
 }
 
 public protocol ProjectTasksViewModelOutput {
@@ -42,6 +43,7 @@ public enum ProjectTasksViewModelOutputAction {
 public enum ProjectTasksViewModelRoute {
     case details(TaskDetailsViewModelParams)
     case projectDeleted
+    case newTask
 }
 
 class DefaultProjectTasksViewModel {
@@ -65,7 +67,7 @@ class DefaultProjectTasksViewModel {
     
     // MARK: - Methods
     
-    private func fetchTasks() {
+    func fetchTasks() {
         guard let params else {
             return
         }
@@ -99,7 +101,6 @@ class DefaultProjectTasksViewModel {
             }
         }
     }
-
 }
 
 extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
@@ -127,5 +128,9 @@ extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
         let name = tasks[index].name
 
         routeSubject.send(.details(.init(name: name, gid: gid)))
+    }
+    
+    func newTask() {
+        routeSubject.send(.newTask)
     }
 }
