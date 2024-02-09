@@ -20,6 +20,8 @@
 		41BA94D12B70FEE5009AA25C /* UserTaskListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D02B70FEE5009AA25C /* UserTaskListModel.swift */; };
 		41BA94D32B710D06009AA25C /* MyTaskListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */; };
 		41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D42B7130EB009AA25C /* UserProfileModel.swift */; };
+		41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */; };
+		41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
 		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
@@ -74,6 +76,8 @@
 		41BA94D02B70FEE5009AA25C /* UserTaskListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTaskListModel.swift; sourceTree = "<group>"; };
 		41BA94D22B710D06009AA25C /* MyTaskListNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTaskListNavigator.swift; sourceTree = "<group>"; };
 		41BA94D42B7130EB009AA25C /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
+		41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
 		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
@@ -161,12 +165,23 @@
 				41FBEB712B56762B00A7670A /* HomePage */,
 				41FAAC702B6119CF009F6510 /* CreateNewProjectPage */,
 				41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */,
+				41BA94D82B74F6B3009AA25C /* AddtaskPage */,
 				41FAAC8D2B6917F4009F6510 /* TaskDetailsPage */,
 				417A80852B6ECF0A00E867E7 /* AddSubtaskPage */,
 				41FBEB762B5676D000A7670A /* MyTaskPage */,
 				41FBEB7B2B5676EF00A7670A /* AccountSettingsPage */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		41BA94D82B74F6B3009AA25C /* AddtaskPage */ = {
+			isa = PBXGroup;
+			children = (
+				41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */,
+				41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */,
+			);
+			name = AddtaskPage;
+			path = HomePage;
 			sourceTree = "<group>";
 		};
 		41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */ = {
@@ -452,6 +467,7 @@
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				4163F48E2B6D4D9B001D139A /* TaskAsanaMode.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
+				41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */,
 				41FAAC602B5FB24F009F6510 /* ProjectTasksViewModel.swift in Sources */,
 				41FBEBA82B596A6900A7670A /* PasswordChecklList.swift in Sources */,
 				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
@@ -468,6 +484,7 @@
 				41FAAC832B6298F0009F6510 /* ProjectsModel.swift in Sources */,
 				41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */,
 				41FAAC6F2B60F9E8009F6510 /* UserDefaultsManager.swift in Sources */,
+				41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksViewController.swift in Sources */,
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
 				4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */,

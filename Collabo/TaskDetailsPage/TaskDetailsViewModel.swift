@@ -27,6 +27,8 @@ public protocol TaskDetailsViewModelInput: AnyObject {
     var params: TaskDetailsViewModelParams? { get set }
     func viewDidLoad()
     func newSubtask()
+    func deleteTask()
+    func updateSingleTask()
 }
 
 public protocol TaskDetailsViewModelOutput {
@@ -158,8 +160,7 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
     var route: AnyPublisher<TaskDetailsViewModelRoute, Never> {
         routeSubject.eraseToAnyPublisher()
     }
-    
-    
+        
     func viewDidLoad() {
         fetchSingleTask()
         fetchSubtask()

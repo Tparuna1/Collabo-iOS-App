@@ -8,6 +8,8 @@
 import UIKit
 import Combine
 
+
+
 public final class ProjectTasksViewController: UIViewController {
     
     // MARK: - Properties
@@ -52,7 +54,7 @@ public final class ProjectTasksViewController: UIViewController {
         button.addTarget(self, action: #selector(showMoreOptions), for: .touchUpInside)
         return button
     }()
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +68,18 @@ public final class ProjectTasksViewController: UIViewController {
         wrapperView.layer.cornerRadius = 10
         wrapperView.clipsToBounds = true
         return wrapperView
+    }()
+    
+    private lazy var addTask: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("+ Add Task", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 25
+        button.addTarget(self, action: #selector(addTask(_:)), for: .touchUpInside)
+        return button
     }()
     
     // MARK: - View Lifecycle
@@ -104,6 +118,8 @@ public final class ProjectTasksViewController: UIViewController {
             navigator.navigate(to: .details(params), animated: true)
         case .projectDeleted:
             navigationController?.popViewController(animated: true)
+        case .newTask:
+            navigator.navigate(to: .newTask, animated: true)
         }
     }
     
@@ -153,6 +169,7 @@ public final class ProjectTasksViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(wrapperView)
+        view.addSubview(addTask)
         wrapperView.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -165,6 +182,11 @@ public final class ProjectTasksViewController: UIViewController {
             wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
             wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
             wrapperView.heightAnchor.constraint(equalToConstant: 800),
+            
+            addTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addTask.widthAnchor.constraint(equalToConstant: 140),
+            addTask.heightAnchor.constraint(equalToConstant: 50),
         ])
         
         tableView.separatorStyle = .none
@@ -200,10 +222,14 @@ public final class ProjectTasksViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-
+    
     
     func handleDeleteProject() {
         viewModel.deleteProject()
+    }
+    
+    @objc func addTask(_ sender: UIButton) {
+        viewModel.newTask()
     }
 }
 
@@ -238,5 +264,20 @@ extension ProjectTasksViewController: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelectRow(at: indexPath.row)
+    }
+}
+
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ProjectTasksViewController: UIViewControllerTransitioningDelegate {
+    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        SheetPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+extension ProjectTasksViewController: AddTaskViewControllerDelegate {
+    func dismissed() {
+        viewModel.fetchTasks()
     }
 }

@@ -15,12 +15,15 @@ public final class ProjectTasksNavigator {
 
     public enum Destination {
         case details(TaskDetailsViewModelParams)
+        case newTask
     }
 
     public func navigate(to destination: Destination, animated animate: Bool) {
         switch destination {
         case .details(let params):
             navigateToDetails(params: params, animated: animate)
+        case .newTask:
+            navigateToNewTask(animated: animate)
         }
     }
 
@@ -29,5 +32,13 @@ public final class ProjectTasksNavigator {
         let vc = TaskDetailsViewController()
         vc.viewModel = DefaultTaskDetailsViewModel(params: params)
         viewController?.navigationController?.pushViewController(vc, animated: animated)
+    }
+    
+    private func navigateToNewTask(animated: Bool) {
+        let vc = AddTaskViewController()
+        vc.delegate = viewController
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = viewController
+        viewController?.present(vc, animated: animated)
     }
 }
