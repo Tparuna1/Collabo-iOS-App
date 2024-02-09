@@ -38,11 +38,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         myTasksViewController.viewModel = DefaultUserTaskListViewModel()
         myTasksViewController.navigator = .init(viewController: myTasksViewController)
         let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
-        myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
+        myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 2)
         
         let accountViewController = AccountViewController()
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
-        accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 2)
+        accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 3)
         
         tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, accountNavigationController]
         

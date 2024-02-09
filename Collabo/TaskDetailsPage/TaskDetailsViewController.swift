@@ -365,6 +365,10 @@ public final class TaskDetailsViewController: UIViewController {
         viewModel.newSubtask()
     }
     
+    func handleDeleteTask() {
+        viewModel.deleteTask()
+    }
+    
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -387,10 +391,6 @@ public final class TaskDetailsViewController: UIViewController {
         }
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    func handleDeleteTask() {
-        viewModel.deleteTask()
     }
     
     @objc func toggleTaskCompletion() {
