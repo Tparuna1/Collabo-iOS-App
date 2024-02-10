@@ -360,8 +360,7 @@ public class AsanaManager {
         }.resume()
     }
 
-
-
+    
     func fetchUserTasks() async throws -> [UserTaskList] {
         let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userTaskListGID)/tasks")!
         
@@ -544,7 +543,6 @@ public class AsanaManager {
             print("Network Request Error: \(error)")
             throw error
         }
-        
     }
     
     func fetchUserInfo() async throws -> UserProfile {

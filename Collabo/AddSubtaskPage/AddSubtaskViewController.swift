@@ -17,6 +17,7 @@ class AddSubtaskViewController: UIViewController {
     
     private var initialSheetYPosition: CGFloat = 0
     private var viewModel = AddSubtaskViewModel()
+    var taskGID: String?
     
     public weak var delegate: AddSubtaskViewControllerDelegate?
 
@@ -120,7 +121,7 @@ class AddSubtaskViewController: UIViewController {
     @objc func createSubtask() {
         print("button tapped")
         guard let subtaskName = subtaskNameTextField.text, !subtaskName.isEmpty else {
-            print("Project name is empty")
+            print("Subtask name is empty")
             return
         }
         
@@ -128,7 +129,7 @@ class AddSubtaskViewController: UIViewController {
             if let error = error {
                 print("Error creating project: \(error.localizedDescription)")
             } else {
-                print("Project added successfully")
+                print("Subtask added successfully")
                 DispatchQueue.main.async {
                     self.dismiss(animated: true) { [weak self] in
                         self?.delegate?.dismissed()

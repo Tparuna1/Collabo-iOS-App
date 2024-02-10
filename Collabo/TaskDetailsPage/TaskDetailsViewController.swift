@@ -9,11 +9,17 @@
 import UIKit
 import Combine
 
+public protocol TaskDetailsDelegate: AnyObject {
+    func deleted()
+}
+
 public final class TaskDetailsViewController: UIViewController {
     
     // MARK: - Properties
     var viewModel: DefaultTaskDetailsViewModel!
     var navigator: TaskDetailsNavigator!
+    
+    weak var delegate: TaskDetailsDelegate?
     
     private var subtask = [Subtask]()
     private var cancellables = Set<AnyCancellable>()
@@ -229,7 +235,8 @@ public final class TaskDetailsViewController: UIViewController {
         case .newSubtask:
             navigator.navigate(to: .newSubtask, animated: true)
         case .taskDeleted:
-            navigationController?.popViewController(animated: true)
+            delegate?.deleted()
+            navigator.navigate(to: .close, animated: true)
         }
     }
     

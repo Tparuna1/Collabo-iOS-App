@@ -17,10 +17,16 @@ public final class TaskDetailsNavigator {
 
     public enum Destination {
         case newSubtask
+        case close
     }
 
     public func navigate(to destination: Destination, animated animate: Bool) {
+        switch destination {
+        case .newSubtask:
             navigateToAddSubtask(animated: animate)
+        case .close:
+            navigateToClose(animated: animate)
+        }
     }
 
     // MARK: - Private Methods
@@ -31,5 +37,9 @@ public final class TaskDetailsNavigator {
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = viewController
         viewController?.present(vc, animated: animated)
+    }
+        
+    private func navigateToClose(animated: Bool) {
+        viewController?.navigationController?.popViewController(animated: animated)
     }
 }
