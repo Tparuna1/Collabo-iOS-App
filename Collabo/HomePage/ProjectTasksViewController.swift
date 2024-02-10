@@ -57,14 +57,14 @@ public final class ProjectTasksViewController: UIViewController {
     
     private lazy var progressContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.systemCyan.withAlphaComponent(0.8)
+        view.backgroundColor = UIColor(red: 0.102, green: 0.1765, blue: 0.2588, alpha: 1.0)
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let circularProgressView: CircularProgressView = {
-        let progressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), lineWidth: 10, rounded: true)
+        let progressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 70, height: 70), lineWidth: 10, rounded: true)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.progressColor = .green
         progressView.trackColor = .white
@@ -75,10 +75,21 @@ public final class ProjectTasksViewController: UIViewController {
     private let progressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         label.text = "Project Progress"
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var additionalLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 3
+        label.text = "Additional Text"
         return label
     }()
 
@@ -194,18 +205,24 @@ public final class ProjectTasksViewController: UIViewController {
             progressContainer.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 10),
             progressContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
             progressContainer.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
-            progressContainer.heightAnchor.constraint(equalToConstant: 80)
+            progressContainer.heightAnchor.constraint(equalToConstant: 120)
         ])
         
         progressContainer.addSubview(circularProgressView)
         progressContainer.addSubview(progressLabel)
+        progressContainer.addSubview(additionalLabel)
+
         
         NSLayoutConstraint.activate([
             progressLabel.leadingAnchor.constraint(equalTo: progressContainer.leadingAnchor, constant: 15),
-            progressLabel.centerYAnchor.constraint(equalTo: progressContainer.centerYAnchor),
-               
-            circularProgressView.trailingAnchor.constraint(equalTo: progressContainer.trailingAnchor, constant: -80),
-            circularProgressView.topAnchor.constraint(equalTo: progressContainer.topAnchor, constant: 15)
+            progressLabel.topAnchor.constraint(equalTo: progressContainer.topAnchor, constant: 20),
+            
+            additionalLabel.topAnchor.constraint(equalTo: progressLabel.bottomAnchor, constant: 10),
+            additionalLabel.leadingAnchor.constraint(equalTo: progressContainer.leadingAnchor, constant: 15),
+            additionalLabel.trailingAnchor.constraint(equalTo: progressContainer.trailingAnchor, constant: -200),
+
+            circularProgressView.trailingAnchor.constraint(equalTo: progressContainer.trailingAnchor, constant: -90),
+            circularProgressView.topAnchor.constraint(equalTo: progressContainer.topAnchor, constant: 25)
         ])
     }
 
@@ -281,6 +298,23 @@ public final class ProjectTasksViewController: UIViewController {
     private func updateProgress() {
         let progress = viewModel.calculateProgress()
         circularProgressView.setProgress(duration: 0.5, to: progress)
+        
+        let progressPercentage = Int(progress * 100)
+        
+        switch progressPercentage {
+        case 0..<25:
+            additionalLabel.text = "Time to start! Progress needed"
+        case 25..<50:
+            additionalLabel.text = "Making good progress. Stay focused!"
+        case 50..<75:
+            additionalLabel.text = "Doing great! Keep up the momentum!"
+        case 75..<100:
+            additionalLabel.text = "Almost there! Keep pushing forward!"
+        case 100:
+            additionalLabel.text = "Congratulations! Project successfully completed!"
+        default:
+            break
+        }
     }
 }
 

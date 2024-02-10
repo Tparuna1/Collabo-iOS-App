@@ -9,6 +9,8 @@ import UIKit
 
 class CircularProgressView: UIView {
     
+    // MARK: - Properties
+    
     fileprivate var progressLayer = CAShapeLayer()
     fileprivate var trackLayer = CAShapeLayer()
     fileprivate var percentageLabel = UILabel()
@@ -40,6 +42,8 @@ class CircularProgressView: UIView {
     var rounded: Bool
     var filled: Bool
     var lineWidth: CGFloat?
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         progress = 0
@@ -83,6 +87,8 @@ class CircularProgressView: UIView {
         setupPercentageLabel()
     }
     
+    // MARK: - Private Methods
+    
     fileprivate func createProgressView() {
         self.backgroundColor = .clear
         self.layer.cornerRadius = frame.size.width / 2
@@ -111,10 +117,12 @@ class CircularProgressView: UIView {
         addSubview(percentageLabel)
         
         NSLayoutConstraint.activate([
-            percentageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 17),
-            percentageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11)
+            percentageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 28),
+            percentageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24)
         ])
     }
+    
+    // MARK: - Public Methods
     
     func trackColorToProgressColor() {
         trackColor = progressColor
@@ -134,6 +142,8 @@ class CircularProgressView: UIView {
         let percentage = Int(newProgress * 100)
         updatePercentageLabel(to: percentage)
     }
+    
+    // MARK: - Private Methods
     
     private func updatePercentageLabel(to percentage: Int) {
         percentageLabel.text = "\(percentage)%"
