@@ -22,6 +22,7 @@
 		41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D42B7130EB009AA25C /* UserProfileModel.swift */; };
 		41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */; };
 		41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */; };
+		41BA94E52B779BEB009AA25C /* CircullarProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
 		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
@@ -78,6 +79,7 @@
 		41BA94D42B7130EB009AA25C /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
 		41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
+		41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircullarProgressView.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
 		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				4163F48F2B6D53CC001D139A /* ProjectCell */,
 				41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */,
 				4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */,
+				41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */,
 			);
 			path = UIKitComponents;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				41FBEB6C2B566FFA00A7670A /* HomeViewController.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountViewController.swift in Sources */,
 				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,
+				41BA94E52B779BEB009AA25C /* CircullarProgressView.swift in Sources */,
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
 				417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */,
