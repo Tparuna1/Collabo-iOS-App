@@ -149,7 +149,6 @@ class DefaultTaskDetailsViewModel: ObservableObject {
             }
         }
     }
-
 }
 
 extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {

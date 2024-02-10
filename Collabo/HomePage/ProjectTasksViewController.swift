@@ -365,3 +365,11 @@ extension ProjectTasksViewController: AddTaskViewControllerDelegate {
         viewModel.fetchTasks()
     }
 }
+
+// MARK: - TaskDetailsDelegate
+
+extension ProjectTasksViewController: TaskDetailsDelegate {
+    public func deleted() {
+        viewModel.fetchTasks()
+    }
+}

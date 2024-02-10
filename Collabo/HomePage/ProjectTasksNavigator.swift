@@ -31,6 +31,8 @@ public final class ProjectTasksNavigator {
     private func navigateToDetails(params: TaskDetailsViewModelParams, animated: Bool) {
         let vc = TaskDetailsViewController()
         vc.viewModel = DefaultTaskDetailsViewModel(params: params)
+        vc.navigator = .init(viewController: vc)
+        vc.delegate = viewController
         viewController?.navigationController?.pushViewController(vc, animated: animated)
     }
     

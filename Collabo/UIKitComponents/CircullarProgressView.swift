@@ -118,7 +118,7 @@ class CircularProgressView: UIView {
         
         NSLayoutConstraint.activate([
             percentageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 28),
-            percentageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24)
+            percentageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22)
         ])
     }
     

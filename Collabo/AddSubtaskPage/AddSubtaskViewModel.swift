@@ -15,6 +15,7 @@ class AddSubtaskViewModel {
     
     private var asanaManager = AsanaManager.shared
     var errorMessage: String?
+    var params: TaskDetailsViewModelParams?
 
     // MARK: - Methods
     
