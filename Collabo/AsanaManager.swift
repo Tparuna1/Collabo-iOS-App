@@ -250,9 +250,10 @@ public class AsanaManager {
     }
     
     func fetchTasks(forProject projectGID: String) async throws -> [AsanaTask] {
-        let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)/tasks")!
+        let baseApiEndpoint = "https://app.asana.com/api/1.0"
+        let tasksApiEndpoint = "\(baseApiEndpoint)/projects/\(projectGID)/tasks?opt_fields=gid,name,completed"
         
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL(string: tasksApiEndpoint)!)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -269,7 +270,7 @@ public class AsanaManager {
             throw NetworkError.decodingError
         }
     }
-    
+
     public func fetchAllTasks() async throws -> [AsanaTask] {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks")!
         
@@ -307,7 +308,7 @@ public class AsanaManager {
         let parameters: [String: Any] = [
             "data": [
                 "workspace": "\(workspaceGID)",
-                "projects": [projectGID], // Pass project GID as an array
+                "projects": [projectGID],
                 "name": name
             ]
         ]
@@ -353,7 +354,6 @@ public class AsanaManager {
                 return
             }
             
-            // Task added successfully
             print("Task added successfully")
             completion(.success(()))
             

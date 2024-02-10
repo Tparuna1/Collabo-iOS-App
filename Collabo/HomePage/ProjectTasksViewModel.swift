@@ -76,6 +76,7 @@ class DefaultProjectTasksViewModel {
                 tasks = try await AsanaManager.shared.fetchTasks(forProject: params.gid)
                 await MainActor.run {
                     self.actionSubject.send(.tasks(self.tasks))
+                    print("Fetched tasks: \(tasks)")
                 }
             } catch {
                 self.errorMessage = error.localizedDescription
@@ -100,6 +101,13 @@ class DefaultProjectTasksViewModel {
                 }
             }
         }
+    }
+    
+    func calculateProgress() -> Float {
+        guard !tasks.isEmpty else { return 0.0 }
+        
+        let completedTasksCount = tasks.filter { $0.completed }.count
+        return Float(completedTasksCount) / Float(tasks.count)
     }
 }
 

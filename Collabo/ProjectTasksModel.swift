@@ -14,6 +14,7 @@ import Foundation
 public struct AsanaTask: Codable {
     let gid: String
     let name: String
+    let completed: Bool
 }
 
 // MARK: - AsanaTaskResponse
