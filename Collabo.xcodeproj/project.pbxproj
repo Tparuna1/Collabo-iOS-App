@@ -186,6 +186,15 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		41BA94E72B7A90DF009AA25C /* CheklistForPassword */ = {
+			isa = PBXGroup;
+			children = (
+				41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */,
+				41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */,
+			);
+			path = CheklistForPassword;
+			sourceTree = "<group>";
+		};
 		41FAAC5A2B5FB1EC009F6510 /* ProjectTasksPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +359,7 @@
 				41FBEB9C2B57EA1300A7670A /* CustomTextfieldComponent.swift */,
 				41FBEB962B56F10100A7670A /* EmailFieldComponent.swift */,
 				41FBEB982B56F10A00A7670A /* SecureFieldComponent.swift */,
+				41BA94E72B7A90DF009AA25C /* CheklistForPassword */,
 			);
 			name = SwiftUIComponents;
 			path = HomePage;
@@ -360,8 +370,6 @@
 			children = (
 				41FBEBA52B5959C700A7670A /* SUISIgnUpViewModel.swift */,
 				41FBEB942B56EE1300A7670A /* SUISignUpView.swift */,
-				41FBEBA72B596A6900A7670A /* PasswordChecklList.swift */,
-				41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */,
 			);
 			path = SignUpPage;
 			sourceTree = "<group>";
