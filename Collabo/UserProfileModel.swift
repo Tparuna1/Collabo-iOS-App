@@ -7,8 +7,8 @@
 
 import Foundation
 
-
 // MARK: - UserProfile
+
 struct UserProfile: Codable {
     let data: DataClass?
 }

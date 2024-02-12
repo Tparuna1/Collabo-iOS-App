@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class WelcomeViewModel: ObservableObject {
+final class WelcomeViewModel: ObservableObject {
     
     // MARK: - View Methods
     

@@ -8,7 +8,7 @@
 import SwiftUI
 import Auth0
 
-class LoginPageViewModel: ObservableObject {
+final class LoginPageViewModel: ObservableObject {
     
     // MARK: - Published Properties
     
@@ -50,7 +50,7 @@ class LoginPageViewModel: ObservableObject {
                     case .success(let credentials):
                         print("Credentials: \(credentials)")
                         self?.onLoginSuccess?()
-
+                        
                     case .failure(let error):
                         print("Error: \(error)")
                         self?.errorMessage = "Login failed: \(error.localizedDescription)"
@@ -58,7 +58,7 @@ class LoginPageViewModel: ObservableObject {
                 }
             }
     }
-
+    
     func connectWithAsana() {
         let connectionName = "Asana"
         

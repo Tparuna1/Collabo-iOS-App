@@ -7,17 +7,26 @@
 
 import UIKit
 
-class SheetPresentationController: UIPresentationController {
+/// Custom UIPresentationController for presenting a view controller as a sheet.
+
+final class SheetPresentationController: UIPresentationController {
+    
+    // MARK: - Properties
+
     private let presentedHeightFraction: CGFloat
     private let cornerRadius: CGFloat = 16.0
     private var blurEffectView: UIVisualEffectView?
     
+    // MARK: - Initializers
+
     init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, presentedHeightFraction: CGFloat = 0.30) {
         self.presentedHeightFraction = presentedHeightFraction
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         setupBlurView()
     }
     
+    // MARK: - UIPresentationController Overrides
+
     override var frameOfPresentedViewInContainerView: CGRect {
         if let containerView = containerView {
             let height = containerView.bounds.height * presentedHeightFraction
@@ -53,6 +62,8 @@ class SheetPresentationController: UIPresentationController {
         }
     }
     
+    // MARK: - Private Methods
+
     private func setupBlurView() {
         let blurEffect = UIBlurEffect(style: .light)
         

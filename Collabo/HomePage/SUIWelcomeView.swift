@@ -34,8 +34,3 @@ struct SUIWelcomeView: View {
     }
 }
 
-// MARK: - Preview
-
-#Preview {
-    SUIWelcomeView()
-}

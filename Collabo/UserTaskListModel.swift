@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // MARK: - DataClass
 public struct UserTaskList: Codable {
     let gid: String

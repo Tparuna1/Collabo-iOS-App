@@ -9,10 +9,11 @@
 import Foundation
 import Combine
 
-// MARK: - Protocols
+// MARK: - UserTaskListViewModel Protocol
 
 public protocol UserTaskListViewModel: UserTaskListViewModelInput, UserTaskListViewModelOutput {}
 
+// MARK: - UserTaskListViewModel Input & Output  Protocols
 
 public protocol UserTaskListViewModelInput: AnyObject {
     func viewDidLoad()
@@ -24,6 +25,8 @@ public protocol UserTaskListViewModelOutput {
     var route: AnyPublisher<UserTaskListViewModelRoute, Never> { get }
 }
 
+// MARK: - UserTaskListViewModel Enumerations
+
 public enum UserTaskListViewModelOutputAction {
     case tasks([UserTaskList])
 }
@@ -32,7 +35,9 @@ public enum UserTaskListViewModelRoute {
     case details(TaskDetailsViewModelParams)
 }
 
-class DefaultUserTaskListViewModel {
+// MARK: - DefaultUserTaskListViewModel Class
+
+final class DefaultUserTaskListViewModel {
     private let actionSubject = PassthroughSubject<UserTaskListViewModelOutputAction, Never>()
     private let routeSubject = PassthroughSubject<UserTaskListViewModelRoute, Never>()
         
@@ -58,6 +63,8 @@ class DefaultUserTaskListViewModel {
         }
     }
 }
+
+// MARK: - UserTaskListViewModel Extension
 
 extension DefaultUserTaskListViewModel: UserTaskListViewModel {
     var action: AnyPublisher<UserTaskListViewModelOutputAction, Never> {

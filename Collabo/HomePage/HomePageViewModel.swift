@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
+// MARK: - HomeViewModel Protocol
+
 public protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
+
+// MARK: - HomeViewModel Input & Output  Protocols
 
 public protocol HomeViewModelInput: AnyObject {
     func viewDidLoad()
@@ -22,6 +26,8 @@ public protocol HomeViewModelOutput {
     var route: AnyPublisher<HomeViewModelRoute, Never> { get }
 }
 
+// MARK: - HomeViewModel Enumerations
+
 public enum HomeViewModelOutputAction {
     case projects([AsanaProject])
 }
@@ -30,6 +36,8 @@ public enum HomeViewModelRoute {
     case detail(ProjectTasksViewModelParams)
     case newProject
 }
+
+// MARK: - DefaultHomeViewModel Class
 
 final class DefaultHomeViewModel {
     private let actionSubject = PassthroughSubject<HomeViewModelOutputAction, Never>()
@@ -69,6 +77,8 @@ final class DefaultHomeViewModel {
     }
 }
 
+// MARK: - HomeViewModel Extension
+
 extension DefaultHomeViewModel: HomeViewModel {
     var action: AnyPublisher<HomeViewModelOutputAction, Never> {
         actionSubject.eraseToAnyPublisher()
@@ -79,6 +89,7 @@ extension DefaultHomeViewModel: HomeViewModel {
     }
     
     // MARK: - Public Methods
+    
     func viewDidLoad() {
         fetchProjects()
     }

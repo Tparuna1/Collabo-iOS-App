@@ -139,19 +139,6 @@ public final class UserTaskListViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension UserTaskListViewController: UITableViewDelegate {
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        70
-    }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath.row)
-    }
-}
-
 // MARK: - UITableViewDataSource
 
 extension UserTaskListViewController: UITableViewDataSource {
@@ -174,3 +161,15 @@ extension UserTaskListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Delegate Extensions
+
+extension UserTaskListViewController: UITableViewDelegate {
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
+    }
+}

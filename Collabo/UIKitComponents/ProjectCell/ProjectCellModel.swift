@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - ProjectCellModel
+
 struct ProjectCellModel {
     let title: String
     let color: UIColor

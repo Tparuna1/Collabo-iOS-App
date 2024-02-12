@@ -5,11 +5,9 @@
 //  Created by tornike <parunashvili on 03.02.24.
 //
 
-
-
 import Foundation
 
-class AddSubtaskViewModel {
+final class AddSubtaskViewModel {
     
     // MARK: - Properties
     

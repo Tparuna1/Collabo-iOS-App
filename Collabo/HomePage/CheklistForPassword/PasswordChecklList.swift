@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct ChecklistItem: View {
+    
     // MARK: - Properties
+    
     var title: String
     var isMet: Bool
     
     // MARK: - Body
+    
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: isMet ? "checkmark.circle.fill" : "circle")

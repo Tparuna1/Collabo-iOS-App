@@ -499,15 +499,13 @@ extension TaskDetailsViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - Delegate Extensions
 
 extension TaskDetailsViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         70
     }
 }
-
-// MARK: - UIViewControllerTransitioningDelegate
 
 extension TaskDetailsViewController: UIViewControllerTransitioningDelegate {
     

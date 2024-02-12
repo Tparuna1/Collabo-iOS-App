@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct EmailTextField: View {
+    
     // MARK: - Properties
+    
     @Binding var email: String
     
     // MARK: - Body
+    
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {

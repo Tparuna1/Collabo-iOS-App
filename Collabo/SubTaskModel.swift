@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-
-
 // MARK: - SubtaskModel
 public struct Subtask: Codable {
     let gid: String
