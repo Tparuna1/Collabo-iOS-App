@@ -19,7 +19,6 @@ class AddTaskViewModel {
     
     func addTask(name: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let projectGID = params?.gid else {
-            print("failure")
             return
         }
         

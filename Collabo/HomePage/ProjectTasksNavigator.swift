@@ -16,6 +16,7 @@ public final class ProjectTasksNavigator {
     public enum Destination {
         case details(TaskDetailsViewModelParams)
         case newTask
+        case close
     }
 
     public func navigate(to destination: Destination, animated animate: Bool) {
@@ -24,6 +25,8 @@ public final class ProjectTasksNavigator {
             navigateToDetails(params: params, animated: animate)
         case .newTask:
             navigateToNewTask(animated: animate)
+        case .close:
+            navigateToClose(animated: animate)
         }
     }
 
@@ -50,5 +53,8 @@ public final class ProjectTasksNavigator {
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = viewController
         viewController.present(vc, animated: animated)
+    }
+    private func navigateToClose(animated: Bool) {
+        viewController?.navigationController?.popViewController(animated: animated)
     }
 }

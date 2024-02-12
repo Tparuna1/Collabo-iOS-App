@@ -27,6 +27,8 @@ public class AsanaManager {
         
     }
     
+    // MARK: - Authentication
+
     public func getAccessToken(authorizationCode: String) async throws {
         let tokenEndpoint = "https://app.asana.com/-/oauth_token"
         
@@ -134,6 +136,8 @@ public class AsanaManager {
         }
     }
     
+    // MARK: - User
+
     public func getUserID() async throws -> String {
         let url = URL(string: "https://app.asana.com/api/1.0/users/me")!
         
@@ -146,9 +150,6 @@ public class AsanaManager {
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 throw NetworkError.invalidResponse
             }
-            
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Raw Response:\n\(responseBody)")
             
             let decoder = JSONDecoder()
             let user = try decoder.decode(UserProfile.self, from: data)
@@ -163,6 +164,30 @@ public class AsanaManager {
         }
     }
     
+    func fetchUserInfo() async throws -> UserProfile {
+        let url = URL(string: "https://app.asana.com/api/1.0/users/\(userGID)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.invalidResponse
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let userProfile = try decoder.decode(UserProfile.self, from: data)
+            return userProfile
+        } catch {
+            throw error
+        }
+    }
+    
+    // MARK: - Projects
+
     public func fetchProjects() async throws -> [AsanaProject] {
         do {
             return try await performFetchProjects()
@@ -192,36 +217,24 @@ public class AsanaManager {
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("Request URL: \(url)")
-            print("Request Headers: \(headers)")
-            print("Request Body: \(parameters)")
         } catch {
-            print("JSON Encoding Error: \(error)")
             throw NetworkError.jsonEncodingError
         }
         
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (_, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse
             }
             
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Response Status Code: \(httpResponse.statusCode)")
-            print("Response Body: \(responseBody)")
-            
             guard (200...299).contains(httpResponse.statusCode) else {
-                print("Server returned an error: \(responseBody)")
                 throw NetworkError.invalidResponse
             }
         } catch {
-            print("Network Request Error: \(error)")
             throw error
         }
-        
     }
-    
-    
+
     func deleteProject(projectGID: String) async throws {
         let url = URL(string: "https://app.asana.com/api/1.0/projects/\(projectGID)")!
         
@@ -230,25 +243,21 @@ public class AsanaManager {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (_, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse
             }
             
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Response Status Code: \(httpResponse.statusCode)")
-            print("Response Body: \(responseBody)")
-            
             guard (200...299).contains(httpResponse.statusCode) else {
-                print("Server returned an error: \(responseBody)")
                 throw NetworkError.invalidResponse
             }
         } catch {
-            print("Network Request Error: \(error)")
             throw error
         }
     }
     
+    // MARK: - Tasks
+
     func fetchTasks(forProject projectGID: String) async throws -> [AsanaTask] {
         let baseApiEndpoint = "https://app.asana.com/api/1.0"
         let tasksApiEndpoint = "\(baseApiEndpoint)/projects/\(projectGID)/tasks?opt_fields=gid,name,completed"
@@ -288,9 +297,6 @@ public class AsanaManager {
                 }
             }
             
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Raw Response:\n\(responseBody)")
-            
             let decoder = JSONDecoder()
             let asanaTaskResponse = try decoder.decode(AsanaTasksResponse.self, from: data)
             return asanaTaskResponse.data
@@ -302,7 +308,6 @@ public class AsanaManager {
         }
     }
 
-    
     func addTaskToAsana(name: String, projectGID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks")!
         let parameters: [String: Any] = [
@@ -324,43 +329,34 @@ public class AsanaManager {
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("Request URL: \(url)")
-            print("Request Headers: \(headers)")
-            print("Request Body: \(parameters)")
         } catch {
-            print("JSON Encoding Error: \(error)")
             completion(.failure(error))
             return
         }
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Network Request Error: \(error)")
                 completion(.failure(error))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 let error = NetworkError.invalidResponse
-                print("Invalid Response Error: \(error)")
                 completion(.failure(error))
                 return
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
                 let error = NetworkError.invalidResponse
-                print("Server returned an error: \(error)")
                 completion(.failure(error))
                 return
             }
             
-            print("Task added successfully")
             completion(.success(()))
             
         }.resume()
     }
 
-    
     func fetchUserTasks() async throws -> [UserTaskList] {
         let url = URL(string: "https://app.asana.com/api/1.0/user_task_lists/\(userTaskListGID)/tasks")!
         
@@ -377,9 +373,6 @@ public class AsanaManager {
                     throw SpecificNetworkError.invalidResponse(0)
                 }
             }
-            
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Raw Response:\n\(responseBody)")
             
             let decoder = JSONDecoder()
             let userTaskListsResponse = try decoder.decode(UserTaskListResponse.self, from: data)
@@ -401,17 +394,12 @@ public class AsanaManager {
         
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON Response: \(jsonString)")
-            }
             
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let task = try decoder.decode(TaskAsana.self, from: data)
-            print("Task fetched successfully")
             return task
         } catch {
-            print("Networking error: \(error)")
             throw NetworkError.decodingError
         }
     }
@@ -432,17 +420,12 @@ public class AsanaManager {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let (data, _) = try await URLSession.shared.data(for: request)
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON Response: \(jsonString)")
-            }
             
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let task = try decoder.decode(TaskAsana.self, from: data)
-            print("Task updated successfully")
             return task
         } catch {
-            print("Networking error: \(error)")
             throw NetworkError.decodingError
         }
     }
@@ -456,21 +439,18 @@ public class AsanaManager {
         
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON Response: \(jsonString)")
-            }
             
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let task = try decoder.decode(TaskAsana.self, from: data)
-            print("Task fetched successfully")
             return task
         } catch {
-            print("Networking error: \(error)")
             throw NetworkError.decodingError
         }
     }
     
+    // MARK: - Subtasks
+
     func fetchSubtasks(forSubtask taskGID: String) async throws -> [Subtask] {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
         
@@ -484,11 +464,6 @@ public class AsanaManager {
                 throw NetworkError.invalidResponse
             }
             
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON Response:")
-                print(jsonString)
-            }
-            
             let decoder = JSONDecoder()
             let tasksResponse = try decoder.decode(SubtaskResponse.self, from: data)
             return tasksResponse.data
@@ -497,12 +472,13 @@ public class AsanaManager {
         }
     }
     
-    func addSubtask(name: String) async throws {
+    func addSubtask(name: String, taskGID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = URL(string: "https://app.asana.com/api/1.0/tasks/\(taskGID)/subtasks")!
         let parameters: [String: Any] = [
             "data": [
-                "name": name,
-                "gid": "\(taskGID)"
+                "projects": "\(projectGID)",
+                "tasks": [taskGID],
+                "name": name
             ]
         ]
         
@@ -517,56 +493,33 @@ public class AsanaManager {
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("Request URL: \(url)")
-            print("Request Headers: \(headers)")
-            print("Request Body: \(parameters)")
         } catch {
-            print("JSON Encoding Error: \(error)")
-            throw NetworkError.jsonEncodingError
+            completion(.failure(error))
+            return
         }
         
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidResponse
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
             }
             
-            let responseBody = String(data: data, encoding: .utf8) ?? "Could not decode response"
-            print("Response Status Code: \(httpResponse.statusCode)")
-            print("Response Body: \(responseBody)")
+            guard let httpResponse = response as? HTTPURLResponse else {
+                let error = NetworkError.invalidResponse
+                completion(.failure(error))
+                return
+            }
             
             guard (200...299).contains(httpResponse.statusCode) else {
-                print("Server returned an error: \(responseBody)")
-                throw NetworkError.invalidResponse
-            }
-        } catch {
-            print("Network Request Error: \(error)")
-            throw error
-        }
-    }
-    
-    func fetchUserInfo() async throws -> UserProfile {
-        let url = URL(string: "https://app.asana.com/api/1.0/users/\(userGID)")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                throw NetworkError.invalidResponse
+                let error = NetworkError.invalidResponse
+                completion(.failure(error))
+                return
             }
             
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let userProfile = try decoder.decode(UserProfile.self, from: data)
-            return userProfile
-        } catch {
-            throw error
-        }
+            completion(.success(()))
+            
+        }.resume()
     }
-    
     
     enum NetworkError: Error {
         case invalidURL

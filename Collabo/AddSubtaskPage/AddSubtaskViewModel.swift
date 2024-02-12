@@ -19,14 +19,19 @@ class AddSubtaskViewModel {
 
     // MARK: - Methods
     
-    func addSubtask(name: String, completion: @escaping (Error?) -> Void) {
-        Task {
-            do {
-                try await asanaManager.addSubtask(name: name)
-                completion(nil)
-            } catch {
+    func addSubtask(name: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let taskGID = params?.gid else {
+            print("failure")
+            return
+        }
+        
+        asanaManager.addSubtask(name: name, taskGID: taskGID) { result in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case .failure(let error):
                 self.errorMessage = error.localizedDescription
-                completion(error)
+                completion(.failure(error))
             }
         }
     }

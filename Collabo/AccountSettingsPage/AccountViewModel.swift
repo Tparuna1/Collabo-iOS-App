@@ -5,18 +5,17 @@
 //  Created by tornike <parunashvili on 16.01.24.
 //
 
-
 import Foundation
 import Combine
 import Auth0
 
-
-
-class AccountViewModel {
-    static let shared = AccountViewModel()
+final class AccountViewModel {
+    
+    // MARK: - Properties
     var onLogoutComplete: (() -> Void)?
+    static let shared = AccountViewModel()
     
-    
+    // MARK: - Methods
     func logout() {
         Auth0
             .webAuth()
@@ -43,4 +42,3 @@ class AccountViewModel {
         }
     }
 }
-

@@ -9,6 +9,8 @@
 import UIKit
 import Combine
 
+//MARK: - Protocols
+
 public protocol TaskDetailsDelegate: AnyObject {
     func deleted()
 }
@@ -204,10 +206,9 @@ public final class TaskDetailsViewController: UIViewController {
     // MARK: - Lifecycle Methods
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupCustomNavBar()
+        setupNavigationBarAppearance()
         setupUI()
         bind(to: viewModel)
-        setupTableView()
         viewModel.viewDidLoad()
         view.applyCustomBackgroundColor()
     }
@@ -240,6 +241,16 @@ public final class TaskDetailsViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - UI Setup
+    
+    private func setupUI() {
+        setupCustomNavBar()
+        setupStackview()
+        setupTableView()
+        setupAddSubtaskButton()
+    }
+    
     private func setupNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .systemBlue
@@ -251,7 +262,6 @@ public final class TaskDetailsViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    // MARK: - Custom Navigation Bar Setup
     private func setupCustomNavBar() {
         view.addSubview(customNavBar)
         customNavBar.addSubview(backButton)
@@ -283,7 +293,7 @@ public final class TaskDetailsViewController: UIViewController {
     }
     
     // MARK: - UI Setup
-    private func setupUI() {
+    private func setupStackview() {
         completedStackView.addArrangedSubview(checkmarkImageView)
         completedStackView.addArrangedSubview(completedLabel)
         
@@ -309,21 +319,16 @@ public final class TaskDetailsViewController: UIViewController {
         mainStackView.addArrangedSubview(UIView())
         
         view.addSubview(mainStackView)
-        view.addSubview(wrapperView)
-        view.addSubview(addSubtaskButton)
-        wrapperView.addSubview(tableView)
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             descriptionContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             descriptionContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             descriptionContainerView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20),
             descriptionContainerView.heightAnchor.constraint(equalToConstant: 100),
 
-            
             scrollView.leadingAnchor.constraint(equalTo: descriptionContainerView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: descriptionContainerView.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
@@ -339,7 +344,14 @@ public final class TaskDetailsViewController: UIViewController {
             mainStackView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 40),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
+        ])
+    }
+    
+    private func setupTableView() {
+        view.addSubview(wrapperView)
+        wrapperView.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
             wrapperView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 20),
             wrapperView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             wrapperView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -349,32 +361,26 @@ public final class TaskDetailsViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor),
-            
-            addSubtaskButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            addSubtaskButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            addSubtaskButton.widthAnchor.constraint(equalToConstant: 140),
-            addSubtaskButton.heightAnchor.constraint(equalToConstant: 50),
         ])
-        
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-    }
-    
-    
-    private func setupTableView() {
         tableView.register(ProjectCell.self, forCellReuseIdentifier: "SubtaskCell")
         tableView.dataSource = self
         tableView.rowHeight = 70
     }
     
-    @objc func addSubtask(_ sender: UIButton) {
-        print("Add Subtask button tapped")
-        viewModel.newSubtask()
+    private func setupAddSubtaskButton() {
+        view.addSubview(addSubtaskButton)
+
+        NSLayoutConstraint.activate([
+            addSubtaskButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addSubtaskButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addSubtaskButton.widthAnchor.constraint(equalToConstant: 140),
+            addSubtaskButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
     }
     
-    func handleDeleteTask() {
-        viewModel.deleteTask()
-    }
+    //MARK: - Button Actions
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
@@ -418,6 +424,15 @@ public final class TaskDetailsViewController: UIViewController {
                 viewModel.updateSingleTask()
             }
         }
+    }
+    
+    @objc func addSubtask(_ sender: UIButton) {
+        print("Add Subtask button tapped")
+        viewModel.newSubtask()
+    }
+    
+    func handleDeleteTask() {
+        viewModel.deleteTask()
     }
     
     // MARK: - Populate Task Details
@@ -503,6 +518,6 @@ extension TaskDetailsViewController: UIViewControllerTransitioningDelegate {
 
 extension TaskDetailsViewController: AddSubtaskViewControllerDelegate {
     func dismissed() {
-        print("ViewController Dismissed ")
     }
 }
+

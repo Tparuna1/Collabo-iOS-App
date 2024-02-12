@@ -8,6 +8,12 @@
 import UIKit
 import Combine
 
+//MARK: - Protocols
+
+public protocol ProjecTasksDelegate: AnyObject {
+    func deleted()
+}
+
 public final class ProjectTasksViewController: UIViewController {
 
     // MARK: - Properties
@@ -15,6 +21,9 @@ public final class ProjectTasksViewController: UIViewController {
     var viewModel: DefaultProjectTasksViewModel!
     var navigator: ProjectTasksNavigator!
     var taskDetailsNavigator: TaskDetailsNavigator!
+    
+    weak var delegate: ProjecTasksDelegate?
+    
     private var tasks = [AsanaTask]()
     private var cancellables = Set<AnyCancellable>()
     
@@ -124,13 +133,10 @@ public final class ProjectTasksViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavigationBarAppearance()
-        setupCustomNavBar()
         setupUI()
         bind(to: viewModel)
         viewModel.viewDidLoad()
-        setupTableView()
         view.applyCustomBackgroundColor()
     }
 
@@ -157,10 +163,20 @@ public final class ProjectTasksViewController: UIViewController {
         case .details(let params):
             navigator.navigate(to: .details(params), animated: true)
         case .projectDeleted:
-            navigationController?.popViewController(animated: true)
+            delegate?.deleted()
+            navigator.navigate(to: .close, animated: true)
         case .newTask:
             navigator.navigate(to: .newTask, animated: true)
         }
+    }
+
+    // MARK: - UI Setup
+    
+    func setupUI() {
+        setupCustomNavBar()
+        setupProgressView()
+        setupAddTaskButton()
+        setupTableView()
     }
 
     private func setupNavigationBarAppearance() {
@@ -201,19 +217,20 @@ public final class ProjectTasksViewController: UIViewController {
             navBarTitleLabel.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -50),
             navBarTitleLabel.leftAnchor.constraint(greaterThanOrEqualTo: customNavBar.leftAnchor, constant: 16),
             navBarTitleLabel.rightAnchor.constraint(lessThanOrEqualTo: customNavBar.rightAnchor, constant: -16),
-            
-            progressContainer.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 10),
-            progressContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
-            progressContainer.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
-            progressContainer.heightAnchor.constraint(equalToConstant: 120)
         ])
-        
+    }
+    
+    private func setupProgressView() {
         progressContainer.addSubview(circularProgressView)
         progressContainer.addSubview(progressLabel)
         progressContainer.addSubview(additionalLabel)
 
-        
         NSLayoutConstraint.activate([
+            progressContainer.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 10),
+            progressContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
+            progressContainer.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
+            progressContainer.heightAnchor.constraint(equalToConstant: 120),
+            
             progressLabel.leadingAnchor.constraint(equalTo: progressContainer.leadingAnchor, constant: 15),
             progressLabel.topAnchor.constraint(equalTo: progressContainer.topAnchor, constant: 20),
             
@@ -226,40 +243,39 @@ public final class ProjectTasksViewController: UIViewController {
         ])
     }
 
-
-    // MARK: - UI Setup
-
-    private func setupUI() {
+    private func setupTableView() {
         view.addSubview(wrapperView)
-        view.addSubview(addTask)
         wrapperView.addSubview(tableView)
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: progressContainer.bottomAnchor, constant: 20),
             tableView.leftAnchor.constraint(equalTo: wrapperView.leftAnchor, constant: 20),
             tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: -100),
+            tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor),
 
             wrapperView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 20),
             wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
             wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            wrapperView.heightAnchor.constraint(equalToConstant: 800),
+            wrapperView.bottomAnchor.constraint(equalTo: addTask.topAnchor, constant: -10),
+        ])
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.register(ProjectCell.self, forCellReuseIdentifier: "ProjectCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func setupAddTaskButton() {
+        view.addSubview(addTask)
 
+        NSLayoutConstraint.activate([
             addTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             addTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             addTask.widthAnchor.constraint(equalToConstant: 140),
             addTask.heightAnchor.constraint(equalToConstant: 50),
         ])
-
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
     }
 
-    private func setupTableView() {
-        tableView.register(ProjectCell.self, forCellReuseIdentifier: "ProjectCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
 
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)

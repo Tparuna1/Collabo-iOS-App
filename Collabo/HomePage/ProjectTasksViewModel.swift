@@ -76,7 +76,6 @@ class DefaultProjectTasksViewModel {
                 tasks = try await AsanaManager.shared.fetchTasks(forProject: params.gid)
                 await MainActor.run {
                     self.actionSubject.send(.tasks(self.tasks))
-                    print("Fetched tasks: \(tasks)")
                 }
             } catch {
                 self.errorMessage = error.localizedDescription
