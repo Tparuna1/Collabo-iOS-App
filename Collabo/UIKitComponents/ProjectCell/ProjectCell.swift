@@ -7,7 +7,12 @@
 
 import UIKit
 
-class ProjectCell: UITableViewCell {
+/// Custom UITableViewCell for displaying project information.
+
+final class ProjectCell: UITableViewCell {
+    
+    // MARK: - Properties
+
     private let colorView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +32,8 @@ class ProjectCell: UITableViewCell {
         return view
     }()
     
+    // MARK: - Initializers
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -58,12 +65,15 @@ class ProjectCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+
     func setup(with model: ProjectCellModel) {
         colorView.backgroundColor = model.color
         projectNameLabel.text = model.title
     }
 
-    
+    // MARK: - Layout
+
     override func layoutSubviews() {
         super.layoutSubviews()
         

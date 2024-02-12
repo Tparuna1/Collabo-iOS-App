@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct PasswordSecureField: View {
+    
     // MARK: - Properties
+    
     @Binding var password: String
     var onCommit: () -> Void = {}
     
     // MARK: - Body
+    
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {

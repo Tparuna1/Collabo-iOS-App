@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
+// MARK: - TaskDetailsViewModel Protocol
+
 public protocol TaskDetailsViewModel: TaskDetailsViewModelInput, TaskDetailsViewModelOutput {}
+
+//MARK: - Params
 
 public struct TaskDetailsViewModelParams {
     public let name: String
@@ -23,6 +27,8 @@ public struct TaskDetailsViewModelParams {
     }
 }
 
+// MARK: - TaskDetailsViewModel Input & Output  Protocols
+
 public protocol TaskDetailsViewModelInput: AnyObject {
     var params: TaskDetailsViewModelParams? { get set }
     func viewDidLoad()
@@ -36,6 +42,8 @@ public protocol TaskDetailsViewModelOutput {
     var route: AnyPublisher<TaskDetailsViewModelRoute, Never> { get }
 }
 
+// MARK: - TaskDetailsViewModel Enumerations
+
 public enum TaskDetailsViewModelOutputAction {
     case task(SingleAsanaTask?)
     case subtask([Subtask])
@@ -47,7 +55,9 @@ public enum TaskDetailsViewModelRoute {
     case taskDeleted
 }
 
-class DefaultTaskDetailsViewModel: ObservableObject {
+// MARK: - DefaultTaskDetailsViewModel Class
+
+final class DefaultTaskDetailsViewModel: ObservableObject {
     private let actionSubject = PassthroughSubject<TaskDetailsViewModelOutputAction, Never>()
     private let routeSubject = PassthroughSubject<TaskDetailsViewModelRoute, Never>()
     
@@ -150,6 +160,8 @@ class DefaultTaskDetailsViewModel: ObservableObject {
         }
     }
 }
+
+// MARK: - TaskDetailsViewModel Extension
 
 extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
     var action: AnyPublisher<TaskDetailsViewModelOutputAction, Never> {

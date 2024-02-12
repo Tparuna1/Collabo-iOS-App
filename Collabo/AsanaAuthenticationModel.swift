@@ -7,6 +7,8 @@
 
 import Foundation
 
+//MARK: - AsanaAuthenticationModel
+
 public struct AsanaAuthenticationModel: Decodable {
     public let accessToken: String
     public let refreshToken: String

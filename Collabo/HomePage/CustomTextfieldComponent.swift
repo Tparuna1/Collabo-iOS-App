@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CustomTextField: View {
+    
     // MARK: - Properties
+    
     @Binding var text: String
     let placeholder: String
     let keyboardType: UIKeyboardType
@@ -20,6 +22,7 @@ struct CustomTextField: View {
     }
     
     // MARK: - Body
+    
     var body: some View {
         VStack {
             ZStack(alignment: .leading) {

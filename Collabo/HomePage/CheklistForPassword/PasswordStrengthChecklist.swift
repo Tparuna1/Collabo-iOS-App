@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct PasswordStrengthChecklist: View {
+    
     // MARK: - Properties
+    
     var isMinLengthMet: Bool
     var isCapitalLetterMet: Bool
     var isNumberMet: Bool
     var isUniqueCharacterMet: Bool
     
     // MARK: - Body
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Your password should have:")

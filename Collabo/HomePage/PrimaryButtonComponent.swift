@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct PrimaryButtonComponentView: View {
+    
     // MARK: - Properties
+    
     var text: String
     var backgroundColor: Color
     var textColor: Color
@@ -22,6 +24,7 @@ struct PrimaryButtonComponentView: View {
     }
     
     // MARK: - Body
+    
     var body: some View {
         Text(text.capitalized)
             .foregroundColor(textColor)

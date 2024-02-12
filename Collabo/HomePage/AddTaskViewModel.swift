@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AddTaskViewModel {
+final class AddTaskViewModel {
     
     // MARK: - Properties
     

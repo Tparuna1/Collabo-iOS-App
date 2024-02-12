@@ -7,11 +7,13 @@
 
 import UIKit
 
+// MARK: Protocols
+
 protocol AddSubtaskViewControllerDelegate: AnyObject {
     func dismissed()
 }
 
-class AddSubtaskViewController: UIViewController {
+final class AddSubtaskViewController: UIViewController {
     
     // MARK: - Properties
     

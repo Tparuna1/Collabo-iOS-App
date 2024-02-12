@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AddProjectViewModel {
+final class AddProjectViewModel {
     
     // MARK: - Properties
     

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-//MARK: - Onboarding Background
+//MARK: - Onboarding Background Animation
+
 struct AnimatedBackgroundView: View {
     @State private var isAnimating = false
     

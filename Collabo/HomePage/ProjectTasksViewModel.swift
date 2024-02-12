@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
+// MARK: - ProjectTasksViewModel Protocol
+
 public protocol ProjectTasksViewModel: ProjectTasksViewModelInput, ProjectTasksViewModelOutput {}
+
+//MARK: - Params
 
 public struct ProjectTasksViewModelParams {
     public let name: String
@@ -23,6 +27,8 @@ public struct ProjectTasksViewModelParams {
     }
 }
 
+// MARK: - ProjectTasksViewModel Input & Output  Protocols
+
 public protocol ProjectTasksViewModelInput: AnyObject {
     var params: ProjectTasksViewModelParams? { get set }
     func viewDidLoad()
@@ -35,6 +41,8 @@ public protocol ProjectTasksViewModelOutput {
     var route: AnyPublisher<ProjectTasksViewModelRoute, Never> { get }
 }
 
+// MARK: - ProjectTasksViewModel Enumerations
+
 public enum ProjectTasksViewModelOutputAction {
     case tasks([AsanaTask])
     case title(String)
@@ -46,12 +54,14 @@ public enum ProjectTasksViewModelRoute {
     case newTask
 }
 
-class DefaultProjectTasksViewModel {
+// MARK: - DefaultProjectTasksViewModel Class
+
+final class DefaultProjectTasksViewModel {
     private let actionSubject = PassthroughSubject<ProjectTasksViewModelOutputAction, Never>()
     private let routeSubject = PassthroughSubject<ProjectTasksViewModelRoute, Never>()
-    
+    private let additionalLabelSubject = PassthroughSubject<String, Never>()
+
     public var params: ProjectTasksViewModelParams?
-    
     
     // MARK: - Properties
     
@@ -102,6 +112,26 @@ class DefaultProjectTasksViewModel {
         }
     }
     
+    func updateProgress() -> String {
+        let progress = calculateProgress()
+        let progressPercentage = Int(progress * 100)
+        
+        switch progressPercentage {
+        case 0..<25:
+            return "Time to start! Progress needed"
+        case 25..<50:
+            return "Making good progress. Stay focused!"
+        case 50..<75:
+            return "Doing great! Keep up the momentum!"
+        case 75..<100:
+            return "Almost there! Keep pushing forward!"
+        case 100:
+            return "Congratulations! Project successfully completed!"
+        default:
+            return ""
+        }
+    }
+    
     func calculateProgress() -> Float {
         guard !tasks.isEmpty else { return 0.0 }
         
@@ -109,6 +139,8 @@ class DefaultProjectTasksViewModel {
         return Float(completedTasksCount) / Float(tasks.count)
     }
 }
+
+// MARK: - ProjectTasksViewModel Extension
 
 extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
     var action: AnyPublisher<ProjectTasksViewModelOutputAction, Never> {

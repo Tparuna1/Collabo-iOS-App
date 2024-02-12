@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 // MARK: - AsanaTask
 
 public struct AsanaTask: Codable {

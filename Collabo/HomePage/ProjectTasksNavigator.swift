@@ -5,6 +5,8 @@
 //  Created by tornike <parunashvili on 02.02.24.
 //
 
+// MARK: - ProjectTasksNavigator
+
 public final class ProjectTasksNavigator {
     private weak var viewController: ProjectTasksViewController?
     private var deleteTaskAction: ((Bool) -> Void)?
@@ -31,6 +33,7 @@ public final class ProjectTasksNavigator {
     }
 
     // MARK: - Private Methods
+    
     private func navigateToDetails(params: TaskDetailsViewModelParams, animated: Bool) {
         let vc = TaskDetailsViewController()
         vc.viewModel = DefaultTaskDetailsViewModel(params: params)

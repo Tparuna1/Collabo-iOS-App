@@ -8,7 +8,7 @@
 import SwiftUI
 import Auth0
 
-class SUISignUpViewModel: ObservableObject {
+final class SUISignUpViewModel: ObservableObject {
     
     // MARK: - Published Properties
     

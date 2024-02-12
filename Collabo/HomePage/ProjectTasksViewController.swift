@@ -154,7 +154,10 @@ public final class ProjectTasksViewController: UIViewController {
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()
-            updateProgress()
+            let additionalLabelText = viewModel.updateProgress()
+            self.additionalLabel.text = additionalLabelText
+            let progress = viewModel.calculateProgress()
+            self.circularProgressView.setProgress(duration: 0.5, to: progress)
         }
     }
 
@@ -277,7 +280,6 @@ public final class ProjectTasksViewController: UIViewController {
         ])
     }
 
-
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -309,30 +311,6 @@ public final class ProjectTasksViewController: UIViewController {
     @objc func addTask(_ sender: UIButton) {
         viewModel.newTask()
     }
-    
-    // MARK: - Progress Bar
-    
-    private func updateProgress() {
-        let progress = viewModel.calculateProgress()
-        circularProgressView.setProgress(duration: 0.5, to: progress)
-        
-        let progressPercentage = Int(progress * 100)
-        
-        switch progressPercentage {
-        case 0..<25:
-            additionalLabel.text = "Time to start! Progress needed"
-        case 25..<50:
-            additionalLabel.text = "Making good progress. Stay focused!"
-        case 50..<75:
-            additionalLabel.text = "Doing great! Keep up the momentum!"
-        case 75..<100:
-            additionalLabel.text = "Almost there! Keep pushing forward!"
-        case 100:
-            additionalLabel.text = "Congratulations! Project successfully completed!"
-        default:
-            break
-        }
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -357,7 +335,7 @@ extension ProjectTasksViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - Delegate Extensions
 
 extension ProjectTasksViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -368,8 +346,6 @@ extension ProjectTasksViewController: UITableViewDelegate {
         viewModel.didSelectRow(at: indexPath.row)
     }
 }
-
-// MARK: - UIViewControllerTransitioningDelegate
 
 extension ProjectTasksViewController: UIViewControllerTransitioningDelegate {
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
@@ -382,8 +358,6 @@ extension ProjectTasksViewController: AddTaskViewControllerDelegate {
         viewModel.fetchTasks()
     }
 }
-
-// MARK: - TaskDetailsDelegate
 
 extension ProjectTasksViewController: TaskDetailsDelegate {
     public func deleted() {

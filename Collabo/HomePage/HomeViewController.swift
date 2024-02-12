@@ -18,7 +18,6 @@ public final class HomeViewController: UIViewController {
     private var projects = [AsanaProject]()
     private var cancellables = Set<AnyCancellable>()
 
-    
     // MARK: - UI Components
     
     private lazy var asanaLogoImageView: UIImageView = {
@@ -216,7 +215,6 @@ public final class HomeViewController: UIViewController {
         ])
     }
     
-    
     // MARK: - View Model Binding
     private func bind(to viewModel: HomeViewModel) {
         viewModel.action.sink { [weak self] action in self?.didReceive(action: action) }.store(in: &cancellables)
@@ -254,19 +252,6 @@ public final class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension HomeViewController: UITableViewDelegate {
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        70
-    }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath.row)
-    }
-}
-
 // MARK: - UITableViewDataSource
 
 extension HomeViewController: UITableViewDataSource {
@@ -290,14 +275,25 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Delegate Extensions
 
-// MARK: - UIViewControllerTransitioningDelegate
+extension HomeViewController: UITableViewDelegate {
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
+    }
+}
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         SheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
+
 
 extension HomeViewController: NewProjectViewControllerDelegate {
     func dismissed() {
