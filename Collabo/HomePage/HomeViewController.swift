@@ -21,7 +21,6 @@ public final class HomeViewController: UIViewController {
     
     // MARK: - UI Components
     
-    
     private lazy var asanaLogoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -302,6 +301,12 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 
 extension HomeViewController: NewProjectViewControllerDelegate {
     func dismissed() {
+        viewModel.fetchProjects(with: "")
+    }
+}
+
+extension HomeViewController: ProjecTasksDelegate {
+    public func deleted() {
         viewModel.fetchProjects(with: "")
     }
 }

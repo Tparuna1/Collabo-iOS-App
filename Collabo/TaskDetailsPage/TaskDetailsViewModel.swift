@@ -115,7 +115,7 @@ class DefaultTaskDetailsViewModel: ObservableObject {
         
         Task {
             do {
-                let deletedTask = try await AsanaManager.shared.deleteSingleTask(forTask: taskGID)
+                _ = try await AsanaManager.shared.deleteSingleTask(forTask: taskGID)
                 
                 await MainActor.run {
                     self.routeSubject.send(.taskDeleted)

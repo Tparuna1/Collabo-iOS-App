@@ -77,7 +77,7 @@ class AddSubtaskViewController: UIViewController {
         subtaskNameTextField.frame = CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40)
         createButton.frame = CGRect(x: 20, y: 140, width: view.frame.width - 40, height: 40)
         
-        createButton.addTarget(self, action: #selector(createSubtask), for: .touchUpInside)
+        createButton.addTarget(self, action: #selector(addSubtask), for: .touchUpInside)
     }
     
     // MARK: - Gesture Handling
@@ -118,23 +118,24 @@ class AddSubtaskViewController: UIViewController {
     
     // MARK: - Button Actions
     
-    @objc func createSubtask() {
+    @objc func addSubtask() {
         print("button tapped")
-        guard let subtaskName = subtaskNameTextField.text, !subtaskName.isEmpty else {
-            print("Subtask name is empty")
+        guard let SubtaskName = subtaskNameTextField.text, !SubtaskName.isEmpty else {
+            print("Task name is empty")
             return
         }
         
-        viewModel.addSubtask(name: subtaskName) { error in
-            if let error = error {
-                print("Error creating project: \(error.localizedDescription)")
-            } else {
-                print("Subtask added successfully")
+        viewModel.addSubtask(name: SubtaskName) { result in
+            switch result {
+            case .success:
+                print("Task added successfully")
                 DispatchQueue.main.async {
                     self.dismiss(animated: true) { [weak self] in
                         self?.delegate?.dismissed()
                     }
                 }
+            case .failure(let error):
+                print("Error creating task: \(error.localizedDescription)")
             }
         }
     }

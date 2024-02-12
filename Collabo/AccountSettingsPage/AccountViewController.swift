@@ -9,8 +9,19 @@ import UIKit
 import Auth0
 import Combine
 
-class AccountViewController: UIViewController {
+final class AccountViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private let viewModel = AccountViewModel()
+    private let nameLabel = UILabel()
+    private let emailLabel = UILabel()
+    private let profileImageView = UIImageView()
+    private let logoutButton = UIButton(type: .system)
+    private var cancellables: Set<AnyCancellable> = []
+    
+    // MARK: - UI Components
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -32,11 +43,7 @@ class AccountViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
-    private let nameLabel = UILabel()
-    private let emailLabel = UILabel()
-    private let profileImageView = UIImageView()
-    private let logoutButton = UIButton(type: .system)
-    private var cancellables: Set<AnyCancellable> = []
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +52,7 @@ class AccountViewController: UIViewController {
         bindViewModel()
     }
 
+    // MARK: - UI Setup
     private func setupUI() {
         setupProfileImageView()
         setupLabels()
@@ -124,6 +132,8 @@ class AccountViewController: UIViewController {
             logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
         ])
     }
+    
+    // MARK: - View Model Binding
 
     private func bindViewModel() {
         viewModel.fetchUserInfo { [weak self] result in
@@ -138,6 +148,8 @@ class AccountViewController: UIViewController {
         }
     }
 
+    // MARK: - Private Methods
+    
     private func updateLabels(with userInfo: UserProfile) {
         if let name = userInfo.data?.name {
             nameLabel.text = "Name: \(name)"

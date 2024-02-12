@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - Protocols
+
 protocol AddTaskViewControllerDelegate: AnyObject {
     func dismissed()
 }
@@ -123,21 +125,19 @@ class AddTaskViewController: UIViewController {
     @objc func addTask() {
         print("button tapped")
         guard let taskName = taskNameTextField.text, !taskName.isEmpty else {
-            print("Task name is empty")
             return
         }
         
         viewModel.addTask(name: taskName) { result in
             switch result {
             case .success:
-                print("Task added successfully")
                 DispatchQueue.main.async {
                     self.dismiss(animated: true) { [weak self] in
                         self?.delegate?.dismissed()
                     }
                 }
             case .failure(let error):
-                print("Error creating task: \(error.localizedDescription)")
+                print("\(error.localizedDescription)")
             }
         }
     }
