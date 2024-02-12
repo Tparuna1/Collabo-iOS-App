@@ -11,6 +11,7 @@ import OAuthSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    // MARK: - OAuth Configuration
 
     let asanaOAuth = OAuth2Swift(
         consumerKey: "1206344666310503",
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         authorizeUrl: "https://app.asana.com/-/oauth_authorize",
         responseType: "code"
     )
+    
+    // MARK: - Application Lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -37,10 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // MARK: - User Defaults
+
     func retrieveAccessTokenFromUserDefaults() -> String? {
         return UserDefaults.standard.string(forKey: "accessToken")
     }
     
+    // MARK: - URL Handling
+
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         print("Called 2")
         if url.host == "oauth-callback" {

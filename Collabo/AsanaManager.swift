@@ -9,6 +9,9 @@ import Foundation
 
 
 public class AsanaManager {
+    
+    //MARK: - Properties
+    
     var token: String
     var refreshToken: String
     let clientId = "1206344666310503"
