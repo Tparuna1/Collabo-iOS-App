@@ -177,6 +177,7 @@ public final class ProjectTasksViewController: UIViewController {
         setupProgressView()
         setupAddTaskButton()
         setupTableView()
+        self.view.bringSubviewToFront(addTask)
     }
 
     private func setupNavigationBarAppearance() {
@@ -256,7 +257,7 @@ public final class ProjectTasksViewController: UIViewController {
             wrapperView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 20),
             wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
             wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            wrapperView.bottomAnchor.constraint(equalTo: addTask.topAnchor, constant: -10),
+            wrapperView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -267,7 +268,7 @@ public final class ProjectTasksViewController: UIViewController {
     
     private func setupAddTaskButton() {
         view.addSubview(addTask)
-
+        
         NSLayoutConstraint.activate([
             addTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             addTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
