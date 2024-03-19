@@ -8,14 +8,6 @@
 import SwiftUI
 import Auth0
 
-// MARK: - NavigationPath Enum
-
-//enum NavigationPath: Hashable {
-//    case home
-//    case signUp
-//    case login
-//}
-
 struct SUILoginView: View {
     
     // MARK: - State Properties
