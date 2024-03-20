@@ -199,6 +199,10 @@ public final class TaskDetailsViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 25
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowRadius = 6
         button.addTarget(self, action: #selector(addSubtask(_:)), for: .touchUpInside)
         return button
     }()
@@ -490,7 +494,7 @@ extension TaskDetailsViewController: UITableViewDataSource {
         }
         let subtask = subtask[indexPath.row]
         
-        let colors: [UIColor] = [.systemOrange]
+        let colors: [UIColor] = [.taskColor4]
         let colorIndex = indexPath.row % colors.count
         
         cell.setup(with: .init(title: subtask.name, color: colors[colorIndex]))
