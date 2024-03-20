@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct Home: View {
+struct TodoView: View {
     @State private var currentDate: Date = .init()
     @State private var weekSlider: [[Date.WeekDay]] = []
     @State private var currentWeekIndex: Int = 1
     @State private var createWeek: Bool = false
-    @State private var toDos: [Todo] = sampleTasks.sorted(by: { $1.creationDate > $0.creationDate })
+    @State private var toDos: [Todo] = []
     @State private var createNewTask: Bool = false
     @Namespace private var animation
     
@@ -39,11 +39,18 @@ struct Home: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                     .frame(width: 55, height: 55)
-                    .background(.darkBlue.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 10, y: 10)), in: .circle)
+                    .background(.blue.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 10, y: 10)), in: .circle)
             })
             .padding(15)
         })
         .onAppear(perform: {
+            if let savedTasksData = UserDefaults.standard.data(forKey: "tasks") {
+                let decoder = JSONDecoder()
+                if let decodedTasks = try? decoder.decode([Todo].self, from: savedTasksData) {
+                    toDos = decodedTasks
+                }
+            }
+            
             if weekSlider.isEmpty {
                 let currentWeek = Date().fetchWeek()
                 
@@ -72,7 +79,7 @@ struct Home: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 5) {
                 Text(currentDate.format("MMMM"))
-                    .foregroundStyle(.darkBlue)
+                    .foregroundStyle(.blue)
                 
                 Text(currentDate.format("YYYY"))
                     .foregroundStyle(.gray)
@@ -127,7 +134,7 @@ struct Home: View {
                         .background(content: {
                             if isSameDate(day.date, currentDate) {
                                 Circle()
-                                    .fill(.darkBlue)
+                                    .fill(.blue)
                                     .matchedGeometryEffect(id: "TABINDICATOR", in: animation)
                             }
                             
@@ -170,7 +177,7 @@ struct Home: View {
     func TasksView() -> some View {
         VStack(alignment: .leading, spacing: 35) {
             ForEach(toDos.indices, id: \.self) { index in
-                TaskRowView(task: $toDos[index])
+                TaskRowView(task: $toDos[index], toDos: $toDos)
                     .background(alignment: .leading) {
                         if index != toDos.indices.last {
                             Rectangle()

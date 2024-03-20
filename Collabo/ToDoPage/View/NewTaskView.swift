@@ -101,7 +101,7 @@ struct NewTaskView: View {
     }
     
     func createTask() {
-        let newTask = Todo(taskTitle: taskTitle, creationDate: taskDate, tint: taskColor)
+        let newTask = Todo(taskTitle: taskTitle, creationDate: taskDate, isCompleted: false, tint: taskColor)
         tasks.append(newTask)
         
         let encoder = JSONEncoder()
@@ -112,7 +112,6 @@ struct NewTaskView: View {
         }
         dismiss()
     }
-
 }
 
 struct NewTaskView_Previews: PreviewProvider {

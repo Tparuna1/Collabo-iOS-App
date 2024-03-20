@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Home()
+        TodoView()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.BG)
             .preferredColorScheme(.light)
