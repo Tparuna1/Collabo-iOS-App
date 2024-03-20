@@ -42,13 +42,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         myTasksViewController.viewModel = DefaultUserTaskListViewModel()
         myTasksViewController.navigator = .init(viewController: myTasksViewController)
         let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
-        myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 2)
+        myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
+        
+        let todoView = ContentView()
+        let todoHostingController = UIHostingController(rootView: todoView)
+        let todoNavigationController = UINavigationController(rootViewController: todoHostingController)
+        todoNavigationController.tabBarItem = UITabBarItem(title: "Todo", image: UIImage(systemName: "list.bullet.rectangle.portrait"), tag: 2)
         
         let accountViewController = AccountViewController()
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
         accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 3)
         
-        tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, accountNavigationController]
+        tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, todoNavigationController, accountNavigationController]
         
         tabBarController.tabBar.applyCustomBackgroundColor()
 
