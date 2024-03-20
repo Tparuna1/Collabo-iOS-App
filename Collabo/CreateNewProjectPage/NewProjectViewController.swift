@@ -22,29 +22,13 @@ class NewProjectViewController: UIViewController {
     
     // MARK: - UI Components
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Create a New Project"
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .systemCyan
-        return label
-    }()
+    private let titleLabel = CustomLabelForSheetPresentationController(text: "Create New Project", font: UIFont.boldSystemFont(ofSize: 20), textColor: .systemCyan, alignment: .center)
+
     
-    let projectNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Project Name"
-        textField.borderStyle = .roundedRect
-        return textField
-    }()
-    
-    let createButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Create", for: .normal)
-        button.backgroundColor = .systemCyan
-        button.layer.cornerRadius = 5
-        return button
-    }()
+    private let projectNameTextField = CustomTextFieldForSheetPresentationController(placeholder: "Project Name")
+
+    private let createButton = CustomButtonFOrSheetPresentationController(title: "Create", backgroundColor: .systemCyan, cornerRadius: 5)
+
     
     
     // MARK: - View Lifecycle

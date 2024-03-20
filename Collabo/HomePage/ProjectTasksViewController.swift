@@ -8,8 +8,6 @@
 import UIKit
 import Combine
 
-//MARK: - Protocols
-
 public protocol ProjecTasksDelegate: AnyObject {
     func deleted()
 }
@@ -27,40 +25,10 @@ public final class ProjectTasksViewController: UIViewController {
     private var tasks = [AsanaTask]()
     private var cancellables = Set<AnyCancellable>()
     
+    //MARK: - UI Elements
     
-
-    // MARK: - UI Components
-
-    private let customNavBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private let navBarTitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var moreButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(showMoreOptions), for: .touchUpInside)
+    private lazy var moreBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(showMoreOptions))
         return button
     }()
     
@@ -77,7 +45,6 @@ public final class ProjectTasksViewController: UIViewController {
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.progressColor = .green
         progressView.trackColor = .white
-        
         return progressView
     }()
     
@@ -138,6 +105,7 @@ public final class ProjectTasksViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBarAppearance()
+        setupNavigationBarItems()
         setupUI()
         bind(to: viewModel)
         viewModel.viewDidLoad()
@@ -154,7 +122,7 @@ public final class ProjectTasksViewController: UIViewController {
     private func didReceive(action: ProjectTasksViewModelOutputAction) {
         switch action {
         case .title(let title):
-            self.navBarTitleLabel.text = title
+            self.navigationItem.title = title
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()
@@ -180,7 +148,6 @@ public final class ProjectTasksViewController: UIViewController {
     // MARK: - UI Setup
     
     func setupUI() {
-        setupCustomNavBar()
         setupProgressView()
         setupAddTaskButton()
         setupTableView()
@@ -189,54 +156,24 @@ public final class ProjectTasksViewController: UIViewController {
 
     private func setupNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .systemBlue
+        appearance.backgroundColor = .white
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
 
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.isHidden = true
-    }
-
-    private func setupCustomNavBar() {
-        view.addSubview(customNavBar)
-        customNavBar.addSubview(backButton)
-        customNavBar.addSubview(navBarTitleLabel)
-        customNavBar.addSubview(moreButton)
-        customNavBar.addSubview(progressContainer)
-
-        NSLayoutConstraint.activate([
-            customNavBar.topAnchor.constraint(equalTo: view.topAnchor),
-            customNavBar.leftAnchor.constraint(equalTo: view.leftAnchor),
-            customNavBar.rightAnchor.constraint(equalTo: view.rightAnchor),
-            customNavBar.heightAnchor.constraint(equalToConstant: 150),
-
-            backButton.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 10),
-            backButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 44),
-            backButton.heightAnchor.constraint(equalToConstant: 44),
-
-            moreButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -10),
-            moreButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            moreButton.widthAnchor.constraint(equalToConstant: 44),
-            moreButton.heightAnchor.constraint(equalToConstant: 44),
-
-            navBarTitleLabel.centerXAnchor.constraint(equalTo: customNavBar.centerXAnchor),
-            navBarTitleLabel.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -50),
-            navBarTitleLabel.leftAnchor.constraint(greaterThanOrEqualTo: customNavBar.leftAnchor, constant: 16),
-            navBarTitleLabel.rightAnchor.constraint(lessThanOrEqualTo: customNavBar.rightAnchor, constant: -16),
-        ])
     }
     
     private func setupProgressView() {
+        view.addSubview(progressContainer)
         progressContainer.addSubview(circularProgressView)
         progressContainer.addSubview(progressLabel)
         progressContainer.addSubview(additionalLabel)
 
         NSLayoutConstraint.activate([
-            progressContainer.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 10),
-            progressContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
-            progressContainer.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
+            progressContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            progressContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            progressContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             progressContainer.heightAnchor.constraint(equalToConstant: 120),
             
             progressLabel.leadingAnchor.constraint(equalTo: progressContainer.leadingAnchor, constant: 15),
@@ -261,7 +198,7 @@ public final class ProjectTasksViewController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: wrapperView.rightAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor),
 
-            wrapperView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 20),
+            wrapperView.topAnchor.constraint(equalTo: progressContainer.bottomAnchor, constant: 20),
             wrapperView.leftAnchor.constraint(equalTo: view.leftAnchor),
             wrapperView.rightAnchor.constraint(equalTo: view.rightAnchor),
             wrapperView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -284,6 +221,10 @@ public final class ProjectTasksViewController: UIViewController {
         ])
     }
 
+    private func setupNavigationBarItems() {
+        navigationItem.rightBarButtonItem = moreBarButtonItem
+    }
+
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -301,9 +242,9 @@ public final class ProjectTasksViewController: UIViewController {
         alertController.addAction(cancelAction)
 
         if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.moreButton
-            popoverController.sourceRect = self.moreButton.bounds
+            popoverController.barButtonItem = moreBarButtonItem
         }
+
 
         present(alertController, animated: true, completion: nil)
     }

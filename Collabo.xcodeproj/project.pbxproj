@@ -13,6 +13,7 @@
 		4163F4932B6D5F10001D139A /* HomeNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4922B6D5F0F001D139A /* HomeNavigator.swift */; };
 		4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */; };
 		4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */; };
+		416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */; };
 		417A807F2B6E33CE00E867E7 /* SubTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */; };
 		417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */; };
 		417A808B2B6ECF4000E867E7 /* TaskDetailsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */; };
@@ -78,6 +79,7 @@
 		4163F4922B6D5F0F001D139A /* HomeNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigator.swift; sourceTree = "<group>"; };
 		4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksNavigator.swift; sourceTree = "<group>"; };
 		4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaAuthenticationModel.swift; sourceTree = "<group>"; };
+		416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetPresentationComponents.swift; sourceTree = "<group>"; };
 		417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskModel.swift; sourceTree = "<group>"; };
 		417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewModel.swift; sourceTree = "<group>"; };
 		417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsNavigator.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 			children = (
 				4163F48F2B6D53CC001D139A /* ProjectCell */,
 				41FAAC782B626FF1009F6510 /* SheetPresentationController.swift */,
+				416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */,
 				4163F4892B6CF9F4001D139A /* CustomBackgroundColor.swift */,
 				41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */,
 			);
@@ -517,6 +520,7 @@
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
 				41D344462BAA0AB0002378FB /* View+Extensions.swift in Sources */,
+				416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */,
 				41D3444F2BAA0B71002378FB /* ContentView.swift in Sources */,
 				417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */,
 				41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */,

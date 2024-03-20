@@ -28,37 +28,17 @@ public final class TaskDetailsViewController: UIViewController {
     
     // MARK: - UI Elements
     
-    private let customNavBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var moreButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(showMoreOptions), for: .touchUpInside)
-        return button
-    }()
-    
     private let navBarTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var moreBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(showMoreOptions))
+        return button
     }()
     
     private let mainStackView: UIStackView = {
@@ -211,6 +191,7 @@ public final class TaskDetailsViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBarAppearance()
+        setupNavigationBarItems()
         setupUI()
         bind(to: viewModel)
         viewModel.viewDidLoad()
@@ -249,7 +230,6 @@ public final class TaskDetailsViewController: UIViewController {
     // MARK: - UI Setup
     
     private func setupUI() {
-        setupCustomNavBar()
         setupStackview()
         setupTableView()
         setupAddSubtaskButton()
@@ -257,46 +237,15 @@ public final class TaskDetailsViewController: UIViewController {
     
     private func setupNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .systemBlue
+        appearance.backgroundColor = .white
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
     }
     
-    private func setupCustomNavBar() {
-        view.addSubview(customNavBar)
-        customNavBar.addSubview(backButton)
-        customNavBar.addSubview(navBarTitleLabel)
-        customNavBar.addSubview(moreButton)
-        
-        
-        NSLayoutConstraint.activate([
-            customNavBar.topAnchor.constraint(equalTo: view.topAnchor),
-            customNavBar.leftAnchor.constraint(equalTo: view.leftAnchor),
-            customNavBar.rightAnchor.constraint(equalTo: view.rightAnchor),
-            customNavBar.heightAnchor.constraint(equalToConstant: 150),
-            
-            backButton.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 10),
-            backButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 44),
-            backButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            moreButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -10),
-            moreButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            moreButton.widthAnchor.constraint(equalToConstant: 44),
-            moreButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            navBarTitleLabel.centerXAnchor.constraint(equalTo: customNavBar.centerXAnchor),
-            navBarTitleLabel.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: -50),
-            navBarTitleLabel.leftAnchor.constraint(greaterThanOrEqualTo: customNavBar.leftAnchor, constant: 16),
-            navBarTitleLabel.rightAnchor.constraint(lessThanOrEqualTo: customNavBar.rightAnchor, constant: -16)
-        ])
-    }
-    
-    // MARK: - UI Setup
     private func setupStackview() {
         completedStackView.addArrangedSubview(checkmarkImageView)
         completedStackView.addArrangedSubview(completedLabel)
@@ -345,7 +294,7 @@ public final class TaskDetailsViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 40),
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
@@ -384,6 +333,10 @@ public final class TaskDetailsViewController: UIViewController {
         ])
     }
     
+    private func setupNavigationBarItems() {
+        navigationItem.rightBarButtonItem = moreBarButtonItem
+    }
+    
     //MARK: - Button Actions
     
     @objc private func backButtonTapped() {
@@ -403,8 +356,7 @@ public final class TaskDetailsViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.moreButton
-            popoverController.sourceRect = self.moreButton.bounds
+            popoverController.barButtonItem = moreBarButtonItem
         }
         
         present(alertController, animated: true, completion: nil)

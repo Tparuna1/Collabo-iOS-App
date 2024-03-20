@@ -26,29 +26,11 @@ final class AddSubtaskViewController: UIViewController {
 
     // MARK: - UI Components
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Add New Subtask"
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .systemCyan
-        return label
-    }()
+    private let titleLabel = CustomLabelForSheetPresentationController(text: "Add Subtask", font: UIFont.boldSystemFont(ofSize: 20), textColor: .systemCyan, alignment: .center)
     
-    let subtaskNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Subtask Name"
-        textField.borderStyle = .roundedRect
-        return textField
-    }()
+    private let subtaskNameTextField = CustomTextFieldForSheetPresentationController(placeholder: "Subtask Name")
     
-    let createButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Create", for: .normal)
-        button.backgroundColor = .systemCyan
-        button.layer.cornerRadius = 5
-        return button
-    }()
+    private let createButton = CustomButtonFOrSheetPresentationController(title: "Create", backgroundColor: .systemCyan, cornerRadius: 5)
     
     
     // MARK: - View Lifecycle

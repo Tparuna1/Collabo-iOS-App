@@ -22,7 +22,7 @@ public final class UserTaskListViewController: UIViewController {
     
     private let customNavBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = UIColor(red: 251/255, green: 247/255, blue: 248/255, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -30,7 +30,7 @@ public final class UserTaskListViewController: UIViewController {
     private let headerLabel: UILabel = {
         let label = UILabel()
         label.text = "My Tasks"
-        label.textColor = .white
+        label.textColor = .systemBlue
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -63,6 +63,7 @@ public final class UserTaskListViewController: UIViewController {
     }
     
     // MARK: - View Model Binding
+    
     private func bind(to viewModel: UserTaskListViewModel) {
         viewModel.action.sink { [weak self] action in self?.didReceive(action: action) }.store(in: &cancellables)
         viewModel.route.sink { [weak self] route in self?.didReceive(route: route) }.store(in: &cancellables)
@@ -84,17 +85,6 @@ public final class UserTaskListViewController: UIViewController {
     }
     
     // MARK: - UI Setup
-    
-    private func setupNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .systemBlue
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.isHidden = true
-    }
     
     private func setupCustomNavBar() {
         view.addSubview(customNavBar)
