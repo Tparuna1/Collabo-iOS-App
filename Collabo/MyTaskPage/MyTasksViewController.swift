@@ -51,10 +51,19 @@ public final class UserTaskListViewController: UIViewController {
         return wrapperView
     }()
     
+    private let loadingImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "MyTaskList")
+        return imageView
+    }()
+    
     // MARK: - View Lifecycle
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        setupLoadingImageView()
         setupUI()
         setupTableView()
         bind(to: viewModel)
@@ -74,6 +83,8 @@ public final class UserTaskListViewController: UIViewController {
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()
+            
+            loadingImageView.isHidden = true
         }
     }
     
@@ -126,6 +137,16 @@ public final class UserTaskListViewController: UIViewController {
         tableView.register(ProjectCell.self, forCellReuseIdentifier: "UserTaskCell")
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func setupLoadingImageView() {
+        view.addSubview(loadingImageView)
+        NSLayoutConstraint.activate([
+            loadingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingImageView.widthAnchor.constraint(equalToConstant: 200),
+            loadingImageView.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
 }
 

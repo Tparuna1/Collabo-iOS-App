@@ -175,21 +175,29 @@ struct TodoView: View {
     
     @ViewBuilder
     func TasksView() -> some View {
-        VStack(alignment: .leading, spacing: 35) {
-            ForEach(toDos.indices, id: \.self) { index in
-                TaskRowView(task: $toDos[index], toDos: $toDos)
-                    .background(alignment: .leading) {
-                        if index != toDos.indices.last {
-                            Rectangle()
-                                .frame(width: 1)
-                                .offset(x: 8)
-                                .padding(.bottom, -35)
+        if toDos.isEmpty {
+            Image(systemName: "TodoList")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(.gray)
+                .padding()
+        } else {
+            VStack(alignment: .leading, spacing: 35) {
+                ForEach(toDos.indices, id: \.self) { index in
+                    TaskRowView(task: $toDos[index], toDos: $toDos)
+                        .background(alignment: .leading) {
+                            if index != toDos.indices.last {
+                                Rectangle()
+                                    .frame(width: 1)
+                                    .offset(x: 8)
+                                    .padding(.bottom, -35)
+                            }
                         }
-                    }
+                }
             }
+            .padding([.vertical, .leading], 15)
+            .padding(.top, 15)
         }
-        .padding([.vertical, .leading], 15)
-        .padding(.top, 15)
     }
 
     func paginateWeek() {
