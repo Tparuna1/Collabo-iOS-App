@@ -10,25 +10,38 @@ import SwiftUI
 class TodoManager {
     static let shared = TodoManager()
     
-    func loadSavedTasks() -> [Todo] {
-        var savedTasks: [Todo] = []
-        if let savedTasksData = UserDefaults.standard.data(forKey: "tasks") {
-            let decoder = JSONDecoder()
-            if let decodedTasks = try? decoder.decode([Todo].self, from: savedTasksData) {
-                savedTasks = decodedTasks
+        var tasksByDate: [Date: [Todo]] = [:]
+        
+        init() {
+            loadFromUserDefaults()
+        }
+        
+        func loadSavedTasks(for date: Date) -> [Todo] {
+            return tasksByDate[date] ?? []
+        }
+        
+        func saveTasks(_ tasks: [Todo], for date: Date) {
+            tasksByDate[date] = tasks
+            updateUserDefaults()
+        }
+        
+        func updateUserDefaults() {
+            let encoder = JSONEncoder()
+            if let encodedData = try? encoder.encode(tasksByDate) {
+                UserDefaults.standard.set(encodedData, forKey: "tasksByDate")
+            } else {
+                print("Failed to encode tasksByDate.")
             }
         }
-        return savedTasks
-    }
-    
-    func saveTasks(_ tasks: [Todo]) {
-        let encoder = JSONEncoder()
-        if let encodedTasks = try? encoder.encode(tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
-        } else {
-            print("Failed to encode tasks.")
+        
+        func loadFromUserDefaults() {
+            if let savedData = UserDefaults.standard.data(forKey: "tasksByDate") {
+                let decoder = JSONDecoder()
+                if let decodedData = try? decoder.decode([Date: [Todo]].self, from: savedData) {
+                    tasksByDate = decodedData
+                }
+            }
         }
-    }
     
     func initializeWeekSlider() -> [[Date.WeekDay]] {
         var weekSlider: [[Date.WeekDay]] = []

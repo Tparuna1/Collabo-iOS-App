@@ -13,6 +13,7 @@ struct TaskRowView: View {
     @Binding var task: Todo
     @Binding var toDos: [Todo]
     @State private var offset: CGFloat = 0
+    var currentDate: Date
     
     var body: some View {
         HStack(alignment: .top, spacing: 15) {
@@ -21,7 +22,7 @@ struct TaskRowView: View {
                 .fill(indicatorColor)
                 .frame(width: 10, height: 10)
                 .padding(4)
-                .background(.white.shadow(.drop(color: .black.opacity(0.1), radius: 3)), in: .circle)
+                .background(.white.shadow(.drop(color: .blue.opacity(0.1), radius: 3)), in: .circle)
                 .overlay {
                     Circle()
                         .frame(width: 50, height: 50)
@@ -57,7 +58,7 @@ struct TaskRowView: View {
                     }
                     .onEnded { value in
                         if value.translation.width > 50 {
-                            deleteTask()
+                            deleteTask(for: currentDate)
                         } else {
                             withAnimation {
                                 offset = 50
@@ -79,10 +80,10 @@ struct TaskRowView: View {
     }
     
     // MARK: - Delete Task Function
-    private func deleteTask() {
+    private func deleteTask(for date: Date) {
         if let index = toDos.firstIndex(where: { $0.id == task.id }) {
             toDos.remove(at: index)
-            TodoManager.shared.saveTasks(toDos)
+            TodoManager.shared.saveTasks(toDos, for: date)
         }
     }
     

@@ -19,7 +19,7 @@ struct TodoView: View {
     @Namespace private var animation
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0, content: {
+        VStack(alignment: .leading, spacing: 0) {
             HeaderView()
             
             ScrollView(.vertical) {
@@ -30,33 +30,41 @@ struct TodoView: View {
                 .vSpacing(.center)
             }
             .scrollIndicators(.hidden)
-        })
+        }
         .vSpacing(.top)
         .background(Color.customBackground)
-        .overlay(alignment: .bottomTrailing, content: {
+        .overlay(alignment: .bottomTrailing) {
             Button(action: {
                 createNewTask.toggle()
-            }, label: {
+            }) {
                 Image(systemName: "plus")
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                     .frame(width: 55, height: 55)
                     .background(.blue.shadow(.drop(color: .black.opacity(0.25), radius: 5, x: 10, y: 10)), in: .circle)
-            })
+            }
             .padding(15)
-        })
-        .onAppear(perform: {
-                    toDos = TodoManager.shared.loadSavedTasks()
-                    weekSlider = TodoManager.shared.initializeWeekSlider()
-                })
-        .sheet(isPresented: $createNewTask, content: {
-            NewTaskView(tasks: $toDos)
+        }
+        .onAppear {
+            updateTasks(for: currentDate)
+            weekSlider = TodoManager.shared.initializeWeekSlider()
+        }
+        .sheet(isPresented: $createNewTask) {
+            NewTaskView(tasks: $toDos, selectedDate: currentDate)
                 .presentationDetents([.height(300)])
                 .interactiveDismissDisabled()
                 .presentationCornerRadius(30)
                 .presentationBackground(.BG)
-        })
+        }
+        .onChange(of: currentDate) { newValue in
+            updateTasks(for: currentDate)
+        }
     }
+
+    func updateTasks(for date: Date) {
+        toDos = TodoManager.shared.loadSavedTasks(for: currentDate).filter { Calendar.current.isDate($0.creationDate, inSameDayAs: date) }
+    }
+
     
     @ViewBuilder
     func HeaderView() -> some View {
@@ -168,7 +176,7 @@ struct TodoView: View {
         } else {
             VStack(alignment: .leading, spacing: 35) {
                 ForEach(toDos.indices, id: \.self) { index in
-                    TaskRowView(task: $toDos[index], toDos: $toDos)
+                    TaskRowView(task: $toDos[index], toDos: $toDos, currentDate: currentDate)
                         .background(alignment: .leading) {
                             if index != toDos.indices.last {
                                 Rectangle()
