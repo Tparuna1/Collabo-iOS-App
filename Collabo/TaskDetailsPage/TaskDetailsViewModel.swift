@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+// MARK: - AsanaManaging Protocol
+
+protocol TaskDetailsAsanaManaging: TaskManager, SubtaskManager {}
+
 // MARK: - TaskDetailsViewModel Protocol
 
 public protocol TaskDetailsViewModel: TaskDetailsViewModelInput, TaskDetailsViewModelOutput {}
@@ -65,7 +69,8 @@ final class DefaultTaskDetailsViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
+    private var asanaManager: TaskDetailsAsanaManaging
+    
     var task: SingleAsanaTask?
     private var subTasks: [Subtask] = []
     private var errorMessage: String?
@@ -73,19 +78,20 @@ final class DefaultTaskDetailsViewModel: ObservableObject {
     
     // MARK: - Init
     
-    public init(params: TaskDetailsViewModelParams? = nil) {
+    public init(asanaManager: TaskDetailsAsanaManaging = AsanaManager.shared, params: TaskDetailsViewModelParams? = nil) {
+        self.asanaManager = asanaManager
         self.params = params
     }
     
     // MARK: - Private Methods
     
     private func fetchSingleTask() {
-        guard let params else {
+        guard let params = params else {
             return
         }
         Task {
             do {
-                self.task = try await AsanaManager.shared.fetchSingleTask(forTask: params.gid).data
+                self.task = try await asanaManager.fetchSingleTask(forTask: params.gid).data
                 await MainActor.run {
                     self.actionSubject.send(.task(self.task))
                 }
@@ -103,8 +109,7 @@ final class DefaultTaskDetailsViewModel: ObservableObject {
         }
         Task {
             do {
-                let subtaskResponse = try await AsanaManager.shared.fetchSubtasks(forSubtask: params.gid)
-                
+                let subtaskResponse = try await asanaManager.fetchSubtasks(forSubtask: params.gid)
                 
                 self.subTasks = subtaskResponse
                 await MainActor.run {
@@ -125,7 +130,7 @@ final class DefaultTaskDetailsViewModel: ObservableObject {
         
         Task {
             do {
-                _ = try await AsanaManager.shared.deleteSingleTask(forTask: taskGID)
+                _ = try await asanaManager.deleteSingleTask(forTask: taskGID)
                 
                 await MainActor.run {
                     self.routeSubject.send(.taskDeleted)
@@ -147,7 +152,7 @@ final class DefaultTaskDetailsViewModel: ObservableObject {
         
         Task {
             do {
-                let _ = try await AsanaManager.shared.updateSingleTask(forTask: taskGID, completed: newCompletionStatus)
+                let _ = try await asanaManager.updateSingleTask(forTask: taskGID, completed: newCompletionStatus)
                 
                 await MainActor.run {
                     self.task?.completed = newCompletionStatus
@@ -176,7 +181,7 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
         fetchSingleTask()
         fetchSubtask()
         
-        guard let params else {
+        guard let params = params else {
             return
         }
         
@@ -187,4 +192,8 @@ extension DefaultTaskDetailsViewModel: TaskDetailsViewModel {
         routeSubject.send(.newSubtask)
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: TaskDetailsAsanaManaging {}
 

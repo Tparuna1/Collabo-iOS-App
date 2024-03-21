@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+// MARK: - AsanaManaging Protocol
+
+protocol ProjectAsanaManaging: TaskManager, ProjectManager {}
+
 // MARK: - ProjectTasksViewModel Protocol
 
 public protocol ProjectTasksViewModel: ProjectTasksViewModelInput, ProjectTasksViewModelOutput {}
@@ -54,6 +58,8 @@ public enum ProjectTasksViewModelRoute {
     case newTask
 }
 
+
+
 // MARK: - DefaultProjectTasksViewModel Class
 
 final class DefaultProjectTasksViewModel {
@@ -65,25 +71,25 @@ final class DefaultProjectTasksViewModel {
     
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
-    private var tasks: [AsanaTask] = []
-    private var errorMessage: String?
+    private var asanaManager: ProjectAsanaManaging
     
-    // MARK: - Init
-    
-    public init(params: ProjectTasksViewModelParams? = nil) {
+    init(asanaManager: ProjectAsanaManaging = AsanaManager.shared, params: ProjectTasksViewModelParams? = nil) {
+        self.asanaManager = asanaManager
         self.params = params
     }
+    
+    private var tasks: [AsanaTask] = []
+    private var errorMessage: String?
     
     // MARK: - Methods
     
     func fetchTasks() {
-        guard let params else {
+        guard let params = params else {
             return
         }
         Task {
             do {
-                tasks = try await AsanaManager.shared.fetchTasks(forProject: params.gid)
+                tasks = try await asanaManager.fetchTasks(forProject: params.gid)
                 await MainActor.run {
                     self.actionSubject.send(.tasks(self.tasks))
                 }
@@ -100,7 +106,7 @@ final class DefaultProjectTasksViewModel {
         
         Task {
             do {
-                try await AsanaManager.shared.deleteProject(projectGID: projectGID)
+                try await asanaManager.deleteProject(projectGID: projectGID)
                 await MainActor.run {
                     self.routeSubject.send(.projectDeleted)
                 }
@@ -155,7 +161,7 @@ extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
     func viewDidLoad() {
         fetchTasks()
         
-        guard let params else {
+        guard let params = params else {
             return
         }
         
@@ -171,7 +177,10 @@ extension DefaultProjectTasksViewModel: ProjectTasksViewModel {
     
     func newTask() {
         routeSubject.send(.newTask)
+   
     }
 }
 
+// MARK: - AsanaManager Extension
 
+extension AsanaManager: ProjectAsanaManaging {}

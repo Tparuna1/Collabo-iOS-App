@@ -8,11 +8,15 @@
 import Foundation
 import Combine
 
+// MARK: - AsanaManaging Protocol
+
+protocol AsanaManaging: AuthenticationManager, ProjectManager {}
+
 // MARK: - HomeViewModel Protocol
 
 public protocol HomeViewModel: HomeViewModelInput, HomeViewModelOutput {}
 
-// MARK: - HomeViewModel Input & Output  Protocols
+// MARK: - HomeViewModel Input & Output Protocols
 
 public protocol HomeViewModelInput: AnyObject {
     func viewDidLoad()
@@ -45,10 +49,14 @@ final class DefaultHomeViewModel {
     
     // MARK: - Properties
     
-    private let asanaManager = AsanaManager.shared
+    private let asanaManager: AsanaManaging
+    
+    init(asanaManager: AsanaManaging = AsanaManager.shared) {
+        self.asanaManager = asanaManager
+    }
+    
     private var projects: [AsanaProject] = []
     private var errorMessage: String?
-    
     
     // MARK: - Private Methods
     
@@ -110,3 +118,7 @@ extension DefaultHomeViewModel: HomeViewModel {
         routeSubject.send(.newProject)
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: AsanaManaging {}
