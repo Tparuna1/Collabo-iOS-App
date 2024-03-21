@@ -24,7 +24,7 @@
 		41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */; };
 		41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */; };
 		41BA94E52B779BEB009AA25C /* CircullarProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */; };
-		41D3443F2BAA0A70002378FB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3443E2BAA0A70002378FB /* Home.swift */; };
+		41D3443F2BAA0A70002378FB /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3443E2BAA0A70002378FB /* ToDoView.swift */; };
 		41D344412BAA0A7D002378FB /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344402BAA0A7D002378FB /* TaskRowView.swift */; };
 		41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344422BAA0A89002378FB /* NewTaskView.swift */; };
 		41D344462BAA0AB0002378FB /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344452BAA0AB0002378FB /* View+Extensions.swift */; };
@@ -90,7 +90,7 @@
 		41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircullarProgressView.swift; sourceTree = "<group>"; };
-		41D3443E2BAA0A70002378FB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		41D3443E2BAA0A70002378FB /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		41D344402BAA0A7D002378FB /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		41D344422BAA0A89002378FB /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
 		41D344452BAA0AB0002378FB /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 		41D3443B2BAA0A23002378FB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				41D3443E2BAA0A70002378FB /* Home.swift */,
+				41D3443E2BAA0A70002378FB /* ToDoView.swift */,
 				41D344402BAA0A7D002378FB /* TaskRowView.swift */,
 				41D344422BAA0A89002378FB /* NewTaskView.swift */,
 			);
@@ -539,7 +539,7 @@
 				41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */,
 				41BA94D12B70FEE5009AA25C /* UserTaskListModel.swift in Sources */,
 				41FBEBA62B5959C700A7670A /* SUISIgnUpViewModel.swift in Sources */,
-				41D3443F2BAA0A70002378FB /* Home.swift in Sources */,
+				41D3443F2BAA0A70002378FB /* ToDoView.swift in Sources */,
 				41FAAC8F2B691826009F6510 /* TaskDetailsViewController.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
 				4163F48E2B6D4D9B001D139A /* TaskAsanaMode.swift in Sources */,
