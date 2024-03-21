@@ -43,8 +43,7 @@ final class AccountViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
-   
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.applyCustomBackgroundColor()
@@ -83,6 +82,38 @@ final class AccountViewController: UIViewController {
     }
 
     private func setupLabels() {
+        let personImage = UIImage(systemName: "person.fill")
+        let mailboxImage = UIImage(systemName: "envelope.fill")
+        
+        let personImageView = UIImageView(image: personImage)
+        let mailboxImageView = UIImageView(image: mailboxImage)
+        
+        personImageView.contentMode = .scaleAspectFit
+        mailboxImageView.contentMode = .scaleAspectFit
+        
+        personImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            personImageView.widthAnchor.constraint(equalToConstant: 20),
+            personImageView.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        mailboxImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mailboxImageView.widthAnchor.constraint(equalToConstant: 20),
+            mailboxImageView.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        let personStackView = UIStackView(arrangedSubviews: [personImageView, nameLabel])
+        personStackView.axis = .horizontal
+        personStackView.spacing = 10
+        
+        let mailboxStackView = UIStackView(arrangedSubviews: [mailboxImageView, emailLabel])
+        mailboxStackView.axis = .horizontal
+        mailboxStackView.spacing = 10
+        
+        infoStackView.addArrangedSubview(personStackView)
+        infoStackView.addArrangedSubview(mailboxStackView)
+        
         nameLabel.text = "Name: Loading..."
         emailLabel.text = "Email: Loading..."
         
@@ -94,10 +125,8 @@ final class AccountViewController: UIViewController {
         
         nameLabel.numberOfLines = 0
         emailLabel.numberOfLines = 0
-        
-        infoStackView.addArrangedSubview(nameLabel)
-        infoStackView.addArrangedSubview(emailLabel)
     }
+
 
     private func setupProfileImageView() {
         profileImageView.contentMode = .scaleAspectFit
@@ -152,13 +181,13 @@ final class AccountViewController: UIViewController {
     
     private func updateLabels(with userInfo: UserProfile) {
         if let name = userInfo.data?.name {
-            nameLabel.text = "Name: \(name)"
+            nameLabel.text = "\(name)"
         } else {
             nameLabel.text = "Name: N/A"
         }
         
         if let email = userInfo.data?.email {
-            emailLabel.text = "Email: \(email)"
+            emailLabel.text = "\(email)"
         } else {
             emailLabel.text = "Email: N/A"
         }
@@ -189,5 +218,6 @@ final class AccountViewController: UIViewController {
         }
     }
 }
+
 
 

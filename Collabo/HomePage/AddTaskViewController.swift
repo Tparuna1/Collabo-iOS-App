@@ -24,29 +24,11 @@ class AddTaskViewController: UIViewController {
     
     // MARK: - UI Components
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Create a New Task"
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .systemCyan
-        return label
-    }()
+    private let titleLabel = CustomLabelForSheetPresentationController(text: "Create New Task", font: UIFont.boldSystemFont(ofSize: 20), textColor: .systemCyan, alignment: .center)
     
-    let taskNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Task Name"
-        textField.borderStyle = .roundedRect
-        return textField
-    }()
+    private let taskNameTextField = CustomTextFieldForSheetPresentationController(placeholder: "Task Name")
     
-    let createButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Create", for: .normal)
-        button.backgroundColor = .systemCyan
-        button.layer.cornerRadius = 5
-        return button
-    }()
+    private let createButton = CustomButtonFOrSheetPresentationController(title: "Create", backgroundColor: .systemCyan, cornerRadius: 5)
     
     
     // MARK: - View Lifecycle

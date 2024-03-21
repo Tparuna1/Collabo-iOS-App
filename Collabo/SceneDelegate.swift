@@ -47,7 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let todoView = ContentView()
         let todoHostingController = UIHostingController(rootView: todoView)
         let todoNavigationController = UINavigationController(rootViewController: todoHostingController)
-        todoNavigationController.tabBarItem = UITabBarItem(title: "Todo", image: UIImage(systemName: "list.bullet.rectangle.portrait"), tag: 2)
+        todoNavigationController.tabBarItem = UITabBarItem(title: "ToDo", image: UIImage(systemName: "checklist"), tag: 2)
         
         let accountViewController = AccountViewController()
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)

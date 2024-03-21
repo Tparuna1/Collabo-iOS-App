@@ -94,6 +94,10 @@ public final class HomeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 25
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowRadius = 6
         button.addTarget(self, action: #selector(addProject(_:)), for: .touchUpInside)
         return button
     }()
@@ -115,7 +119,7 @@ public final class HomeViewController: UIViewController {
     private func setupUI() {
         title = "Home"
         view.addSubview(fetchDataContainerView)
-        
+                
         let fetchDataTitleLabel = UILabel()
         fetchDataTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         fetchDataTitleLabel.text = "Fetch data"
@@ -266,7 +270,7 @@ extension HomeViewController: UITableViewDataSource {
         
         let project = projects[indexPath.row]
         
-        let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemOrange]
+        let colors: [UIColor] = [.taskColor1, .taskColor2, .taskColor4, .taskColor5]
         let colorIndex = indexPath.row % colors.count
         
         cell.setup(with: .init(title: project.name, color: colors[colorIndex]))

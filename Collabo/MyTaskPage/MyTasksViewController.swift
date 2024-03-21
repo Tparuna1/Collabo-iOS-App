@@ -22,7 +22,7 @@ public final class UserTaskListViewController: UIViewController {
     
     private let customNavBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = UIColor(red: 251/255, green: 247/255, blue: 248/255, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -30,7 +30,7 @@ public final class UserTaskListViewController: UIViewController {
     private let headerLabel: UILabel = {
         let label = UILabel()
         label.text = "My Tasks"
-        label.textColor = .white
+        label.textColor = .systemBlue
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -51,10 +51,19 @@ public final class UserTaskListViewController: UIViewController {
         return wrapperView
     }()
     
+    private let loadingImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "MyTaskList")
+        return imageView
+    }()
+    
     // MARK: - View Lifecycle
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        setupLoadingImageView()
         setupUI()
         setupTableView()
         bind(to: viewModel)
@@ -63,6 +72,7 @@ public final class UserTaskListViewController: UIViewController {
     }
     
     // MARK: - View Model Binding
+    
     private func bind(to viewModel: UserTaskListViewModel) {
         viewModel.action.sink { [weak self] action in self?.didReceive(action: action) }.store(in: &cancellables)
         viewModel.route.sink { [weak self] route in self?.didReceive(route: route) }.store(in: &cancellables)
@@ -73,6 +83,8 @@ public final class UserTaskListViewController: UIViewController {
         case .tasks(let tasks):
             self.tasks = tasks
             tableView.reloadData()
+            
+            loadingImageView.isHidden = true
         }
     }
     
@@ -84,17 +96,6 @@ public final class UserTaskListViewController: UIViewController {
     }
     
     // MARK: - UI Setup
-    
-    private func setupNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .systemBlue
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.isHidden = true
-    }
     
     private func setupCustomNavBar() {
         view.addSubview(customNavBar)
@@ -136,6 +137,16 @@ public final class UserTaskListViewController: UIViewController {
         tableView.register(ProjectCell.self, forCellReuseIdentifier: "UserTaskCell")
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func setupLoadingImageView() {
+        view.addSubview(loadingImageView)
+        NSLayoutConstraint.activate([
+            loadingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingImageView.widthAnchor.constraint(equalToConstant: 200),
+            loadingImageView.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
 }
 

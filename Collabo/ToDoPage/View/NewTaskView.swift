@@ -30,7 +30,7 @@ struct NewTaskView: View {
                     .font(.caption)
                     .foregroundStyle(.gray)
                 
-                TextField("Go for a Walk!", text: $taskTitle)
+                TextField("Your Task Here!", text: $taskTitle)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 15)
                     .background(.white.shadow(.drop(color: .black.opacity(0.25), radius: 2)), in: .rect(cornerRadius: 10))
