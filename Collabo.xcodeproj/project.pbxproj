@@ -14,6 +14,7 @@
 		4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */; };
 		4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */; };
 		416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */; };
+		416D96C32BAC208A00563D8B /* ToDoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C22BAC208900563D8B /* ToDoManager.swift */; };
 		417A807F2B6E33CE00E867E7 /* SubTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */; };
 		417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */; };
 		417A808B2B6ECF4000E867E7 /* TaskDetailsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */; };
@@ -80,6 +81,7 @@
 		4163F4942B6D662A001D139A /* ProjectTasksNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksNavigator.swift; sourceTree = "<group>"; };
 		4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaAuthenticationModel.swift; sourceTree = "<group>"; };
 		416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetPresentationComponents.swift; sourceTree = "<group>"; };
+		416D96C22BAC208900563D8B /* ToDoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoManager.swift; sourceTree = "<group>"; };
 		417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskModel.swift; sourceTree = "<group>"; };
 		417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewModel.swift; sourceTree = "<group>"; };
 		417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsNavigator.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				41D344452BAA0AB0002378FB /* View+Extensions.swift */,
 				41D344472BAA0AC4002378FB /* Date+Extensions.swift */,
 				41D344492BAA0ACF002378FB /* OffsetKey.swift */,
+				416D96C22BAC208900563D8B /* ToDoManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				41FBEB9D2B57EA1300A7670A /* CustomTextfieldComponent.swift in Sources */,
 				41FAAC6F2B60F9E8009F6510 /* UserDefaultsManager.swift in Sources */,
 				41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */,
+				416D96C32BAC208A00563D8B /* ToDoManager.swift in Sources */,
 				41FBEB6E2B56700900A7670A /* MyTasksViewController.swift in Sources */,
 				41FBEB972B56F10100A7670A /* EmailFieldComponent.swift in Sources */,
 				4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */,

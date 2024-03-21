@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct NewTaskView: View {
+    
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @State private var taskTitle: String = ""
     @State private var taskDate: Date = .init()
     @State private var taskColor: Color = .taskColor1
     @Binding var tasks: [Todo]
     
+    // MARK: - Body
+
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
             Button(action: {
@@ -100,22 +104,14 @@ struct NewTaskView: View {
         .padding(15)
     }
     
+    // MARK: - Methods
+    
     func createTask() {
         let newTask = Todo(taskTitle: taskTitle, creationDate: taskDate, isCompleted: false, tint: taskColor)
         tasks.append(newTask)
         
-        let encoder = JSONEncoder()
-        if let encodedTasks = try? encoder.encode(tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
-        } else {
-            print("Failed to encode tasks.")
-        }
+        TodoManager.shared.saveTasks(tasks)
         dismiss()
     }
 }
 
-struct NewTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewTaskView(tasks: .constant([]))
-    }
-}

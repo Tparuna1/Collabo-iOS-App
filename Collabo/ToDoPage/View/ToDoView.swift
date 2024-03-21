@@ -1,5 +1,5 @@
 //
-//  Home.swift
+//  TodoView.swift
 //  Collabo
 //
 //  Created by tornike <parunashvili on 19.03.24.
@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TodoView: View {
+    
+    // MARK: - Properties
     @State private var currentDate: Date = .init()
     @State private var weekSlider: [[Date.WeekDay]] = []
     @State private var currentWeekIndex: Int = 1
@@ -44,27 +46,9 @@ struct TodoView: View {
             .padding(15)
         })
         .onAppear(perform: {
-            if let savedTasksData = UserDefaults.standard.data(forKey: "tasks") {
-                let decoder = JSONDecoder()
-                if let decodedTasks = try? decoder.decode([Todo].self, from: savedTasksData) {
-                    toDos = decodedTasks
-                }
-            }
-            
-            if weekSlider.isEmpty {
-                let currentWeek = Date().fetchWeek()
-                
-                if let firstDate = currentWeek.first?.date {
-                    weekSlider.append(firstDate.createPreviousWeek())
-                }
-                
-                weekSlider.append(currentWeek)
-                
-                if let lastDate = currentWeek.last?.date {
-                    weekSlider.append(lastDate.createNextWeek())
-                }
-            }
-        })
+                    toDos = TodoManager.shared.loadSavedTasks()
+                    weekSlider = TodoManager.shared.initializeWeekSlider()
+                })
         .sheet(isPresented: $createNewTask, content: {
             NewTaskView(tasks: $toDos)
                 .presentationDetents([.height(300)])
@@ -200,6 +184,7 @@ struct TodoView: View {
         }
     }
 
+    // MARK: - Pagination Logic
     func paginateWeek() {
         if weekSlider.indices.contains(currentWeekIndex) {
             if let firstDate = weekSlider[currentWeekIndex].first?.date, currentWeekIndex == 0 {
@@ -223,7 +208,4 @@ extension Color {
     static let customBackground = Color(red: 251/255, green: 247/255, blue: 248/255)
 }
 
-#Preview {
-    ContentView()
-}
 

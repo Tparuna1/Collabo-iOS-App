@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct TaskRowView: View {
+    
+    // MARK: - Properties
     @Binding var task: Todo
     @Binding var toDos: [Todo]
     @State private var offset: CGFloat = 0
     
     var body: some View {
         HStack(alignment: .top, spacing: 15) {
+            // MARK: - Task Completion Indicator
             Circle()
                 .fill(indicatorColor)
                 .frame(width: 10, height: 10)
@@ -26,6 +29,7 @@ struct TaskRowView: View {
                         .onTapGesture {
                             withAnimation(.snappy) {
                                 task.isCompleted.toggle()
+                                updateStorage()
                             }
                         }
                 }
@@ -66,6 +70,7 @@ struct TaskRowView: View {
         }
     }
     
+    // MARK: - Indicator Color Logic
     var indicatorColor: Color {
         if task.isCompleted {
             return .green
@@ -73,13 +78,15 @@ struct TaskRowView: View {
         return task.creationDate.isSameHour ? .darkBlue : (task.creationDate.isPast ? .red : .black)
     }
     
+    // MARK: - Delete Task Function
     private func deleteTask() {
         if let index = toDos.firstIndex(where: { $0.id == task.id }) {
             toDos.remove(at: index)
-            updateStorage()
+            TodoManager.shared.saveTasks(toDos)
         }
     }
     
+    // MARK: - Update Storage Function
     private func updateStorage() {
         let encoder = JSONEncoder()
         if let encodedTasks = try? encoder.encode(toDos) {
@@ -90,7 +97,4 @@ struct TaskRowView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
 
