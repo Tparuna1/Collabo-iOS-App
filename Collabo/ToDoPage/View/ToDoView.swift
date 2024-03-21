@@ -56,7 +56,7 @@ struct TodoView: View {
                 .presentationCornerRadius(30)
                 .presentationBackground(.BG)
         }
-        .onChange(of: currentDate) { newValue in
+        .onChange(of: currentDate) {
             updateTasks(for: currentDate)
         }
     }
