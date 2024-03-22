@@ -99,6 +99,8 @@ final class SheetPresentationController: UIPresentationController {
     }
 }
 
+// MARK: - Background Color Extension
+
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)

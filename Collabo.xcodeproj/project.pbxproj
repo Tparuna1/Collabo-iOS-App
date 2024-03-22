@@ -15,6 +15,13 @@
 		4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */; };
 		416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */; };
 		416D96C32BAC208A00563D8B /* ToDoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C22BAC208900563D8B /* ToDoManager.swift */; };
+		416D96C72BADEC9000563D8B /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C62BADEC8F00563D8B /* TimerView.swift */; };
+		416D96C92BADECA600563D8B /* CountPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96C82BADECA600563D8B /* CountPickerView.swift */; };
+		416D96CD2BADED6E00563D8B /* CountDownContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96CC2BADED6E00563D8B /* CountDownContentView.swift */; };
+		416D96CF2BADEF2800563D8B /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96CE2BADEF2700563D8B /* CountDownView.swift */; };
+		416D96D12BADEF6100563D8B /* CountDownViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96D02BADEF6100563D8B /* CountDownViewModel.swift */; };
+		416D96D42BADFB5E00563D8B /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96D32BADFB5E00563D8B /* ColorExtension.swift */; };
+		416D96D82BADFB7000563D8B /* HelperMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D96D72BADFB7000563D8B /* HelperMethods.swift */; };
 		417A807F2B6E33CE00E867E7 /* SubTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */; };
 		417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */; };
 		417A808B2B6ECF4000E867E7 /* TaskDetailsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */; };
@@ -82,6 +89,13 @@
 		4163F4962B6D7072001D139A /* AsanaAuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsanaAuthenticationModel.swift; sourceTree = "<group>"; };
 		416D96C02BAB59A500563D8B /* SheetPresentationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetPresentationComponents.swift; sourceTree = "<group>"; };
 		416D96C22BAC208900563D8B /* ToDoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoManager.swift; sourceTree = "<group>"; };
+		416D96C62BADEC8F00563D8B /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		416D96C82BADECA600563D8B /* CountPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountPickerView.swift; sourceTree = "<group>"; };
+		416D96CC2BADED6E00563D8B /* CountDownContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownContentView.swift; sourceTree = "<group>"; };
+		416D96CE2BADEF2700563D8B /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
+		416D96D02BADEF6100563D8B /* CountDownViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewModel.swift; sourceTree = "<group>"; };
+		416D96D32BADFB5E00563D8B /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		416D96D72BADFB7000563D8B /* HelperMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperMethods.swift; sourceTree = "<group>"; };
 		417A807E2B6E33CE00E867E7 /* SubTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskModel.swift; sourceTree = "<group>"; };
 		417A80882B6ECF3100E867E7 /* AddSubtaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubtaskViewModel.swift; sourceTree = "<group>"; };
 		417A808A2B6ECF4000E867E7 /* TaskDetailsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsNavigator.swift; sourceTree = "<group>"; };
@@ -162,6 +176,44 @@
 			path = ProjectCell;
 			sourceTree = "<group>";
 		};
+		416D96C42BADEC3100563D8B /* CountDownTimerPage */ = {
+			isa = PBXGroup;
+			children = (
+				416D96DD2BAE0C1300563D8B /* CountDownViewModel */,
+				416D96D22BADFB3500563D8B /* CountDownHelpers */,
+				416D96C52BADEC8100563D8B /* Views */,
+				416D96CC2BADED6E00563D8B /* CountDownContentView.swift */,
+			);
+			path = CountDownTimerPage;
+			sourceTree = "<group>";
+		};
+		416D96C52BADEC8100563D8B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				416D96C62BADEC8F00563D8B /* TimerView.swift */,
+				416D96C82BADECA600563D8B /* CountPickerView.swift */,
+				416D96CE2BADEF2700563D8B /* CountDownView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		416D96D22BADFB3500563D8B /* CountDownHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				416D96D32BADFB5E00563D8B /* ColorExtension.swift */,
+				416D96D72BADFB7000563D8B /* HelperMethods.swift */,
+			);
+			path = CountDownHelpers;
+			sourceTree = "<group>";
+		};
+		416D96DD2BAE0C1300563D8B /* CountDownViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				416D96D02BADEF6100563D8B /* CountDownViewModel.swift */,
+			);
+			path = CountDownViewModel;
+			sourceTree = "<group>";
+		};
 		417A80852B6ECF0A00E867E7 /* AddSubtaskPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,10 +226,11 @@
 		41BA94D62B71AD77009AA25C /* SwiftUIViews */ = {
 			isa = PBXGroup;
 			children = (
-				41D3443A2BAA09BB002378FB /* ToDoPage */,
+				416D96C42BADEC3100563D8B /* CountDownTimerPage */,
 				41FBEB802B56772900A7670A /* Onboarding */,
 				41FBEB892B56C2B900A7670A /* LoginPage */,
 				41FBEB932B56EDEC00A7670A /* SignUpPage */,
+				41D3443A2BAA09BB002378FB /* ToDoPage */,
 			);
 			name = SwiftUIViews;
 			sourceTree = "<group>";
@@ -516,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4163F48A2B6CF9F4001D139A /* CustomBackgroundColor.swift in Sources */,
+				416D96C92BADECA600563D8B /* CountPickerView.swift in Sources */,
 				41FBEB6C2B566FFA00A7670A /* HomeViewController.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountViewController.swift in Sources */,
 				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,
@@ -523,12 +577,14 @@
 				41FBEB752B56764600A7670A /* HomePageViewModel.swift in Sources */,
 				41FAAC7B2B627B17009F6510 /* AddProjectViewModel.swift in Sources */,
 				41D344462BAA0AB0002378FB /* View+Extensions.swift in Sources */,
+				416D96D42BADFB5E00563D8B /* ColorExtension.swift in Sources */,
 				416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */,
 				41D3444F2BAA0B71002378FB /* ContentView.swift in Sources */,
 				417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */,
 				41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */,
 				4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */,
 				41D344482BAA0AC4002378FB /* Date+Extensions.swift in Sources */,
+				416D96D82BADFB7000563D8B /* HelperMethods.swift in Sources */,
 				41FBEB842B5692AD00A7670A /* SUIWelcomeView.swift in Sources */,
 				41FAAC742B611B68009F6510 /* NewProjectViewController.swift in Sources */,
 				41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */,
@@ -545,6 +601,8 @@
 				41D3443F2BAA0A70002378FB /* ToDoView.swift in Sources */,
 				41FAAC8F2B691826009F6510 /* TaskDetailsViewController.swift in Sources */,
 				41FBEB882B5696F000A7670A /* AnimatedBackgroundView.swift in Sources */,
+				416D96CD2BADED6E00563D8B /* CountDownContentView.swift in Sources */,
+				416D96C72BADEC9000563D8B /* TimerView.swift in Sources */,
 				4163F48E2B6D4D9B001D139A /* TaskAsanaMode.swift in Sources */,
 				41FBEB902B56C40A00A7670A /* PrimaryButtonComponent.swift in Sources */,
 				41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */,
@@ -553,10 +611,12 @@
 				41FBEBA82B596A6900A7670A /* PasswordChecklList.swift in Sources */,
 				41FBEB922B56DDE400A7670A /* WelcomePageViewModel.swift in Sources */,
 				41D344412BAA0A7D002378FB /* TaskRowView.swift in Sources */,
+				416D96CF2BADEF2800563D8B /* CountDownView.swift in Sources */,
 				41FBEBAA2B5A78A300A7670A /* PasswordStrengthChecklist.swift in Sources */,
 				417A807F2B6E33CE00E867E7 /* SubTaskModel.swift in Sources */,
 				4163F4932B6D5F10001D139A /* HomeNavigator.swift in Sources */,
 				41FBEB582B55837500A7670A /* SceneDelegate.swift in Sources */,
+				416D96D12BADEF6100563D8B /* CountDownViewModel.swift in Sources */,
 				41D3444D2BAA0AED002378FB /* Task.swift in Sources */,
 				4163F4912B6D5424001D139A /* ProjectCellModel.swift in Sources */,
 				41FBEB9B2B57C1D400A7670A /* LoginPageViewModel.swift in Sources */,

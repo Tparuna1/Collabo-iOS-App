@@ -49,11 +49,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let todoNavigationController = UINavigationController(rootViewController: todoHostingController)
         todoNavigationController.tabBarItem = UITabBarItem(title: "ToDo", image: UIImage(systemName: "checklist"), tag: 2)
         
+        let countDownView = CounterContentView()
+        let countDownHostingController = UIHostingController(rootView: countDownView)
+        let countDownNavigationController = UINavigationController(rootViewController: countDownHostingController)
+        countDownNavigationController.tabBarItem = UITabBarItem(title: "Timer", image: UIImage(systemName: "timer"), tag: 3)
+        
         let accountViewController = AccountViewController()
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
-        accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 3)
+        accountNavigationController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.circle"), tag: 4)
         
-        tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, todoNavigationController, accountNavigationController]
+        tabBarController.viewControllers = [homeNavigationController, myTasksNavigationController, todoNavigationController, countDownNavigationController, accountNavigationController]
         
         tabBarController.tabBar.applyCustomBackgroundColor()
 
