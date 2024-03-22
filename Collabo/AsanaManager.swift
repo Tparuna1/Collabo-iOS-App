@@ -7,9 +7,42 @@
 
 import Foundation
 
+// MARK: - AsanaManager Protocols
 
-public class AsanaManager {
-    
+protocol AuthenticationManager {
+    func getAccessToken(authorizationCode: String) async throws
+    func refreshAccessToken() async throws
+}
+
+protocol UserManager {
+    func getUserID() async throws -> String
+    func fetchUserInfo() async throws -> UserProfile
+}
+
+protocol ProjectManager {
+    func fetchProjects() async throws -> [AsanaProject]
+    func addProjectToAsana(name: String) async throws
+    func deleteProject(projectGID: String) async throws
+}
+
+protocol TaskManager {
+    func fetchTasks(forProject projectGID: String) async throws -> [AsanaTask]
+    func fetchAllTasks() async throws -> [AsanaTask]
+    func fetchUserTasks() async throws -> [UserTaskList]
+    func addTaskToAsana(name: String, projectGID: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func fetchSingleTask(forTask taskGID: String) async throws -> TaskAsana
+    func deleteSingleTask(forTask taskGID: String) async throws -> TaskAsana
+    func updateSingleTask(forTask taskGID: String, completed: Bool) async throws -> TaskAsana
+}
+
+protocol SubtaskManager {
+    func fetchSubtasks(forSubtask taskGID: String) async throws -> [Subtask]
+    func addSubtask(name: String, taskGID: String, completion: @escaping (Result<Void, Error>) -> Void)
+}
+
+
+public final class AsanaManager: AuthenticationManager, UserManager, ProjectManager, TaskManager, SubtaskManager {
+
     //MARK: - Properties
     
     var token: String

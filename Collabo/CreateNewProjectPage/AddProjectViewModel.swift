@@ -7,12 +7,25 @@
 
 import Foundation
 
+// MARK: - AsanaManaging Protocol
+
+protocol AddProjectAsanaManaging: ProjectManager {}
+
+// MARK: - AddprojectViewModel Class
+
 final class AddProjectViewModel {
     
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
+    private let asanaManager: AddProjectAsanaManaging
     var errorMessage: String?
+
+    
+    //MARK: - Init
+    
+    init(asanaManager: AddProjectAsanaManaging = AsanaManager.shared) {
+        self.asanaManager = asanaManager
+    }   
 
     // MARK: - Methods
     
@@ -28,3 +41,7 @@ final class AddProjectViewModel {
         }
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: AddProjectAsanaManaging {}
