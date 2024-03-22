@@ -50,13 +50,14 @@ final class DefaultHomeViewModel {
     // MARK: - Properties
     
     private let asanaManager: AsanaManaging
+    private var projects: [AsanaProject] = []
+    private var errorMessage: String?
+    
+    //MARK: - Init
     
     init(asanaManager: AsanaManaging = AsanaManager.shared) {
         self.asanaManager = asanaManager
     }
-    
-    private var projects: [AsanaProject] = []
-    private var errorMessage: String?
     
     // MARK: - Private Methods
     

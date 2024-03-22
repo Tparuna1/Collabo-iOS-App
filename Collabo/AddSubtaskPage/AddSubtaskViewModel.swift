@@ -7,13 +7,25 @@
 
 import Foundation
 
+// MARK: - AsanaManaging Protocol
+
+protocol AddSubtaskAsanaManaging: SubtaskManager {}
+
+// MARK: - AddSubtaskViewModel Class
+
 final class AddSubtaskViewModel {
     
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
+    private let asanaManager: AddSubtaskAsanaManaging
     var errorMessage: String?
     var params: TaskDetailsViewModelParams?
+    
+    //MARK: - Init
+    
+    init(asanaManager: AddSubtaskAsanaManaging = AsanaManager.shared) {
+        self.asanaManager = asanaManager
+    }
 
     // MARK: - Methods
     
@@ -34,3 +46,7 @@ final class AddSubtaskViewModel {
         }
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: AddSubtaskAsanaManaging {}

@@ -72,15 +72,15 @@ final class DefaultProjectTasksViewModel {
     // MARK: - Properties
     
     private var asanaManager: ProjectAsanaManaging
+    private var tasks: [AsanaTask] = []
+    private var errorMessage: String?
     
+    //MARK: - Init
     init(asanaManager: ProjectAsanaManaging = AsanaManager.shared, params: ProjectTasksViewModelParams? = nil) {
         self.asanaManager = asanaManager
         self.params = params
     }
-    
-    private var tasks: [AsanaTask] = []
-    private var errorMessage: String?
-    
+
     // MARK: - Methods
     
     func fetchTasks() {

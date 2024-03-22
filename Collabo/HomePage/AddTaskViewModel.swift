@@ -7,13 +7,25 @@
 
 import Foundation
 
+// MARK: - AsanaManaging Protocol
+
+protocol AddTaskAsanaManaging: TaskManager {}
+
+// MARK: - AddTaskViewModel Class
+
 final class AddTaskViewModel {
     
     // MARK: - Properties
     
-    private let asanaManager = AsanaManager.shared
+    private let asanaManager: AddTaskAsanaManaging
     var errorMessage: String?
     var params: ProjectTasksViewModelParams?
+    
+    //MARK: - Init
+    
+    init(asanaManager: AddTaskAsanaManaging = AsanaManager.shared) {
+        self.asanaManager = asanaManager
+    }
     
     // MARK: - Methods
     
@@ -33,4 +45,8 @@ final class AddTaskViewModel {
         }
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: AddTaskAsanaManaging {}
 

@@ -9,6 +9,10 @@
 import Foundation
 import Combine
 
+// MARK: - AsanaManaging Protocol
+
+protocol UserTaskListAsanaManaging: TaskManager {}
+
 // MARK: - UserTaskListViewModel Protocol
 
 public protocol UserTaskListViewModel: UserTaskListViewModelInput, UserTaskListViewModelOutput {}
@@ -43,9 +47,16 @@ final class DefaultUserTaskListViewModel {
         
     // MARK: - Properties
     
-    private var asanaManager = AsanaManager.shared
+    private var asanaManager: UserTaskListAsanaManaging
+    
     private var tasks: [UserTaskList] = []
     private var errorMessage: String?
+    
+    // MARK: - Init
+    
+    init(asanaManager: UserTaskListAsanaManaging = AsanaManager.shared) {
+        self.asanaManager = asanaManager
+    }
     
     // MARK: - Methods
     
@@ -88,4 +99,8 @@ extension DefaultUserTaskListViewModel: UserTaskListViewModel {
         routeSubject.send(.details(.init(name: name, gid: gid)))
     }
 }
+
+// MARK: - AsanaManager Extension
+
+extension AsanaManager: UserTaskListAsanaManaging {}
 

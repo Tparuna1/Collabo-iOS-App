@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - AsanaManager Protocols
+
 protocol AuthenticationManager {
     func getAccessToken(authorizationCode: String) async throws
     func refreshAccessToken() async throws
@@ -39,7 +41,7 @@ protocol SubtaskManager {
 }
 
 
-public class AsanaManager: AuthenticationManager, UserManager, ProjectManager, TaskManager, SubtaskManager {
+public final class AsanaManager: AuthenticationManager, UserManager, ProjectManager, TaskManager, SubtaskManager {
 
     //MARK: - Properties
     
