@@ -7,12 +7,18 @@
 
 import SwiftUI
 
+//MARK: - CountPickerView
+
 struct CountPickerView: View {
+    
+    //MARK: - Properties
     
     @ObservedObject var viewModel: CountDownViewModel
     @State private var hoursIndex = 0
     @State private var minsIndex = 0
     @State private var secsIndex = 0
+    
+    //MARK: - Body
     
     var body: some View {
         VStack {
@@ -42,18 +48,23 @@ struct CountPickerView: View {
                     .padding(.bottom, 100)
             }
             .padding(16).frame(maxWidth: .infinity)
-            .background(Color(hex: "f2f4f7"))
+            .background(Color.customBackgroundColor)
             .cornerRadius(32)
-        }.edgesIgnoringSafeArea(.all)
+        }.edgesIgnoringSafeArea(.bottom)
     }
 }
 
+//MARK: - GenPickerView
+
 struct GenPickerView: View {
+    
+    //MARK: Properties
     
     var label: String
     let values: ClosedRange<Int>
     @Binding var index: Int
     
+    //MARK: - Body
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
             Text(label)

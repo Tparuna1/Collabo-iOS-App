@@ -7,19 +7,24 @@
 
 import Foundation
 
-class CountDownViewModel: ObservableObject {
+// MARK: - CountDownViewModel
+
+final class CountDownViewModel: ObservableObject {
     
+    //MARK: - Properties
+    
+    private var timer = Timer()
+
     @Published var progress = Double(0)
-    
-    var timer = Timer()
     @Published var timerActive = false
     @Published var duration = 0.0
-    
     @Published var showPickerSheet = false
     
     init() { }
     
-    func setTimer(hours: Int, minutes: Int, seconds: Int) {
+    //MARK: - Methods
+    
+    private func setTimer(hours: Int, minutes: Int, seconds: Int) {
         let hrs = hours * 3600, mins = minutes * 60, secs = seconds
         let seconds = secs + mins + hrs
         self.duration = Double(seconds)
@@ -39,7 +44,7 @@ class CountDownViewModel: ObservableObject {
         }
     }
     
-    func enableTimerMethod() {
+    private func enableTimerMethod() {
         timerActive = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             self.duration -= 1

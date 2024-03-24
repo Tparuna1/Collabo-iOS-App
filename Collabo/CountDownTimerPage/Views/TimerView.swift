@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+//MARK: - TimerView
+
 struct TimerView: View {
+    
+    //MARK: - Properties
     
     @Binding var progress: Double
     @Binding var duration: Double
@@ -38,7 +42,10 @@ struct TimerView: View {
     }
 }
 
+//MARK: - TimerActionView
 struct TimerActionView: View {
+    
+    //MARK: - Properties
     
     @ObservedObject var viewModel: CountDownViewModel
     
