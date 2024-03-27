@@ -26,9 +26,10 @@ To access Collabo, use the following credentials:
 - **UIKit Components:** Custom components and views built using UIKit.
 
 ## Screenshots
-<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/8016655f-4b5a-491d-a648-05384f8a5224" width="200" height="400" />
-
-
+<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/b2c66808-5d0f-4104-bcc0-a7dc6f7f42d5" width="200" />
+<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/2b45c181-cbfd-42c6-98fd-c9a26f18fcf0" width="200" />
+<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/76cd933a-04e0-4a3f-b177-da42ada2b2dd" width="200" />
+<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/9571aeb6-6f96-40e0-9d62-055e311da0f0" width="200"/>
 
 ## Note
 Please ensure that you have an active internet connection to utilize Collabo's features, especially for syncing with Asana projects and tasks.
