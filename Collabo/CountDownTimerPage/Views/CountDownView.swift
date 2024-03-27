@@ -6,23 +6,25 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 //MARK: - CountDownView
 
 struct CountDownView: View {
-    
-    //MARK: - Properties
-    
+
     @ObservedObject var viewModel = CountDownViewModel()
-    
-    //MARK: - Body
-    
+
+    init() {
+        viewModel.notificationHandler = {
+        }
+    }
+
     var body: some View {
         ZStack {
             BackgroundAnimation()
                 .edgesIgnoringSafeArea(.all)
                 .brightness(viewModel.showPickerSheet ? -0.1 : 0)
-            
+
             Group {
                 Button(action: { withAnimation { viewModel.displayPickerSheet() } }, label: { TimerView(progress: $viewModel.progress, duration: $viewModel.duration) })
                 TimerActionView(viewModel: viewModel)
@@ -30,24 +32,16 @@ struct CountDownView: View {
             CountPickerView(viewModel: viewModel)
                 .offset(x: 0, y: viewModel.showPickerSheet ? 0 : 1500)
         }
-    }
-}
+        .onAppear {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
+                if success {
+                } else if let error = error {
+                }
+            }
 
-
-//MARK: - BubbleView
-
-struct BubbleView: View {
-    
-    //MARK: - Properties
-    
-    let size: CGFloat, x: CGFloat, y: CGFloat
-    
-    //MARK: - Body
-    
-    var body: some View {
-        ZStack {
-            Circle().foregroundColor(Color.taskColor2)
-                .frame(width: size, height: size).offset(x: x, y: y)
+            NotificationCenter.default.addObserver(forName: .timerFinished, object: nil, queue: .main) { _ in
+                viewModel.handleTimerFinishedNotification()
+            }
         }
     }
 }
@@ -57,5 +51,6 @@ struct HomeView_Previews: PreviewProvider {
         CountDownView()
     }
 }
+
 
 

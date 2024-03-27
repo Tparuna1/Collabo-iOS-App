@@ -6,21 +6,26 @@
 //
 
 import Foundation
+import UserNotifications
 
 // MARK: - CountDownViewModel
 
-final class CountDownViewModel: ObservableObject {
+final class CountDownViewModel: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     
     //MARK: - Properties
     
     private var timer = Timer()
-
+    var notificationHandler: (() -> Void)?
     @Published var progress = Double(0)
     @Published var timerActive = false
     @Published var duration = 0.0
     @Published var showPickerSheet = false
     
-    init() { }
+    
+    override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+    }
     
     //MARK: - Methods
     
@@ -50,7 +55,10 @@ final class CountDownViewModel: ObservableObject {
             self.duration -= 1
             let seconds = Int(self.duration) % 60
             self.progress = 100 - Double((Double(seconds)/60) * 100)
-            if self.duration <= 0 { self.stopTimerButton() }
+            if self.duration <= 0 {
+                self.stopTimerButton()
+                NotificationCenter.default.post(name: .timerFinished, object: nil)
+            }
         }
     }
     
@@ -65,4 +73,30 @@ final class CountDownViewModel: ObservableObject {
         timerActive = false; timer.invalidate()
         progress = 0; duration = 0
     }
+    
+    func handleTimerFinishedNotification() {        
+        let content = UNMutableNotificationContent()
+        content.title = "Time's up!"
+        content.body = "Take a Break."
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "timerFinished", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
+        
+        notificationHandler?()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        notificationHandler?()
+        completionHandler([.banner, .sound, .badge])
+    }
+}
+
+//MARK: - Extension for Notification
+
+extension Notification.Name {
+    static let timerFinished = Notification.Name("timerFinished")
 }

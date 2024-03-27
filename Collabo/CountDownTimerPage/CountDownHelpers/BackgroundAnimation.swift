@@ -34,3 +34,21 @@ struct BackgroundAnimation: View {
         return CGFloat.random(in: -300...300)
     }
 }
+
+//MARK: - BubbleView
+
+struct BubbleView: View {
+    
+    //MARK: - Properties
+    
+    let size: CGFloat, x: CGFloat, y: CGFloat
+    
+    //MARK: - Body
+    
+    var body: some View {
+        ZStack {
+            Circle().foregroundColor(Color.taskColor2)
+                .frame(width: size, height: size).offset(x: x, y: y)
+        }
+    }
+}
