@@ -16,6 +16,8 @@ struct NewTaskView: View {
     @State private var taskColor: Color = .taskColor1
     @Binding var tasks: [Todo]
     private var selectedDate: Date
+    private let notificationCenter = UNUserNotificationCenter.current()
+    
     
     // MARK: - Initialization
     
@@ -116,7 +118,7 @@ struct NewTaskView: View {
     
     // MARK: - Methods
     
-    func createTask() {
+    private func createTask() {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: taskTime)
         let minute = calendar.component(.minute, from: taskTime)
@@ -127,6 +129,14 @@ struct NewTaskView: View {
         
         TodoManager.shared.saveTasks(tasks, for: selectedDate)
         dismiss()
+    }
+    
+    private func requestNotificationAuthorization() {
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { granted, error in
+            if !granted {
+                print("Notification permission denied")
+            }
+        }
     }
 }
 

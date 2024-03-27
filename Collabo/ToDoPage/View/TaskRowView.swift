@@ -41,7 +41,7 @@ struct TaskRowView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.black)
                 
-                Label(task.creationDate.format("hh:mm a"), systemImage: "clock")
+                Label(task.creationDate.format("H:mm"), systemImage: "clock")
                     .font(.caption)
                     .foregroundStyle(.black)
             }
