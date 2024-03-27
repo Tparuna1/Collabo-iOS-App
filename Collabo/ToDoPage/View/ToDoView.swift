@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//MARK: - TodoView
+
 struct TodoView: View {
     
     // MARK: - Properties
@@ -18,6 +20,8 @@ struct TodoView: View {
     @State private var toDos: [Todo] = []
     @State private var createNewTask: Bool = false
     @Namespace private var animation
+    
+    //MARK: - Body
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -66,7 +70,7 @@ struct TodoView: View {
         toDos = TodoManager.shared.loadSavedTasks(for: currentDate).filter { Calendar.current.isDate($0.creationDate, inSameDayAs: date) }
     }
 
-    
+    //MARK: - HeaderView
     @ViewBuilder
     func HeaderView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -107,6 +111,7 @@ struct TodoView: View {
         }
     }
     
+    //MARK: - WeekView
     @ViewBuilder
     func WeekView(_ week: [Date.WeekDay]) -> some View {
         HStack(spacing: 0) {
@@ -166,6 +171,7 @@ struct TodoView: View {
         }
     }
     
+    //MARK: - TasksView
     @ViewBuilder
     func TasksView() -> some View {
         if toDos.isEmpty {
@@ -213,8 +219,10 @@ struct TodoView: View {
     }
 }
 
-extension Color {
-    static let customBackground = Color(red: 251/255, green: 247/255, blue: 248/255)
+struct TodoView_Previews: PreviewProvider {
+    static var previews: some View {
+        TodoView()
+    }
 }
 
 
