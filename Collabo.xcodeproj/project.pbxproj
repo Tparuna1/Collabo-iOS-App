@@ -33,6 +33,7 @@
 		41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */; };
 		41BA94E52B779BEB009AA25C /* CircullarProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */; };
 		41C286122BB43F42003DEB1B /* BackgroundAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C286112BB43F42003DEB1B /* BackgroundAnimation.swift */; };
+		41C286152BB4C484003DEB1B /* HowToUseCollaboViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C286142BB4C484003DEB1B /* HowToUseCollaboViewController.swift */; };
 		41D3443F2BAA0A70002378FB /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3443E2BAA0A70002378FB /* ToDoView.swift */; };
 		41D344412BAA0A7D002378FB /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344402BAA0A7D002378FB /* TaskRowView.swift */; };
 		41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344422BAA0A89002378FB /* NewTaskView.swift */; };
@@ -108,6 +109,7 @@
 		41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircullarProgressView.swift; sourceTree = "<group>"; };
 		41C286112BB43F42003DEB1B /* BackgroundAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAnimation.swift; sourceTree = "<group>"; };
+		41C286142BB4C484003DEB1B /* HowToUseCollaboViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseCollaboViewController.swift; sourceTree = "<group>"; };
 		41D3443E2BAA0A70002378FB /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		41D344402BAA0A7D002378FB /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		41D344422BAA0A89002378FB /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
@@ -270,6 +272,14 @@
 				41FBEBA92B5A78A300A7670A /* PasswordStrengthChecklist.swift */,
 			);
 			path = CheklistForPassword;
+			sourceTree = "<group>";
+		};
+		41C286132BB4C450003DEB1B /* HowToUseCollabo */ = {
+			isa = PBXGroup;
+			children = (
+				41C286142BB4C484003DEB1B /* HowToUseCollaboViewController.swift */,
+			);
+			path = HowToUseCollabo;
 			sourceTree = "<group>";
 		};
 		41D3443A2BAA09BB002378FB /* ToDoPage */ = {
@@ -445,6 +455,7 @@
 			children = (
 				41FBEB6F2B56702100A7670A /* AccountViewController.swift */,
 				41FBEB7E2B56770E00A7670A /* AccountViewModel.swift */,
+				41C286132BB4C450003DEB1B /* HowToUseCollabo */,
 			);
 			path = AccountSettingsPage;
 			sourceTree = "<group>";
@@ -638,6 +649,7 @@
 				4163F4952B6D662A001D139A /* ProjectTasksNavigator.swift in Sources */,
 				41FAAC792B626FF1009F6510 /* SheetPresentationController.swift in Sources */,
 				41BA94D52B7130EB009AA25C /* UserProfileModel.swift in Sources */,
+				41C286152BB4C484003DEB1B /* HowToUseCollaboViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

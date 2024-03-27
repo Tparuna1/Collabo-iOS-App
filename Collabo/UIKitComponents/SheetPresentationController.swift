@@ -8,8 +8,8 @@
 import UIKit
 
 /// Custom UIPresentationController for presenting a view controller as a sheet.
-final class SheetPresentationController: UIPresentationController {
-    
+class SheetPresentationController: UIPresentationController, UIViewControllerTransitioningDelegate {
+
     // MARK: - Properties
     
     private let presentedHeightFraction: CGFloat
