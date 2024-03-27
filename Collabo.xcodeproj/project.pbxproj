@@ -40,7 +40,7 @@
 		41D344482BAA0AC4002378FB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344472BAA0AC4002378FB /* Date+Extensions.swift */; };
 		41D3444A2BAA0ACF002378FB /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344492BAA0ACF002378FB /* OffsetKey.swift */; };
 		41D3444D2BAA0AED002378FB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3444C2BAA0AED002378FB /* Task.swift */; };
-		41D3444F2BAA0B71002378FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3444E2BAA0B71002378FB /* ContentView.swift */; };
+		41D3444F2BAA0B71002378FB /* TodoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3444E2BAA0B71002378FB /* TodoContentView.swift */; };
 		41FAAC4C2B5D27D9009F6510 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41FAAC4B2B5D27D9009F6510 /* OAuthSwift */; };
 		41FAAC5C2B5FB224009F6510 /* ProjectTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */; };
 		41FAAC5E2B5FB23C009F6510 /* ProjectTasksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */; };
@@ -115,7 +115,7 @@
 		41D344472BAA0AC4002378FB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		41D344492BAA0ACF002378FB /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		41D3444C2BAA0AED002378FB /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		41D3444E2BAA0B71002378FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		41D3444E2BAA0B71002378FB /* TodoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoContentView.swift; sourceTree = "<group>"; };
 		41FAAC5B2B5FB224009F6510 /* ProjectTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewController.swift; sourceTree = "<group>"; };
 		41FAAC5D2B5FB23C009F6510 /* ProjectTasksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksModel.swift; sourceTree = "<group>"; };
 		41FAAC5F2B5FB24F009F6510 /* ProjectTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTasksViewModel.swift; sourceTree = "<group>"; };
@@ -229,11 +229,11 @@
 		41BA94D62B71AD77009AA25C /* SwiftUIViews */ = {
 			isa = PBXGroup;
 			children = (
-				416D96C42BADEC3100563D8B /* CountDownTimerPage */,
 				41FBEB802B56772900A7670A /* Onboarding */,
 				41FBEB892B56C2B900A7670A /* LoginPage */,
 				41FBEB932B56EDEC00A7670A /* SignUpPage */,
 				41D3443A2BAA09BB002378FB /* ToDoPage */,
+				416D96C42BADEC3100563D8B /* CountDownTimerPage */,
 			);
 			name = SwiftUIViews;
 			sourceTree = "<group>";
@@ -278,7 +278,7 @@
 				41D3443B2BAA0A23002378FB /* View */,
 				41D344442BAA0A90002378FB /* Helpers */,
 				41D3444B2BAA0AD7002378FB /* Model */,
-				41D3444E2BAA0B71002378FB /* ContentView.swift */,
+				41D3444E2BAA0B71002378FB /* TodoContentView.swift */,
 			);
 			path = ToDoPage;
 			sourceTree = "<group>";
@@ -583,7 +583,7 @@
 				41D344462BAA0AB0002378FB /* View+Extensions.swift in Sources */,
 				416D96D42BADFB5E00563D8B /* ColorExtension.swift in Sources */,
 				416D96C12BAB59A500563D8B /* SheetPresentationComponents.swift in Sources */,
-				41D3444F2BAA0B71002378FB /* ContentView.swift in Sources */,
+				41D3444F2BAA0B71002378FB /* TodoContentView.swift in Sources */,
 				417A80892B6ECF3100E867E7 /* AddSubtaskViewModel.swift in Sources */,
 				41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */,
 				4163F4972B6D7072001D139A /* AsanaAuthenticationModel.swift in Sources */,

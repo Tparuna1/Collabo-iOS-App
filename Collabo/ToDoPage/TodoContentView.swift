@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct TodoContentView: View {
     var body: some View {
         TodoView()
             .frame(maxWidth: .infinity, maxHeight: .infinity)

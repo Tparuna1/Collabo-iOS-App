@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let myTasksNavigationController = UINavigationController(rootViewController: myTasksViewController)
         myTasksNavigationController.tabBarItem = UITabBarItem(title: "My Tasks", image: UIImage(systemName: "list.bullet"), tag: 1)
         
-        let todoView = ContentView()
+        let todoView = TodoContentView()
         let todoHostingController = UIHostingController(rootView: todoView)
         let todoNavigationController = UINavigationController(rootViewController: todoHostingController)
         todoNavigationController.tabBarItem = UITabBarItem(title: "ToDo", image: UIImage(systemName: "checklist"), tag: 2)
