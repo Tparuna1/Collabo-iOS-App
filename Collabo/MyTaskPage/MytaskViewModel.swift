@@ -48,7 +48,6 @@ final class DefaultUserTaskListViewModel {
     // MARK: - Properties
     
     private var asanaManager: UserTaskListAsanaManaging
-    
     private var tasks: [UserTaskList] = []
     private var errorMessage: String?
     

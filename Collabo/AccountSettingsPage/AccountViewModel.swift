@@ -9,11 +9,15 @@ import Foundation
 import Combine
 import Auth0
 
+
+//MARK: - AccountViewModel Class
+
 final class AccountViewModel {
     
     // MARK: - Properties
     var onLogoutComplete: (() -> Void)?
     static let shared = AccountViewModel()
+    private var taskCount = 0
     
     // MARK: - Methods
     func logout() {
@@ -41,4 +45,17 @@ final class AccountViewModel {
             }
         }
     }
+    
+    func fetchAndCountUserTasks(completion: @escaping (Result<Int, Error>) -> Void) {
+        Task {
+            do {
+                let userTasks = try await AsanaManager.shared.fetchUserTasks()
+                self.taskCount = userTasks.count
+                completion(.success(self.taskCount))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
 }
+
