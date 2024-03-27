@@ -19,10 +19,7 @@ struct CountDownView: View {
     
     var body: some View {
         ZStack {
-            Color.customBackgroundColor.edgesIgnoringSafeArea(.all)
-                .brightness(viewModel.showPickerSheet ? -0.1 : 0)
-            
-            AnimatedBackgroundView()
+            BackgroundAnimation()
                 .edgesIgnoringSafeArea(.all)
                 .brightness(viewModel.showPickerSheet ? -0.1 : 0)
             
