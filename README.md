@@ -26,6 +26,8 @@ To access Collabo, use the following credentials:
 - **UIKit Components:** Custom components and views built using UIKit.
 
 ## Screenshots
+<img src="https://github.com/Tparuna1/Collabo-iOS-App/assets/145837277/8016655f-4b5a-491d-a648-05384f8a5224" width="200" height="400" />
+
 
 
 ## Note
