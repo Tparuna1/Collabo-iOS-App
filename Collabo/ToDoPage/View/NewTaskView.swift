@@ -12,7 +12,7 @@ struct NewTaskView: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @State private var taskTitle: String = ""
-    @State private var taskDate: Date
+    @State private var taskTime: Date
     @State private var taskColor: Color = .taskColor1
     @Binding var tasks: [Todo]
     private var selectedDate: Date
@@ -22,7 +22,7 @@ struct NewTaskView: View {
     init(tasks: Binding<[Todo]>, selectedDate: Date) {
         self._tasks = tasks
         self.selectedDate = selectedDate
-        _taskDate = State(initialValue: selectedDate)
+        _taskTime = State(initialValue: selectedDate)
     }
     
     // MARK: - Body
@@ -51,22 +51,23 @@ struct NewTaskView: View {
             .padding(.top, 5)
             
             HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 8, content: {
-                    Text("Task Date")
+                VStack(alignment: .leading, content: {
+                    Text("Task Time")
                         .font(.caption)
                         .foregroundStyle(.gray)
                     
-                    DatePicker("", selection: $taskDate)
+                    DatePicker("", selection: $taskTime, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.compact)
                         .scaleEffect(0.9, anchor: .leading)
+                        .frame(width: 70)
                 })
-                .padding(.trailing, -15)
+                
                 
                 VStack(alignment: .leading, spacing: 8, content: {
                     Text("Task Color")
                         .font(.caption)
                         .foregroundStyle(.gray)
-                    
+                    Spacer()
                     let colors: [Color] = [.taskColor1, .taskColor2, .taskColor3, .taskColor4, .taskColor5]
                     
                     HStack(spacing: 0) {
@@ -116,10 +117,15 @@ struct NewTaskView: View {
     // MARK: - Methods
     
     func createTask() {
-        let newTask = Todo(taskTitle: taskTitle, creationDate: taskDate, isCompleted: false, tint: taskColor)
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: taskTime)
+        let minute = calendar.component(.minute, from: taskTime)
+        let dateWithSelectedTime = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: selectedDate)!
+        
+        let newTask = Todo(taskTitle: taskTitle, creationDate: dateWithSelectedTime, isCompleted: false, tint: taskColor)
         tasks.append(newTask)
         
-        TodoManager.shared.saveTasks(tasks, for: taskDate)
+        TodoManager.shared.saveTasks(tasks, for: selectedDate)
         dismiss()
     }
 }

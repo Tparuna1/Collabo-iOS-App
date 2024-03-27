@@ -25,3 +25,9 @@ extension View {
         return Calendar.current.isDate(date1, inSameDayAs: date2)
     }
 }
+
+//MARK: - Color extension
+
+extension Color {
+    static let customBackground = Color(red: 251/255, green: 247/255, blue: 248/255)
+}
