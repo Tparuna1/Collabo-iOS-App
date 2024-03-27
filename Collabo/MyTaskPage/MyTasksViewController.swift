@@ -163,7 +163,7 @@ extension UserTaskListViewController: UITableViewDataSource {
         }
         let task = tasks[indexPath.row]
         
-        let colors: [UIColor] = [.systemBlue]
+        let colors: [UIColor] = [.taskColor4]
         let colorIndex = indexPath.row % colors.count
         
         cell.setup(with: .init(title: task.name, color: colors[colorIndex]))
