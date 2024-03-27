@@ -32,6 +32,7 @@
 		41BA94DA2B74F6DB009AA25C /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */; };
 		41BA94DC2B74F6E8009AA25C /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */; };
 		41BA94E52B779BEB009AA25C /* CircullarProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */; };
+		41C286122BB43F42003DEB1B /* BackgroundAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C286112BB43F42003DEB1B /* BackgroundAnimation.swift */; };
 		41D3443F2BAA0A70002378FB /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D3443E2BAA0A70002378FB /* ToDoView.swift */; };
 		41D344412BAA0A7D002378FB /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344402BAA0A7D002378FB /* TaskRowView.swift */; };
 		41D344432BAA0A89002378FB /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D344422BAA0A89002378FB /* NewTaskView.swift */; };
@@ -106,6 +107,7 @@
 		41BA94D92B74F6DB009AA25C /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		41BA94DB2B74F6E8009AA25C /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		41BA94E42B779BEB009AA25C /* CircullarProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircullarProgressView.swift; sourceTree = "<group>"; };
+		41C286112BB43F42003DEB1B /* BackgroundAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAnimation.swift; sourceTree = "<group>"; };
 		41D3443E2BAA0A70002378FB /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		41D344402BAA0A7D002378FB /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		41D344422BAA0A89002378FB /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				416D96D32BADFB5E00563D8B /* ColorExtension.swift */,
 				416D96D72BADFB7000563D8B /* HelperMethods.swift */,
+				41C286112BB43F42003DEB1B /* BackgroundAnimation.swift */,
 			);
 			path = CountDownHelpers;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 			files = (
 				4163F48A2B6CF9F4001D139A /* CustomBackgroundColor.swift in Sources */,
 				416D96C92BADECA600563D8B /* CountPickerView.swift in Sources */,
+				41C286122BB43F42003DEB1B /* BackgroundAnimation.swift in Sources */,
 				41FBEB6C2B566FFA00A7670A /* HomeViewController.swift in Sources */,
 				41FBEB702B56702100A7670A /* AccountViewController.swift in Sources */,
 				41FAAC912B69182F009F6510 /* TaskDetailsViewModel.swift in Sources */,
