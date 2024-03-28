@@ -16,6 +16,8 @@ struct PrimaryButtonComponentView: View {
     var textColor: Color
     @GestureState private var isPressed = false
     
+    let cornerRadius: CGFloat = 12
+    let borderWidth: CGFloat = 2
     
     init(text: String, backgroundColor: Color = .white, textColor: Color = .blue) {
         self.text = text
@@ -26,16 +28,23 @@ struct PrimaryButtonComponentView: View {
     // MARK: - Body
     
     var body: some View {
-        Text(text.capitalized)
-            .foregroundColor(textColor)
-            .font(.system(size: 16))
-            .fontWeight(.bold)
-            .frame(maxWidth: .infinity)
-            .frame(height: 48)
-            .background(backgroundColor)
-            .cornerRadius(12)
-            .padding(.horizontal, 16)
-            .scaleEffect(isPressed ? 0.96 : 1.0)
+        ZStack {
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(textColor, lineWidth: borderWidth)
+                .background(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(backgroundColor)
+                )
+                .frame(maxWidth: .infinity)
+                .frame(height: 48)
+                .padding(.horizontal, 16)
+                .scaleEffect(isPressed ? 0.96 : 1.0)
+            Text(text.capitalized)
+                .foregroundColor(textColor)
+                .font(.system(size: 16))
+                .fontWeight(.bold)
+        }
     }
 }
+
 
