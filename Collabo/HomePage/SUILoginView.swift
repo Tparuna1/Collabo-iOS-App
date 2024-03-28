@@ -16,6 +16,14 @@ struct SUILoginView: View {
     @State private var email = ""
     @State private var password = ""
     
+    private var loginButtonColor: (backgroundColor: Color, textColor: Color) {
+        if viewModel.isValidEmail(email) && viewModel.isValidPassword(password) {
+            return (.white, .blue)
+        } else {
+            return (.white.opacity(0.8), .blue)
+        }
+    }
+    
     // MARK: - Body View
     
     var body: some View {
@@ -40,20 +48,20 @@ struct SUILoginView: View {
                     } else {
                         PrimaryButtonComponentView(
                             text: "Log In",
-                            backgroundColor: .white,
-                            textColor: .blue
+                            backgroundColor: loginButtonColor.backgroundColor,
+                            textColor: loginButtonColor.textColor
                         )
                         .onTapGesture {
                             viewModel.login(email: email, password: password)
                         }
-                        .disabled(viewModel.isLoading)
+                        .disabled(!viewModel.isValidEmail(email) || !viewModel.isValidPassword(password) || viewModel.isLoading)
                         .padding()
                         
                         NavigationLink(destination: SUISignUpView()) {
                             PrimaryButtonComponentView(
                                 text: "Sign Up",
-                                backgroundColor: .white,
-                                textColor: .blue
+                                backgroundColor: .clear,
+                                textColor: .white
                             )
                             .padding(.horizontal)
                         }

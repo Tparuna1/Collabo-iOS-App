@@ -47,10 +47,11 @@ final class AccountViewController: UIViewController {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.spacing = 20
         return stackView
     }()
+    
     private lazy var UserInfoContainer: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
@@ -68,7 +69,7 @@ final class AccountViewController: UIViewController {
     
     private lazy var tasksCountContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.102, green: 0.1765, blue: 0.2588, alpha: 1.0)
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
         return view
@@ -118,6 +119,14 @@ final class AccountViewController: UIViewController {
         setupLabels()
         setupLogoutButton()
         
+        view.addSubview(profileImageView)
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+        ])
+        
         UserInfoContainer.addSubview(infoStackView)
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -127,13 +136,13 @@ final class AccountViewController: UIViewController {
             infoStackView.bottomAnchor.constraint(equalTo: UserInfoContainer.bottomAnchor, constant: -20),
         ])
         
-        stackView.addArrangedSubview(profileImageView)
         stackView.addArrangedSubview(userInfoHeaderLabel)
         stackView.addArrangedSubview(UserInfoContainer)
-        stackView.addArrangedSubview(supportHeaderLabel)
-        stackView.addArrangedSubview(supportInfoContainer)
         stackView.addArrangedSubview(statisticsHeaderLabel)
         stackView.addArrangedSubview(tasksCountContainer)
+        stackView.addArrangedSubview(supportHeaderLabel)
+        stackView.addArrangedSubview(supportInfoContainer)
+
 
         
         view.addSubview(stackView)
@@ -142,7 +151,7 @@ final class AccountViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -20),
         ])
         
@@ -228,36 +237,15 @@ final class AccountViewController: UIViewController {
         ])
     }
     
-    private func setupLogoutButton() {
-        logoutButton.setTitle("Log Out", for: .normal)
-        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        
-        logoutButton.backgroundColor = .systemRed
-        logoutButton.setTitleColor(.white, for: .normal)
-        logoutButton.layer.cornerRadius = 10
-        
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            logoutButton.widthAnchor.constraint(equalToConstant: 150),
-            logoutButton.heightAnchor.constraint(equalToConstant: 50),
-        ])
-        
-        view.addSubview(logoutButton)
-        NSLayoutConstraint.activate([
-            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-        ])
-    }
-    
     private func updateTasksCountLabel(_ count: Int) {
         let tasksCountLabel = UILabel()
-        tasksCountLabel.textColor = .white
+        tasksCountLabel.textColor = .black
         tasksCountLabel.textAlignment = .left
-        tasksCountLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        tasksCountLabel.font = UIFont.systemFont(ofSize: 18)
         tasksCountLabel.text = "Overall tasks to complete:"
         
         let countLabel = UILabel()
-        countLabel.textColor = .white
+        countLabel.textColor = .systemBlue
         countLabel.textAlignment = .right
         countLabel.font = UIFont.boldSystemFont(ofSize: 18)
         countLabel.text = "\(count)"
@@ -352,6 +340,27 @@ final class AccountViewController: UIViewController {
            let sceneDelegate = windowScene.delegate as? SceneDelegate {
             sceneDelegate.switchToLoginViewController()
         }
+    }
+    
+    private func setupLogoutButton() {
+        logoutButton.setTitle("Log Out", for: .normal)
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        
+        logoutButton.backgroundColor = .systemRed
+        logoutButton.setTitleColor(.white, for: .normal)
+        logoutButton.layer.cornerRadius = 10
+        
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoutButton.widthAnchor.constraint(equalToConstant: 350),
+            logoutButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        view.addSubview(logoutButton)
+        NSLayoutConstraint.activate([
+            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+        ])
     }
 }
 
